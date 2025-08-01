@@ -79,6 +79,7 @@ def fix_slurm_flags(content, use_high_partition=False):
     modified_lines = []
     requeue_added = False
     time_adjusted = False
+    ntasks_found = False
     
     target_partition = 'high' if use_high_partition else 'low'
     max_days = 30 if use_high_partition else 3
@@ -88,8 +89,18 @@ def fix_slurm_flags(content, use_high_partition=False):
         
         # Check if this is an sbatch line
         if line.strip().startswith('#SBATCH'):
+            # Check for ntasks (Rosetta doesn't benefit from MPI)
+            ntasks_match = re.search(r'--ntasks=(\d+)', line) or re.search(r'-n\s+(\d+)', line)
+            if ntasks_match:
+                ntasks = int(ntasks_match.group(1))
+                if ntasks > 1:
+                    ntasks_found = True
+                    # Comment out the ntasks line
+                    line = f"# {line}  # Rosetta doesn't use MPI"
+                    changes.append(f"Commented out ntasks={ntasks} (Rosetta doesn't benefit from MPI)")
+            
             # Fix partition from production to low/high
-            if '--partition=production' in line or '-p production' in line:
+            elif '--partition=production' in line or '-p production' in line:
                 line = re.sub(r'--partition=production', f'--partition={target_partition}', line)
                 line = re.sub(r'-p production', f'-p {target_partition}', line)
                 changes.append(f"Updated partition: production -> {target_partition}")
@@ -105,18 +116,31 @@ def fix_slurm_flags(content, use_high_partition=False):
                 changes.append(f"Updated partition: gpu-a100 -> {target_partition} (Rosetta doesn't need GPUs)")
             
             # Check time limits
-            time_match = re.search(r'--time=([^\s]+)', line) or re.search(r'-t\s+([^\s]+)', line)
-            if time_match and target_partition == 'low':
-                time_str = time_match.group(1)
-                days = parse_time_to_days(time_str)
-                if days > 3:
-                    # Replace with 3 days
-                    line = re.sub(r'--time=[^\s]+', '--time=3-00:00:00', line)
-                    line = re.sub(r'-t\s+[^\s]+', '-t 3-00:00:00', line)
-                    time_adjusted = True
-                    changes.append(f"Adjusted time limit from {time_str} to 3-00:00:00 (max for low partition)")
+            elif (time_match := re.search(r'--time=([^\s]+)', line) or re.search(r'-t\s+([^\s]+)', line)):
+                if target_partition == 'low':
+                    time_str = time_match.group(1)
+                    days = parse_time_to_days(time_str)
+                    if days > 3:
+                        # Replace with 3 days
+                        line = re.sub(r'--time=[^\s]+', '--time=3-00:00:00', line)
+                        line = re.sub(r'-t\s+[^\s]+', '-t 3-00:00:00', line)
+                        time_adjusted = True
+                        changes.append(f"Adjusted time limit from {time_str} to 3-00:00:00 (max for low partition)")
         
         modified_lines.append(line)
+    
+    # Add cpus-per-task if ntasks was found and not already present
+    if ntasks_found:
+        content_check = '\n'.join(modified_lines)
+        if '--cpus-per-task' not in content_check and '-c ' not in content_check:
+            # Find where to add cpus-per-task (after the commented ntasks line)
+            final_lines = []
+            for i, line in enumerate(modified_lines):
+                final_lines.append(line)
+                if 'Rosetta doesn\'t use MPI' in line:
+                    final_lines.append('#SBATCH --cpus-per-task=8  # Use 8 CPUs per Rosetta job')
+                    changes.append("Added --cpus-per-task=8 (recommended for Rosetta)")
+            modified_lines = final_lines
     
     # Add requeue for low partition if not already present
     if target_partition == 'low':
