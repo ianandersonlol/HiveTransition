@@ -169,9 +169,9 @@ sandboxlowgpu # 8 CPU, 16GB RAM, 1 GPU, low priority
 Instead of local conda:
 ```bash
 module load conda/latest
-module load cuda/12.6.2  # For GPU jobs
+module load cuda/12.6.2  # For GPU jobs Good to have even when you're not using a GPU so you have the drivers up!
 ```
-
+**IF YOU USED MY BASH MIGRATION TOOL IT WILL PUT IT IN YOUR BASHRC**
 ### Partition Selection
 - Use `low` for most jobs (< 3 days)
 - Use `high` for long jobs (> 3 days)
