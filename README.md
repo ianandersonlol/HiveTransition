@@ -83,37 +83,41 @@ The `bash_profile_migration.py` script adds these convenient aliases for request
 
 ## Quick Start
 
-**IMPORTANT**: Run these scripts from your old cluster (cacao/barbera), NOT from HIVE!
+### Step 1: Migrate Your Shell Configuration (Run from Cacao/Barbera)
 
-1. **Clone this repository on your old cluster:**
-   ```bash
-   # SSH to cacao or barbera first
-   ssh username@cacao.genomecenter.ucdavis.edu
-   # OR
-   ssh username@barbera.genomecenter.ucdavis.edu
-   
-   # Then clone the repo
-   git clone https://github.com/ianandersonlol/HiveTransition.git
-   cd HiveTransition
-   ```
+**IMPORTANT**: Run this from your old cluster (cacao/barbera), NOT from HIVE!
 
-2. **Migrate your shell configuration:**
-   ```bash
-   python bash_profile_migration.py <ssh_username> <quobyte_dir>
-   ```
+```bash
+# SSH to cacao or barbera first
+ssh username@cacao.genomecenter.ucdavis.edu
 
-3. **Fix your job scripts:**
-   ```bash
-   python colab_fix.py my_colabfold_job.sh      # For ColabFold
-   python ligandmpnn_fix.py my_ligandmpnn_job.sh # For LigandMPNN
-   python rfdiffusion_fix.py my_rfdiff_job.sh    # For RFdiffusion
-   python rosetta_fix.py my_rosetta_job.sh       # For Rosetta
-   ```
+# Download just the bash profile migration script
+wget https://raw.githubusercontent.com/ianandersonlol/HiveTransition/main/bash_profile_migration.py
 
-   **Or update all paths at once (no SLURM changes):**
-   ```bash
-   python pathMigrator.py /path/to/scripts        # Update all software paths
-   ```
+# Run it
+python bash_profile_migration.py <ssh_username> <quobyte_dir>
+
+# Example:
+python bash_profile_migration.py jdoe john
+```
+
+### Step 2: Fix Your Job Scripts (Can run anywhere)
+
+For fixing job scripts, you can clone the full repository wherever your scripts are located:
+
+```bash
+git clone https://github.com/ianandersonlol/HiveTransition.git
+cd HiveTransition
+
+# Fix individual scripts
+python colab_fix.py /path/to/colabfold_job.sh      # For ColabFold
+python ligandmpnn_fix.py /path/to/ligandmpnn_job.sh # For LigandMPNN
+python rfdiffusion_fix.py /path/to/rfdiff_job.sh    # For RFdiffusion
+python rosetta_fix.py /path/to/rosetta_job.sh       # For Rosetta
+
+# Or update all paths at once (no SLURM changes)
+python pathMigrator.py /path/to/scripts/directory    # Update all software paths
+```
 
 ## Available Scripts
 
