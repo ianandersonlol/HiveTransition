@@ -22,9 +22,6 @@ The `rosetta_fix.py` script updates Rosetta job scripts for the new HIVE cluster
 ### 3. SLURM Partition Management (CPU-only)
 - Changes `production` → `low` (default) or `high` (with `--high` flag)
 - Removes GPU partitions (Rosetta doesn't use GPUs)
-- **Fixes ntasks misuse**:
-  - Comments out `--ntasks` or `-n` (Rosetta doesn't use MPI)
-  - Adds `--cpus-per-task=4` if ntasks was being used
 - **Low partition**:
   - Maximum runtime: 3 days
   - Adds `--requeue` flag (auto-requeue if preempted)
@@ -74,7 +71,6 @@ python rosetta_fix.py <script_filename> --high
 #SBATCH --job-name=rosetta_relax
 #SBATCH --partition=production
 #SBATCH --time=7-00:00:00
-#SBATCH --ntasks=8                    # WRONG! Rosetta doesn't use MPI
 #SBATCH --array=1-100
 
 # Rosetta paths
@@ -100,8 +96,6 @@ $ROSETTA/source/bin/relax.default.linuxgccrelease \
 #SBATCH --partition=low
 #SBATCH --requeue
 #SBATCH --time=3-00:00:00
-# #SBATCH --ntasks=8                    # Rosetta doesn't use MPI
-#SBATCH --cpus-per-task=4              # Use 4 CPUs per Rosetta job
 #SBATCH --array=1-100
 
 # Rosetta paths
@@ -248,12 +242,9 @@ Common flags that work with both versions:
 ## Important Notes
 
 1. **No GPU Support**: Rosetta is CPU-only
-2. **No MPI Support**: Rosetta doesn't use MPI, so `--ntasks` is useless
-   - The script automatically comments out ntasks
-   - Adds `--cpus-per-task=8` instead (recommended for most Rosetta jobs)
-3. **Version Change**: Now using Rosetta 3.14
-4. **Binary Format**: Static binaries for better compatibility
-5. **Database Path**: Automatically set relative to main directory
+2. **Version Change**: Now using Rosetta 3.14
+3. **Binary Format**: Static binaries for better compatibility
+4. **Database Path**: Automatically set relative to main directory
 
 ## Common Issues and Solutions
 
