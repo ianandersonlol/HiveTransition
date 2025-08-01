@@ -72,7 +72,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 
 ### Interactive Sessions
 
-The bash_profile_migration.py script adds these convenient aliases for requesting interactive sessions:
+The `bash_profile_migration.py` script adds these convenient aliases for requesting interactive sessions:
 
 | Command | Resources | Partition |
 |---------|-----------|-----------|
