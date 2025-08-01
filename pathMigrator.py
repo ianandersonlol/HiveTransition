@@ -189,6 +189,10 @@ def main():
         description='Migrate all software paths for HIVE cluster transition',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
+WARNING: This script recursively processes ALL subdirectories!
+        Make sure you are in YOUR directory before running.
+        DO NOT run this in shared directories or parent folders!
+
 This script updates the following software paths:
   • ColabFold:   /toolbox/LocalColabFold → /quobyte/jbsiegelgrp/software/LocalColabFold
   • LigandMPNN:  /toolbox/ligandMPNN → /quobyte/jbsiegelgrp/ligandMPNN
@@ -231,7 +235,21 @@ Examples:
     
     print(f"HIVE Path Migration Tool")
     print(f"=" * 50)
-    print(f"Processing directory: {os.path.abspath(args.directory)}")
+    
+    # Add prominent warning
+    abs_path = os.path.abspath(args.directory)
+    print(f"\n⚠️  WARNING: This will recursively process ALL files in:")
+    print(f"   {abs_path}")
+    print(f"   and ALL subdirectories beneath it!")
+    print(f"\n   Make sure you are in YOUR directory, not a shared location!")
+    
+    if not args.dry_run:
+        response = input("\nAre you sure you want to continue? (y/N): ")
+        if response.lower() not in ['y', 'yes']:
+            print("Aborted.")
+            return
+    
+    print(f"\nProcessing directory: {abs_path}")
     if args.dry_run:
         print("*** DRY RUN MODE - No files will be modified ***")
     print()

@@ -1,5 +1,13 @@
 # Path Migrator - Comprehensive Software Path Migration
 
+## ⚠️ WARNING: RECURSIVE DIRECTORY PROCESSING
+
+**This script processes ALL files in the specified directory AND ALL SUBDIRECTORIES!**
+
+- **ALWAYS run from YOUR directory**, not shared locations
+- **DO NOT run from parent directories** like `/home/` or `/share/`
+- **ALWAYS use --dry-run first** to preview changes
+
 ## Overview
 The `pathMigrator.py` script is a comprehensive tool that updates ALL software paths in your scripts for the HIVE cluster transition. It combines the path migration functionality from all the individual fix scripts into one powerful tool.
 
@@ -146,22 +154,37 @@ This ensures specific software paths are handled correctly before general replac
 
 ## Best Practices
 
-1. **Always use dry run first**:
+1. **VERIFY YOUR LOCATION FIRST**:
    ```bash
-   python pathMigrator.py --dry-run
+   pwd  # Make sure you're in YOUR directory!
+   ls   # Check you're not in a shared location!
    ```
 
-2. **Review verbose output for critical scripts**:
+2. **Always use dry run first**:
+   ```bash
+   python pathMigrator.py . --dry-run
+   ```
+
+3. **Be specific with paths**:
+   ```bash
+   # GOOD - specific directory
+   python pathMigrator.py ./my_scripts --dry-run
+   
+   # BAD - too broad!
+   python pathMigrator.py /home --dry-run
+   ```
+
+4. **Review verbose output for critical scripts**:
    ```bash
    python pathMigrator.py important_script.sh --dry-run -v
    ```
 
-3. **Back up your scripts**:
+5. **Back up your scripts**:
    ```bash
    cp -r scripts/ scripts_backup/
    ```
 
-4. **Test after migration**:
+6. **Test after migration**:
    - Submit a test job
    - Verify paths exist on HIVE
    - Check output logs

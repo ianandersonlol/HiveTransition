@@ -101,9 +101,9 @@ python bash_profile_migration.py <ssh_username> <quobyte_dir>
 python bash_profile_migration.py jdoe john
 ```
 
-### Step 2: Fix Your Job Scripts (Can run anywhere)
+### Step 2: Fix Your Job Scripts
 
-For fixing job scripts, you can clone the full repository wherever your scripts are located:
+For fixing job scripts, clone the repository where YOUR scripts are located:
 
 ```bash
 git clone https://github.com/ianandersonlol/HiveTransition.git
