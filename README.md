@@ -36,30 +36,65 @@ This repository contains scripts to help migrate from the old HPC cluster to the
    python pathMigrator.py /path/to/scripts        # Update all software paths
    ```
 
-## Overview
+## HIVE vs Cacao Comparison
 
-The migration to HIVE involves several key changes:
+### Key Differences Between Clusters
 
-### Storage Changes
-- **Old**: `/share/siegellab/`
-- **New**: `/quobyte/jbsiegelgrp/`
-- **Home Directory**: Limited to 1GB (use quobyte for everything!)
-
-### Module System
-- **Old**: Local conda installations
-- **New**: `module load conda/latest` and `module load cuda/12.6.2`
-
-### SLURM Partitions
-- **GPU Jobs**: `jbsiegel-gpu` → `gpu-a100` (requires `--account=genome-center-grp`)
-- **CPU Jobs**: `production` → `low` or `high`
-  - `low`: Max 3 days, auto-requeue, more available
-  - `high`: Max 30 days, no requeue, less available
+| Component | Cacao (Old Cluster) | HIVE (New Cluster) |
+|-----------|-------------------|-------------------|
+| **Storage Path** | `/share/siegellab/` | `/quobyte/jbsiegelgrp/` |
+| **Home Directory Size** | Larger | 20GB limit |
+| **Shell Config** | `.bash_profile` | `.bashrc` (with minimal `.bash_profile`) |
+| **Conda/Python** | Local installations (~/miniconda3, etc.) | `module load conda/latest` |
+| **CUDA** | Various local installations | `module load cuda/12.6.2` |
+| **GPU Partition** | `jbsiegel-gpu` | `gpu-a100` |
+| **GPU Account** | Not required | `--account=genome-center-grp` required |
+| **CPU Partitions** | `production` | `low` (3 day max) or `high` (30 day max) |
+| **Job Requeue** | Not standard | `--requeue` flag for low partition |
 
 ### Software Locations
-- **ColabFold**: `/quobyte/jbsiegelgrp/software/LocalColabFold/`
-- **LigandMPNN**: `/quobyte/jbsiegelgrp/ligandMPNN/`
-- **RFdiffusion**: `/quobyte/jbsiegelgrp/software/RFdiffusion/`
-- **Rosetta 3.14**: `/quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/`
+
+| Software | Cacao Path | HIVE Path |
+|----------|-----------|-----------|
+| **ColabFold** | `/toolbox/LocalColabFold/` | `/quobyte/jbsiegelgrp/software/LocalColabFold/` |
+| **LigandMPNN** | `/toolbox/ligandMPNN/` | `/quobyte/jbsiegelgrp/ligandMPNN/` |
+| **RFdiffusion** | Various (~/RFdiffusion, /toolbox/RFdiffusion, etc.) | `/quobyte/jbsiegelgrp/software/RFdiffusion/` |
+| **RFdiff Conda Env** | Various (SE3nv, rfdiffusion, etc.) | `/quobyte/jbsiegelgrp/software/envs/SE3nv` |
+| **Rosetta** | `/share/siegellab/software/kschu/Rosetta/main/` | `/quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/` |
+| **Rosetta Version** | Older version | Rosetta 3.14 |
+| **Rosetta Binaries** | `.default.linuxgccrelease` | `.static.linuxgccrelease` |
+
+### Storage Management
+
+| Storage Type | Cacao | HIVE |
+|-------------|-------|------|
+| **Conda Packages** | `~/.conda/pkgs` | `/quobyte/jbsiegelgrp/{user}/.conda/pkgs` |
+| **Conda Environments** | `~/.conda/envs` or local | `/quobyte/jbsiegelgrp/{user}/.conda/envs` |
+| **Pip Cache** | `~/.cache/pip` | `/quobyte/jbsiegelgrp/{user}/.cache/pip` |
+| **HuggingFace Cache** | `~/.cache/huggingface` | `/quobyte/jbsiegelgrp/{user}/.cache/huggingface` |
+| **PyTorch Cache** | `~/.cache/torch` | `/quobyte/jbsiegelgrp/{user}/.cache/torch` |
+| **Transformers Cache** | `~/.cache/transformers` | `/quobyte/jbsiegelgrp/{user}/.cache/transformers` |
+
+### SLURM Changes
+
+| Parameter | Cacao | HIVE |
+|-----------|-------|------|
+| **GPU Jobs** | `#SBATCH -p jbsiegel-gpu` | `#SBATCH -p gpu-a100`<br>`#SBATCH --account=genome-center-grp` |
+| **CPU Jobs** | `#SBATCH -p production` | `#SBATCH -p low` (default) or<br>`#SBATCH -p high` (long jobs) |
+| **Low Priority** | N/A | `#SBATCH --requeue` (auto-requeue if preempted) |
+| **Time Limits** | Flexible | `low`: 3 days max<br>`high`: 30 days max |
+
+### Interactive Sessions
+
+HIVE provides convenient aliases (added by bash_profile_migration.py):
+
+| Command | Resources | Partition |
+|---------|-----------|-----------|
+| `sandbox` | 8 CPU, 16GB RAM, 1 day | high |
+| `sandboxlow` | 16 CPU, 32GB RAM, 1 day | low |
+| `sandboxgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | high |
+| `sandboxlowgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | low |
+
 
 ## Available Scripts
 
