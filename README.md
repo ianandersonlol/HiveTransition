@@ -160,7 +160,7 @@ sandboxlowgpu # 8 CPU, 16GB RAM, 1 GPU, low priority
 ## Important Notes
 
 ### Storage Management
-- Home directory: 1GB limit
+- Home directory: 20GB limit
 - Store everything in `/quobyte/jbsiegelgrp/{your_directory}/`
 - Conda environments go in `.conda/envs/`
 - Package caches go in `.cache/`
@@ -244,7 +244,7 @@ HiveTransition/
 
 ## License
 
-This project is provided as-is for the UC Davis research community.
+This project is provided as-is 
 
 ## Acknowledgments
 
