@@ -4,8 +4,16 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 
 ## Quick Start
 
-1. **Clone this repository:**
+**IMPORTANT**: Run these scripts from your old cluster (cacao/barbera), NOT from HIVE!
+
+1. **Clone this repository on your old cluster:**
    ```bash
+   # SSH to cacao or barbera first
+   ssh username@cacao.genomecenter.ucdavis.edu
+   # OR
+   ssh username@barbera.genomecenter.ucdavis.edu
+   
+   # Then clone the repo
    git clone https://github.com/ianandersonlol/HiveTransition.git
    cd HiveTransition
    ```
@@ -104,7 +112,7 @@ Reports issues with scripts:
 
 ### Setting Up Your Environment
 
-1. **Run the migration script:**
+1. **Run the migration script from old cluster (cacao/barbera):**
    ```bash
    python bash_profile_migration.py myusername mydirectory
    ```

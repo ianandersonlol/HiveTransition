@@ -5,6 +5,7 @@ import os
 import re
 import subprocess
 import tempfile
+import socket
 from pathlib import Path
 
 def detect_conda_setup(line):
@@ -213,6 +214,38 @@ def scp_to_remote(temp_file: Path, remote_user: str, remote_host: str, remote_pa
     """Upload file to remote host"""
     subprocess.run(['scp', str(temp_file), f'{remote_user}@{remote_host}:{remote_path}'], check=True)
 
+def check_cluster(verbose=False):
+    """Check which cluster we're running on and prevent running on HIVE."""
+    try:
+        hostname = socket.gethostname().lower()
+        
+        # Check if we're on HIVE
+        if 'hive' in hostname or hostname.endswith('.hpc.ucdavis.edu'):
+            print("ERROR: This script should NOT be run on HIVE!")
+            print("Please run this script from your old cluster (cacao or barbera):")
+            print("  ssh username@cacao.genomecenter.ucdavis.edu")
+            print("  ssh username@barbera.genomecenter.ucdavis.edu")
+            print("\nThis script migrates FROM the old cluster TO HIVE.")
+            return False
+            
+        # Check if we're on a known old cluster
+        if any(cluster in hostname for cluster in ['cacao', 'barbera', 'genomecenter']):
+            if verbose:
+                print(f"Running on {hostname} - this is correct!")
+            return True
+            
+        # Unknown cluster - warn but allow
+        print(f"Warning: Running on unknown host '{hostname}'")
+        print("This script should be run from cacao or barbera.")
+        response = input("Continue anyway? (y/N): ")
+        return response.lower() in ['y', 'yes']
+        
+    except Exception as e:
+        print(f"Warning: Could not determine hostname: {e}")
+        print("Proceeding with caution...")
+        return True
+
+
 def main():
     parser = argparse.ArgumentParser(description="Migrate bash_profile to bashrc for new HIVE cluster.")
     parser.add_argument("ssh_username", help="Username for SSH to hive.hpc.ucdavis.edu")
@@ -220,6 +253,10 @@ def main():
     parser.add_argument("--dry-run", action="store_true", help="Show changes without uploading")
     parser.add_argument("--verbose", "-v", action="store_true", help="Show detailed processing information")
     args = parser.parse_args()
+
+    # Check if we're running on the correct cluster
+    if not check_cluster(args.verbose):
+        return
 
     original_path = Path.home() / '.bash_profile'
     if not original_path.exists():
