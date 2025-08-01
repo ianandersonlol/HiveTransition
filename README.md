@@ -1,6 +1,6 @@
 # HIVE Cluster Migration Tools
 
-This repository contains scripts to help migrate from the old HPC cluster to the new HIVE cluster at UC Davis.
+This repository contains scripts to help migrate from the old HPC cluster to the new HIVE cluster.
 
 ## Table of Contents
 
