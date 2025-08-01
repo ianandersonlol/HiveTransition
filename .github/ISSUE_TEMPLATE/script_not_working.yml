@@ -1,9 +1,9 @@
----
 name: Script Not Working
-about: Report a script that isn't working properly after migration
+description: Report a script that isn't working properly after migration
 title: "[BUG] Script issue: "
-labels: bug
-assignees: ianandersonlol
+labels: ["bug"]
+assignees:
+  - ianandersonlol
 body:
   - type: textarea
     id: script
@@ -27,4 +27,3 @@ body:
         I expected it to...
     validations:
       required: true
----
