@@ -86,7 +86,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 
 ### Interactive Sessions
 
-HIVE provides convenient aliases (added by bash_profile_migration.py):
+The bash_profile_migration.py script adds these convenient aliases for requesting interactive sessions:
 
 | Command | Resources | Partition |
 |---------|-----------|-----------|
