@@ -138,8 +138,8 @@ def fix_slurm_flags(content, use_high_partition=False):
             for i, line in enumerate(modified_lines):
                 final_lines.append(line)
                 if 'Rosetta doesn\'t use MPI' in line:
-                    final_lines.append('#SBATCH --cpus-per-task=8  # Use 8 CPUs per Rosetta job')
-                    changes.append("Added --cpus-per-task=8 (recommended for Rosetta)")
+                    final_lines.append('#SBATCH --cpus-per-task=4  # Use 4 CPUs per Rosetta job')
+                    changes.append("Added --cpus-per-task=4 (recommended for Rosetta)")
             modified_lines = final_lines
     
     # Add requeue for low partition if not already present

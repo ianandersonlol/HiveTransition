@@ -24,7 +24,7 @@ The `rosetta_fix.py` script updates Rosetta job scripts for the new HIVE cluster
 - Removes GPU partitions (Rosetta doesn't use GPUs)
 - **Fixes ntasks misuse**:
   - Comments out `--ntasks` or `-n` (Rosetta doesn't use MPI)
-  - Adds `--cpus-per-task=8` if ntasks was being used
+  - Adds `--cpus-per-task=4` if ntasks was being used
 - **Low partition**:
   - Maximum runtime: 3 days
   - Adds `--requeue` flag (auto-requeue if preempted)
@@ -101,7 +101,7 @@ $ROSETTA/source/bin/relax.default.linuxgccrelease \
 #SBATCH --requeue
 #SBATCH --time=3-00:00:00
 # #SBATCH --ntasks=8                    # Rosetta doesn't use MPI
-#SBATCH --cpus-per-task=8              # Use 8 CPUs per Rosetta job
+#SBATCH --cpus-per-task=4              # Use 4 CPUs per Rosetta job
 #SBATCH --array=1-100
 
 # Rosetta paths
