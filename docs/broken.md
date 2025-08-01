@@ -60,20 +60,23 @@ The generated issue includes:
    - Note that it was submitted using `broken.py`
 
 ### Example Issue Content
-```markdown
+The generated GitHub issue will look like this:
+
+**Title:** `[BUG] Script issue: my_failing_job.sh`
+
+**Body:**
+```
 ## Script
-```bash
 #!/bin/bash
 #SBATCH --job-name=test
 ... (full script content) ...
-```
 
 ## What happened? What should have happened?
 <!-- Describe what went wrong and what you expected to happen -->
 
 ---
-**Script path:** `/home/user/scripts/my_failing_job.sh`
-**Submitted using:** `broken.py`
+Script path: /home/user/scripts/my_failing_job.sh
+Submitted using: broken.py
 ```
 
 ## When to Use This Tool
