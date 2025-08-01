@@ -43,7 +43,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 | Component | Cacao (Old Cluster) | HIVE (New Cluster) |
 |-----------|-------------------|-------------------|
 | **Storage Path** | `/share/siegellab/` | `/quobyte/jbsiegelgrp/` |
-| **Home Directory Size** | Larger | 20GB limit |
+| **Home Directory Size** | 1GB limit | 20GB limit |
 | **Shell Config** | `.bash_profile` | `.bashrc` (with minimal `.bash_profile`) |
 | **Conda/Python** | Local installations (~/miniconda3, etc.) | `module load conda/latest` |
 | **CUDA** | Various local installations | `module load cuda/12.6.2` |
