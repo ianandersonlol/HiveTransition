@@ -2,39 +2,25 @@
 
 This repository contains scripts to help migrate from the old HPC cluster to the new HIVE cluster at UC Davis.
 
-## Quick Start
+## Table of Contents
 
-**IMPORTANT**: Run these scripts from your old cluster (cacao/barbera), NOT from HIVE!
-
-1. **Clone this repository on your old cluster:**
-   ```bash
-   # SSH to cacao or barbera first
-   ssh username@cacao.genomecenter.ucdavis.edu
-   # OR
-   ssh username@barbera.genomecenter.ucdavis.edu
-   
-   # Then clone the repo
-   git clone https://github.com/ianandersonlol/HiveTransition.git
-   cd HiveTransition
-   ```
-
-2. **Migrate your shell configuration:**
-   ```bash
-   python bash_profile_migration.py <ssh_username> <quobyte_dir>
-   ```
-
-3. **Fix your job scripts:**
-   ```bash
-   python colab_fix.py my_colabfold_job.sh      # For ColabFold
-   python ligandmpnn_fix.py my_ligandmpnn_job.sh # For LigandMPNN
-   python rfdiffusion_fix.py my_rfdiff_job.sh    # For RFdiffusion
-   python rosetta_fix.py my_rosetta_job.sh       # For Rosetta
-   ```
-
-   **Or update all paths at once (no SLURM changes):**
-   ```bash
-   python pathMigrator.py /path/to/scripts        # Update all software paths
-   ```
+- [HIVE vs Cacao Comparison](#hive-vs-cacao-comparison)
+  - [Key Differences Between Clusters](#key-differences-between-clusters)
+  - [Software Locations](#software-locations)
+  - [Storage Management](#storage-management)
+  - [SLURM Changes](#slurm-changes)
+  - [Interactive Sessions](#interactive-sessions)
+- [Quick Start](#quick-start)
+- [Available Scripts](#available-scripts)
+- [Common Migration Tasks](#common-migration-tasks)
+  - [Setting Up Your Environment](#setting-up-your-environment)
+  - [Migrating Job Scripts](#migrating-job-scripts)
+  - [Interactive Sessions](#interactive-sessions-1)
+- [Important Notes](#important-notes)
+- [Troubleshooting](#troubleshooting)
+- [File Structure](#file-structure)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
 
 ## HIVE vs Cacao Comparison
 
@@ -82,7 +68,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 | **GPU Jobs** | `#SBATCH -p jbsiegel-gpu` | `#SBATCH -p gpu-a100`<br>`#SBATCH --account=genome-center-grp` |
 | **CPU Jobs** | `#SBATCH -p production` | `#SBATCH -p low` (default) or<br>`#SBATCH -p high` (long jobs) |
 | **Low Priority** | N/A | `#SBATCH --requeue` (auto-requeue if preempted) |
-| **Time Limits** | Flexible | `low`: 3 days max<br>`high`: 30 days max |
+| **Time Limits** | 30 days max | `low`: 3 days max<br>`high`: 30 days max |
 
 ### Interactive Sessions
 
@@ -95,6 +81,39 @@ The bash_profile_migration.py script adds these convenient aliases for requestin
 | `sandboxgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | high |
 | `sandboxlowgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | low |
 
+## Quick Start
+
+**IMPORTANT**: Run these scripts from your old cluster (cacao/barbera), NOT from HIVE!
+
+1. **Clone this repository on your old cluster:**
+   ```bash
+   # SSH to cacao or barbera first
+   ssh username@cacao.genomecenter.ucdavis.edu
+   # OR
+   ssh username@barbera.genomecenter.ucdavis.edu
+   
+   # Then clone the repo
+   git clone https://github.com/ianandersonlol/HiveTransition.git
+   cd HiveTransition
+   ```
+
+2. **Migrate your shell configuration:**
+   ```bash
+   python bash_profile_migration.py <ssh_username> <quobyte_dir>
+   ```
+
+3. **Fix your job scripts:**
+   ```bash
+   python colab_fix.py my_colabfold_job.sh      # For ColabFold
+   python ligandmpnn_fix.py my_ligandmpnn_job.sh # For LigandMPNN
+   python rfdiffusion_fix.py my_rfdiff_job.sh    # For RFdiffusion
+   python rosetta_fix.py my_rosetta_job.sh       # For Rosetta
+   ```
+
+   **Or update all paths at once (no SLURM changes):**
+   ```bash
+   python pathMigrator.py /path/to/scripts        # Update all software paths
+   ```
 
 ## Available Scripts
 
