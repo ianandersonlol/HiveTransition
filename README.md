@@ -31,6 +31,11 @@ This repository contains scripts to help migrate from the old HPC cluster to the
    python rosetta_fix.py my_rosetta_job.sh       # For Rosetta
    ```
 
+   **Or update all paths at once (no SLURM changes):**
+   ```bash
+   python pathMigrator.py /path/to/scripts        # Update all software paths
+   ```
+
 ## Overview
 
 The migration to HIVE involves several key changes:
@@ -58,7 +63,16 @@ The migration to HIVE involves several key changes:
 
 ## Available Scripts
 
-### 1. bash_profile_migration.py
+### 1. pathMigrator.py (Comprehensive Path Migration)
+Updates ALL software paths in a directory:
+- Combines path fixes from all other scripts
+- Does NOT modify SLURM settings
+- Can process entire directories at once
+- Includes all software: ColabFold, LigandMPNN, RFdiffusion, Rosetta
+
+**[Full Documentation](docs/pathMigrator.md)**
+
+### 2. bash_profile_migration.py
 Migrates your shell configuration to HIVE:
 - Converts `.bash_profile` to `.bashrc`
 - Sets up conda in quobyte directory
@@ -67,7 +81,7 @@ Migrates your shell configuration to HIVE:
 
 **[Full Documentation](docs/bash_profile_migration.md)**
 
-### 2. colab_fix.py
+### 3. colab_fix.py
 Updates ColabFold scripts:
 - Fixes ColabFold installation path
 - Updates GPU partition settings
@@ -75,7 +89,7 @@ Updates ColabFold scripts:
 
 **[Full Documentation](docs/colab_fix.md)**
 
-### 3. ligandmpnn_fix.py
+### 4. ligandmpnn_fix.py
 Updates LigandMPNN scripts:
 - Fixes LigandMPNN installation path
 - Updates GPU partition settings
@@ -83,7 +97,7 @@ Updates LigandMPNN scripts:
 
 **[Full Documentation](docs/ligandmpnn_fix.md)**
 
-### 4. rfdiffusion_fix.py
+### 5. rfdiffusion_fix.py
 Updates RFdiffusion scripts:
 - Standardizes RFdiffusion installation path
 - Updates conda environment to shared SE3nv
@@ -91,7 +105,7 @@ Updates RFdiffusion scripts:
 
 **[Full Documentation](docs/rfdiffusion_fix.md)**
 
-### 5. rosetta_fix.py
+### 6. rosetta_fix.py
 Updates Rosetta scripts:
 - Migrates to Rosetta 3.14
 - Changes binary names (`.default.` → `.static.`)
@@ -100,7 +114,7 @@ Updates Rosetta scripts:
 
 **[Full Documentation](docs/rosetta_fix.md)**
 
-### 6. broken.py
+### 7. broken.py
 Reports issues with scripts:
 - Generates GitHub issue URL
 - Pre-fills script content
@@ -224,13 +238,15 @@ If you find issues or have improvements:
 ```
 HiveTransition/
 ├── README.md                    # This file
+├── pathMigrator.py             # Comprehensive path migration (all software)
 ├── bash_profile_migration.py    # Shell config migration
-├── colab_fix.py                # ColabFold script fixer
-├── ligandmpnn_fix.py           # LigandMPNN script fixer
-├── rfdiffusion_fix.py          # RFdiffusion script fixer
-├── rosetta_fix.py              # Rosetta script fixer
+├── colab_fix.py                # ColabFold script fixer (with SLURM)
+├── ligandmpnn_fix.py           # LigandMPNN script fixer (with SLURM)
+├── rfdiffusion_fix.py          # RFdiffusion script fixer (with SLURM)
+├── rosetta_fix.py              # Rosetta script fixer (with SLURM)
 ├── broken.py                   # Issue reporter
 ├── docs/                       # Detailed documentation
+│   ├── pathMigrator.md
 │   ├── bash_profile_migration.md
 │   ├── colab_fix.md
 │   ├── ligandmpnn_fix.md
