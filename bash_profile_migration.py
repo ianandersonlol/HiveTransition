@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
 import argparse
 import os
@@ -77,7 +78,7 @@ def process_bash_profile(source_path: Path, username: str, quobyte_dir: str, ver
         'sandboxlowgpu': "alias sandboxlowgpu='srun -p low --gres=gpu:a6000:1 --cpus-per-task=8 --mem=16G --time=1-00:00:00 --pty bash'"
     }
     
-    with open(source_path, 'r') as f:
+    with open(source_path, 'r', encoding='utf-8') as f:
         lines = f.readlines()
 
     new_lines = []
@@ -291,17 +292,17 @@ def main():
     
     try:
         # Create temporary .bashrc
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='bashrc_hive_', dir='/tmp') as tmp:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='bashrc_hive_', dir='/tmp', encoding='utf-8') as tmp:
             tmp.write(new_bashrc_contents)
             bashrc_tmp = Path(tmp.name)
 
         # Create temporary .bash_profile
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='bash_profile_hive_', dir='/tmp') as tmp:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='bash_profile_hive_', dir='/tmp', encoding='utf-8') as tmp:
             tmp.write(create_simple_bash_profile())
             bash_profile_tmp = Path(tmp.name)
 
         # Create temporary .condarc
-        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='condarc_hive_', dir='/tmp') as tmp:
+        with tempfile.NamedTemporaryFile(mode='w+', delete=False, prefix='condarc_hive_', dir='/tmp', encoding='utf-8') as tmp:
             tmp.write(create_condarc(args.quobyte_dir))
             condarc_tmp = Path(tmp.name)
 
@@ -352,29 +353,29 @@ def main():
     # Print summary
     print("\n=== Migration Summary ===")
     if conda_found:
-        print("✓ Conda/Miniconda setup was found and removed, replaced with cluster modules")
+        print("[✓] Conda/Miniconda setup was found and removed, replaced with cluster modules")
         print("  - Added: module load conda/latest")
         print("  - Added: module load cuda/12.6.2")
     
     if module_comment_made:
-        print("✓ Some 'module load' commands were commented out")
+        print("[✓] Some 'module load' commands were commented out")
         print("  Use 'module avail <module_name>' on hive to find replacements")
     
-    print("✓ Added conda configuration for limited home storage:")
+    print("[✓] Added conda configuration for limited home storage:")
     print(f"  - Conda packages: /quobyte/jbsiegelgrp/{args.quobyte_dir}/.conda/pkgs")
     print(f"  - Conda environments: /quobyte/jbsiegelgrp/{args.quobyte_dir}/.conda/envs")
     print(f"  - Pip cache: /quobyte/jbsiegelgrp/{args.quobyte_dir}/.cache/pip")
     print("  - Created .condarc to prevent pip conflicts")
     
-    print("\n✓ Added interactive session aliases:")
+    print("\n[✓] Added interactive session aliases:")
     print("  - sandbox: 8 CPU, 16GB RAM, 1 day, high partition")
     print("  - sandboxlow: 16 CPU, 32GB RAM, 1 day, low partition")
     print("  - sandboxgpu: 8 CPU, 16GB RAM, 1 GPU (A6000), 1 day, high partition")
     print("  - sandboxlowgpu: 8 CPU, 16GB RAM, 1 GPU (A6000), 1 day, low partition")
     
-    print("\n✓ Created simple .bash_profile that sources .bashrc")
-    print("✓ Replaced /share/siegellab/ paths with /quobyte/jbsiegelgrp/")
-    print("✓ Replaced hardcoded usernames with $USER variable (except in filepaths)")
+    print("\n[✓] Created simple .bash_profile that sources .bashrc")
+    print("[✓] Replaced /share/siegellab/ paths with /quobyte/jbsiegelgrp/")
+    print("[✓] Replaced hardcoded usernames with $USER variable (except in filepaths)")
     
     print("\nNext steps:")
     print("1. Log into hive.hpc.ucdavis.edu")
