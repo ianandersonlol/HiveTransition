@@ -14,21 +14,15 @@ def fix_rosetta_paths(content):
     """Fix Rosetta installation paths and binary names."""
     changes = []
     
-    # First, replace the base Rosetta path
     old_rosetta_base = '/share/siegellab/software/kschu/Rosetta/main'
     new_rosetta_base = '/quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main'
-    
-    # Count base path replacements
     base_count = content.count(old_rosetta_base)
     if base_count > 0:
         content = content.replace(old_rosetta_base, new_rosetta_base)
         changes.append(f"Updated Rosetta base path ({base_count} occurrences): {old_rosetta_base} -> {new_rosetta_base}")
     
-    # Now fix the binary names from default.linuxgccrelease to static.linuxgccrelease
-    # Pattern to match Rosetta binaries with .default.linuxgccrelease extension
     pattern = r'(\w+)\.default\.linuxgccrelease'
     
-    # Find all matches
     matches = re.findall(pattern, content)
     if matches:
         unique_binaries = list(set(matches))
@@ -38,8 +32,6 @@ def fix_rosetta_paths(content):
             content = content.replace(old_binary, new_binary)
             changes.append(f"Updated Rosetta binary: {old_binary} -> {new_binary}")
     
-    # Also check for any other Rosetta paths that might not follow the exact pattern
-    # Look for other common Rosetta installation locations
     other_rosetta_patterns = [
         r'/home/[^/]+/[Rr]osetta',
         r'/opt/[Rr]osetta',
@@ -48,7 +40,6 @@ def fix_rosetta_paths(content):
         r'\$\{ROSETTA3?\}/main',
     ]
     
-    # Check if any of these patterns exist (but not the ones we already fixed)
     for pattern in other_rosetta_patterns:
         if re.search(pattern, content):
             changes.append(f"WARNING: Found potential Rosetta path pattern '{pattern}' that may need manual review")
@@ -58,13 +49,10 @@ def fix_rosetta_paths(content):
 
 def parse_time_to_days(time_str):
     """Parse SLURM time format to days."""
-    # Handle various time formats: D-HH:MM:SS, HH:MM:SS, MM:SS, etc.
     if '-' in time_str:
-        # Format: D-HH:MM:SS
         days, time_part = time_str.split('-', 1)
         return int(days)
     else:
-        # Format: HH:MM:SS or MM:SS
         parts = time_str.split(':')
         if len(parts) >= 1:
             hours = int(parts[0])
@@ -86,15 +74,12 @@ def fix_slurm_flags(content, use_high_partition=False):
     for line in lines:
         original_line = line
         
-        # Check if this is an sbatch line
         if line.strip().startswith('#SBATCH'):
-            # Fix partition from production to low/high
-            elif '--partition=production' in line or '-p production' in line:
+            if '--partition=production' in line or '-p production' in line:
                 line = re.sub(r'--partition=production', f'--partition={target_partition}', line)
                 line = re.sub(r'-p production', f'-p {target_partition}', line)
                 changes.append(f"Updated partition: production -> {target_partition}")
             
-            # Also check for GPU partitions that shouldn't be there
             elif '--partition=jbsiegel-gpu' in line or '-p jbsiegel-gpu' in line:
                 line = re.sub(r'--partition=jbsiegel-gpu', f'--partition={target_partition}', line)
                 line = re.sub(r'-p jbsiegel-gpu', f'-p {target_partition}', line)
@@ -104,13 +89,11 @@ def fix_slurm_flags(content, use_high_partition=False):
                 line = re.sub(r'-p gpu-a100', f'-p {target_partition}', line)
                 changes.append(f"Updated partition: gpu-a100 -> {target_partition} (Rosetta doesn't need GPUs)")
             
-            # Check time limits
             elif (time_match := re.search(r'--time=([^\s]+)', line) or re.search(r'-t\s+([^\s]+)', line)):
                 if target_partition == 'low':
                     time_str = time_match.group(1)
                     days = parse_time_to_days(time_str)
                     if days > 3:
-                        # Replace with 3 days
                         line = re.sub(r'--time=[^\s]+', '--time=3-00:00:00', line)
                         line = re.sub(r'-t\s+[^\s]+', '-t 3-00:00:00', line)
                         time_adjusted = True
@@ -118,16 +101,13 @@ def fix_slurm_flags(content, use_high_partition=False):
         
         modified_lines.append(line)
     
-    # Add requeue for low partition if not already present
     if target_partition == 'low':
         content_check = '\n'.join(modified_lines)
         if '--requeue' not in content_check:
-            # Find where to add requeue
             final_lines = []
             for i, line in enumerate(modified_lines):
                 final_lines.append(line)
                 if line.strip().startswith('#SBATCH') and not requeue_added:
-                    # Look ahead to see if there are more #SBATCH lines
                     has_more_sbatch = any(l.strip().startswith('#SBATCH') for l in modified_lines[i+1:])
                     if not has_more_sbatch:
                         final_lines.append('#SBATCH --requeue')
@@ -142,19 +122,15 @@ def fix_hardcoded_paths(content):
     """Replace hardcoded paths from /share/siegellab/ to /quobyte/jbsiegelgrp/."""
     changes = []
     
-    # Only replace the base path, keeping everything after it
     old_base = '/share/siegellab/'
     new_base = '/quobyte/jbsiegelgrp/'
     
-    # Count occurrences for reporting (excluding the Rosetta paths we already handled)
-    # We need to count only the non-Rosetta paths
     temp_content = content.replace('/share/siegellab/software/kschu/Rosetta', 'TEMP_ROSETTA_MARKER')
     count = temp_content.count(old_base)
     
     if count > 0:
         changes.append(f"Updated {count} occurrence(s) of {old_base} to {new_base} (non-Rosetta paths)")
     
-    # Simple replacement - this preserves everything after the base path
     content = content.replace(old_base, new_base)
     
     return content, changes
@@ -166,7 +142,6 @@ def process_script(filename, use_high_partition=False):
         print(f"Error: File '{filename}' not found.")
         return False
     
-    # Read the original file
     try:
         with open(filename, 'r') as f:
             original_content = f.read()
@@ -177,24 +152,20 @@ def process_script(filename, use_high_partition=False):
     content = original_content
     all_changes = []
     
-    # Apply Rosetta fixes first (before general path fixes)
     content, rosetta_changes = fix_rosetta_paths(content)
     all_changes.extend(rosetta_changes)
     
     content, slurm_changes, time_adjusted = fix_slurm_flags(content, use_high_partition)
     all_changes.extend(slurm_changes)
     
-    # Apply general path fixes last
     content, hardcoded_changes = fix_hardcoded_paths(content)
     all_changes.extend(hardcoded_changes)
     
-    # Generate output filename
     path = Path(filename)
     stem = path.stem
     suffix = path.suffix
     output_filename = str(path.parent / f"{stem}_fixed{suffix}")
     
-    # Write the fixed content
     try:
         with open(output_filename, 'w') as f:
             f.write(content)
@@ -202,7 +173,6 @@ def process_script(filename, use_high_partition=False):
         print(f"Error writing file '{output_filename}': {e}")
         return False
     
-    # Show summary
     print(f"Processing complete!")
     print(f"Input file: {filename}")
     print(f"Output file: {output_filename}")
@@ -214,12 +184,10 @@ def process_script(filename, use_high_partition=False):
     else:
         print("  No changes were needed.")
     
-    # Additional note about Rosetta version
     if any('Rosetta' in change for change in all_changes):
         print("\nNOTE: This script has updated to Rosetta 3.14 (Rosetta_314).")
         print("      Binary names have been changed from .default.linuxgccrelease to .static.linuxgccrelease")
     
-    # Note about time adjustment
     if time_adjusted:
         print("\nWARNING: Time limit was adjusted to 3 days (maximum for low partition).")
         print("         Consider using --high flag for longer jobs (up to 30 days).")
@@ -229,7 +197,6 @@ def process_script(filename, use_high_partition=False):
 
 def main():
     """Main function."""
-    # Check for --high flag
     use_high = '--high' in sys.argv
     if use_high:
         sys.argv.remove('--high')
