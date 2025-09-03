@@ -19,8 +19,10 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Important Notes](#important-notes)
 - [Troubleshooting](#troubleshooting)
 - [File Structure](#file-structure)
-- [License](#license)
 - [Example Scripts](#Example-scripts)
+   - [Colabfold](#colabfold)
+   - [Chai](#run_chai.py)
+   - [Chai with MSA](#chai_with_msa.py)
 
 ## HIVE vs Cacao Comparison
 
