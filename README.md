@@ -20,7 +20,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Troubleshooting](#troubleshooting)
 - [File Structure](#file-structure)
 - [License](#license)
-- [Acknowledgments](#acknowledgments)
+- [Example Scripts](#Example-scripts)
 
 ## HIVE vs Cacao Comparison
 
@@ -315,14 +315,6 @@ HiveTransition/
     └── ISSUE_TEMPLATE/
         └── script_not_working.md
 ```
-
-## License
-
-This project is provided as-is 
-
-## Acknowledgments
-
-Created to facilitate the transition to the HIVE cluster for the Siegel Lab and affiliated researchers.
 
 ## Example Scripts
 
