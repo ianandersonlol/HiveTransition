@@ -323,3 +323,13 @@ This project is provided as-is
 ## Acknowledgments
 
 Created to facilitate the transition to the HIVE cluster for the Siegel Lab and affiliated researchers.
+
+## Example Scripts
+
+This project includes example scripts to demonstrate how to run common bioinformatics tools in a cluster environment.
+
+### ColabFold
+
+-   **Script:** `example_scripts/colabfold.sh`
+-   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
+-   **[Full Documentation](docs/colabfold.md)**
