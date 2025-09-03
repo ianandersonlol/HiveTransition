@@ -180,6 +180,17 @@ Reports issues with scripts:
 
 **[Full Documentation](docs/broken.md)**
 
+### 8. run_chai.py
+This script performs protein structure prediction using the `chai_lab` library. It takes a FASTA file containing the protein sequence as input and generates a PDB file with the predicted structure.
+
+**[Full Documentation](docs/run_chai.md)**
+
+### 9. chai_with_msa.py
+This script performs protein structure prediction using the `chai_lab` library with support for Multiple Sequence Alignments (MSAs). It can use either a pre-computed MSA or an MSA server (ColabFold's MMseqs2).
+
+**[Full Documentation](docs/chai_with_msa.md)**
+
+
 ## Common Migration Tasks
 
 ### Setting Up Your Environment
@@ -311,6 +322,8 @@ HiveTransition/
 │   ├── rfdiffusion_fix.md
 │   ├── rosetta_fix.md
 │   └── broken.md
+│   ├── run_chai.md
+│   └── chai_with_msa.md
 └── .github/
     └── ISSUE_TEMPLATE/
         └── script_not_working.md
@@ -325,3 +338,13 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/colabfold.sh`
 -   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/colabfold.md)**
+
+### Chai
+
+-   **Script:** `example_scripts/run_chai.py`
+-   **Description:** A script to run protein structure prediction using the `chai_lab` library.
+-   **[Full Documentation](docs/run_chai.md)**
+
+-   **Script:** `example_scripts/chai_with_msa.py`
+-   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
+-   **[Full Documentation](docs/chai_with_msa.md)**
