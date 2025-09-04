@@ -1,0 +1,43 @@
+<ROSETTASCRIPTS>
+  <SCOREFXNS>
+    <ScoreFunction name="myscore" weights="beta_genpot_cart.wts">
+      <Reweight scoretype="coordinate_constraint" weight="1.0"/>      
+      <Reweight scoretype="atom_pair_constraint" weight="1.0"/>
+      <Reweight scoretype="angle_constraint" weight="1.0"/>
+      <Reweight scoretype="dihedral_constraint" weight="1.0"/>
+      <Reweight scoretype="res_type_constraint" weight="1.0"/>
+    </ScoreFunction>
+    <ScoreFunction name="cstscore" weights="beta_genpot_cst.wts"/>
+
+  </SCOREFXNS>
+  <SCORINGGRIDS ligand_chain="X" width="20.0">
+    <ClassicGrid grid_name="vdw" weight="1.0"/>
+  </SCORINGGRIDS>
+  <TASKOPERATIONS>
+    <DetectProteinLigandInterface name="interface_detect" design="0" cut1="6.0" cut2="8.0" cut3="10.0" cut4="12.0"/>
+    <LimitAromaChi2 name="limchi2"/>
+    <SetCatalyticResPackBehavior name="catres" fix_catalytic_aa="0"/>
+    PreventResiduesFromRepacking name=nopacking residues=NOPACK />
+  </TASKOPERATIONS>
+  <FILTERS>
+    <EnzScore name="allcst" score_type="cstE" scorefxn="cstscore" whole_pose="1" energy_cutoff="2000"/>
+
+  </FILTERS>
+  <MOVERS>
+    <AddOrRemoveMatchCsts name="cstadd" cst_instruction="add_new"/>
+
+    <GALigandDock name="GAdock" runmode="refine" scorefxn="myscore" padding="6.0" sidechains="aniso" final_exact_minimize="bbsc2" rotprob="0.9" rotEcut="100">
+      Stage repeats="10" npool="100"/>
+      <Stage repeats="10" npool="100"/>
+    </GALigandDock>
+
+  </MOVERS>
+  <PROTOCOLS>
+    CSTON  <Add mover_name="cstadd"/>
+    Add mover="start_from"/>
+    <Add mover="GAdock"/>
+    Add mover="interative_dp"/>
+    Add mover="repack_wbb_wppi"/>
+    <Add filter="allcst"/>
+  </PROTOCOLS>
+</ROSETTASCRIPTS>

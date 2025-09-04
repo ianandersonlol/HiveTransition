@@ -1,0 +1,126 @@
+# Zn to His88
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN
+  TEMPLATE::  ATOM_MAP: 2 atom_name: NE2 CD2
+  TEMPLATE::  ATOM_MAP: 2 residue3: HIS
+  CONSTRAINT::  distanceAB: 2.0	0.3 500.0 0
+  CONSTRAINT::  angle_B: 120.0 5.0 50.0 180 
+CST::END
+
+# Zn to His257
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN
+  TEMPLATE::  ATOM_MAP: 2 atom_name: ND1 CG
+  TEMPLATE::  ATOM_MAP: 2 residue3: HIS
+  CONSTRAINT::  distanceAB: 2.0	0.3 500.0 0
+  CONSTRAINT::  angle_B: 120.0 5.0 50.0 180 
+CST::END
+
+# Zn to Glu171
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN 
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OE2 CD
+  TEMPLATE::  ATOM_MAP: 2 residue3: GLU
+  CONSTRAINT::  distanceAB: 2.0	0.3 500.0 0
+  CONSTRAINT::  angle_B: 158.8 5.0 50.0 180 
+CST::END
+
+
+# Sugar to Asp 87 OD1
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: O3 C2 C3
+  TEMPLATE::  ATOM_MAP: 1 residue3: DF6  
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OD2 CG CB
+  TEMPLATE::  ATOM_MAP: 2 residue3: ASP
+  CONSTRAINT::  distanceAB: 2.7 0.3 500.0 0
+  CONSTRAINT::  angle_A: 120 10 50.0 180  
+  CONSTRAINT::  angle_B: 109 10 50.0 180 
+  CONSTRAINT::  torsion_B: 180 10 50.0 360
+CST::END
+
+# Sugar O8 to Thr46
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: O8 P O5
+  TEMPLATE::  ATOM_MAP: 1 residue3: DF6
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OG1
+  TEMPLATE::  ATOM_MAP: 2 residue3: THR
+  CONSTRAINT::  distanceAB: 3.0 0.5 500.0 0
+#  CONSTRAINT::  angle_A: 120.9 10.0 50.0 180
+#  CONSTRAINT::  torsion_AB: 153.2 10 50.0 360
+CST::END
+
+# Sugar O7 to Tyr 56 OH
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: O7 P O5
+  TEMPLATE::  ATOM_MAP: 1 residue3: DF6
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OH
+  TEMPLATE::  ATOM_MAP: 2 residue3: TYR
+  CONSTRAINT::  distanceAB: 3.0 0.5 500.0 0
+#  CONSTRAINT::  angle_A: 145 10.0 50.0 180
+#  CONSTRAINT::  torsion_A: 180 30 50.0 360
+CST::END
+
+# Sugar O6 to Tyr351  OH
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: O6 P O5
+  TEMPLATE::  ATOM_MAP: 1 residue3: DF6
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OH
+  TEMPLATE::  ATOM_MAP: 2 residue3: TYR
+  CONSTRAINT::  distanceAB: 3.0 0.5 500.0 0
+#CONSTRAINT::  angle_A: 145 10.0 50.0 180
+#  CONSTRAINT::  torsion_A: 180 30 50.0 360
+CST::END
+
+
+# Zn to Sugar
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN
+  TEMPLATE::  ATOM_MAP: 2 atom_name: O2 
+  TEMPLATE::  ATOM_MAP: 2 residue3: DF6
+  CONSTRAINT::  distanceAB: 3.0	0.5 500.0 0
+CST::END
+
+# Zn to Sugar
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN 
+  TEMPLATE::  ATOM_MAP: 2 atom_name: O 
+  TEMPLATE::  ATOM_MAP: 2 residue3: DF6
+  CONSTRAINT::  distanceAB: 3.0	0.5 500.0 0
+CST::END
+
+# Zn to Sugar
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: ZN
+  TEMPLATE::  ATOM_MAP: 1 residue3: ZN 
+  TEMPLATE::  ATOM_MAP: 2 atom_name: O3
+  TEMPLATE::  ATOM_MAP: 2 residue3: DF6
+  CONSTRAINT::  distanceAB: 3.0	0.5 500.0 0
+CST::END
+
+
+# Glu44 to Lys 279
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: OE2
+  TEMPLATE::  ATOM_MAP: 1 residue3: GLU
+  TEMPLATE::  ATOM_MAP: 2 atom_name: NZ
+  TEMPLATE::  ATOM_MAP: 2 residue3: LYS
+  CONSTRAINT::  distanceAB: 3.0 0.5 500.0 0
+CST::END
+
+# Cys20 to Asp 87 OD2
+CST::BEGIN
+  TEMPLATE::  ATOM_MAP: 1 atom_name: SG
+  TEMPLATE::  ATOM_MAP: 1 residue3: CYS 
+  TEMPLATE::  ATOM_MAP: 2 atom_name: OD2 CG CB
+  TEMPLATE::  ATOM_MAP: 2 residue3: ASP
+  CONSTRAINT::  distanceAB: 2.7 0.3 500.0 0
+CST::END
+
+
+
+
