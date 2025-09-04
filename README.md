@@ -19,10 +19,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Important Notes](#important-notes)
 - [Troubleshooting](#troubleshooting)
 - [File Structure](#file-structure)
-- [Example Scripts](#Example-scripts)
-   - [Colabfold](#colabfold)
-   - [Chai](#run_chai.py)
-   - [Chai with MSA](#chai_with_msa.py)
+- [Example Scripts](#example-scripts)
 
 ## HIVE vs Cacao Comparison
 
@@ -182,21 +179,6 @@ Reports issues with scripts:
 
 **[Full Documentation](docs/broken.md)**
 
-### 8. run_chai.py
-This script performs protein structure prediction using the `chai_lab` library. It takes a FASTA file containing the protein sequence as input and generates a PDB file with the predicted structure.
-
-**[Full Documentation](docs/run_chai.md)**
-
-### 9. chai_with_msa.py
-This script performs protein structure prediction using the `chai_lab` library with support for Multiple Sequence Alignments (MSAs). It can use either a pre-computed MSA or an MSA server (ColabFold's MMseqs2).
-
-**[Full Documentation](docs/chai_with_msa.md)**
-
-### 10. submit_chai.sh & submit_chai_with_msa.sh
-These scripts are used to submit ChAI jobs to a SLURM cluster. They handle the setup of the environment and the execution of the ChAI python scripts.
-
-**[Full Documentation](docs/submit_chai.md)**
-
 
 ## Common Migration Tasks
 
@@ -329,9 +311,6 @@ HiveTransition/
 │   ├── rfdiffusion_fix.md
 │   ├── rosetta_fix.md
 │   └── broken.md
-│   ├── run_chai.md
-│   ├── chai_with_msa.md
-│   └── submit_chai.md
 └── .github/
     └── ISSUE_TEMPLATE/
         └── script_not_working.md
