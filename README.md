@@ -328,14 +328,17 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 ### Chai
 
+#### run_chai.py
 -   **Script:** `example_scripts/run_chai.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library.
 -   **[Full Documentation](docs/run_chai.md)**
 
+#### chai_with_msa.py
 -   **Script:** `example_scripts/chai_with_msa.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
 -   **[Full Documentation](docs/chai_with_msa.md)**
 
+#### submit_chai.sh & submit_chai_with_msa.sh
 -   **Scripts:** `example_scripts/submit_chai.sh`, `example_scripts/submit_chai_with_msa.sh`
 -   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
 -   **[Full Documentation](docs/submit_chai.md)**
