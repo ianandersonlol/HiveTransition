@@ -392,16 +392,16 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 -   **Script:** `example_scripts/design/LigandMPNN/submit_ligandMPNN.sh`
 -   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
--   **[Full Documentation](docs/ligandmpnn.md)
+-   **[Full Documentation](docs/ligandmpnn.md)**
 
 ### GaliGand Dock
 
 -   **Script:** `example_scripts/docking/galigand_dock/submit.sh`
 -   **Description:** A SLURM submission script for running the GaliGand docking protocol. It is pre-configured with resource requests and sets up the necessary environment.
--   **[Full Documentation](docs/galigand_dock.md)`
+-   **[Full Documentation](docs/galigand_dock.md)**
 
 ### Relaxation
 
 -   **Script:** `example_scripts/docking/relaxation/relax.sh`
 -   **Description:** A SLURM submission script for running Rosetta relaxation. It is pre-configured with resource requests and sets up the necessary environment.
--   **[Full Documentation](docs/relax.md)`**
+-   **[Full Documentation](docs/relax.md)**
