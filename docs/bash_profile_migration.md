@@ -1,3 +1,5 @@
+[View Script: bash_profile_migration.py](../../bash_profile_migration.py)
+
 # Bash Profile Migration Script
 
 ## Overview

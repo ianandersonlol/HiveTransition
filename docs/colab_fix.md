@@ -1,3 +1,5 @@
+[View Script: colab_fix.py](../../colab_fix.py)
+
 # ColabFold Script Migration
 
 ## Overview

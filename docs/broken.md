@@ -1,3 +1,5 @@
+[View Script: broken.py](../../broken.py)
+
 # Broken Script Reporter
 
 ## Overview

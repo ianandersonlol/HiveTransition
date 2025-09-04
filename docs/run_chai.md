@@ -1,3 +1,5 @@
+[View Script: run_chai.py](../../example_scripts/run_chai.py)
+
 # `run_chai.py`
 
 This script performs protein structure prediction using the `chai_lab` library. It takes a FASTA file containing the protein sequence as input and generates a PDB file with the predicted structure.

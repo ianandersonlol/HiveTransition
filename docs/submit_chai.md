@@ -1,3 +1,6 @@
+[View Script: submit_chai.sh](../../example_scripts/submit_chai.sh)
+[View Script: submit_chai_with_msa.sh](../../example_scripts/submit_chai_with_msa.sh)
+
 # Submitting ChAI Jobs
 
 The `submit_chai.sh` and `submit_chai_with_msa.sh` scripts are used to submit ChAI jobs to a SLURM cluster. These scripts handle the setup of the environment and the execution of the ChAI python scripts.

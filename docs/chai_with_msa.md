@@ -1,3 +1,6 @@
+[View Script: chai_with_msa.py](../../example_scripts/chai_with_msa.py)
+[View Script: submit_chai_with_msa.sh](../../example_scripts/submit_chai_with_msa.sh)
+
 # `chai_with_msa.py`
 
 This script performs protein structure prediction using the `chai_lab` library with support for Multiple Sequence Alignments (MSAs). It can use either a pre-computed MSA or an MSA server (ColabFold's MMseqs2).

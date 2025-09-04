@@ -1,3 +1,5 @@
+[View Script: pathMigrator.py](../../pathMigrator.py)
+
 # Path Migrator - Comprehensive Software Path Migration
 
 ## ⚠️ WARNING: RECURSIVE DIRECTORY PROCESSING

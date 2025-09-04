@@ -1,3 +1,5 @@
+[View Script: colabfold.sh](../../example_scripts/colabfold.sh)
+
 # ColabFold SLURM Submission Script
 
 This document provides a detailed explanation of the `colabfold.sh` script located in the `example_scripts` directory.
