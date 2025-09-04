@@ -1,5 +1,5 @@
-[View Script: chai_with_msa.py](../example_scripts/chai_with_msa.py)
-[View Script: submit_chai_with_msa.sh](../example_scripts/submit_chai_with_msa.sh)
+[View Script: chai_with_msa.py](../example_scripts/folding/Chai/chai_with_msa.py)
+[View Script: submit_chai_with_msa.sh](../example_scripts/folding/Chai/submit_chai_with_msa.sh)
 
 # `chai_with_msa.py`
 

@@ -1,4 +1,4 @@
-[View Script: colabfold.sh](../example_scripts/colabfold.sh)
+[View Script: colabfold.sh](../example_scripts/folding/Alphafold2/colabfold.sh)
 
 # ColabFold SLURM Submission Script
 

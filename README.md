@@ -330,29 +330,29 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 ### ColabFold
 
--   **Script:** `example_scripts/colabfold.sh`
+-   **Script:** `example_scripts/folding/Alphafold2/colabfold.sh`
 -   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/colabfold.md)**
 
 ### Chai
 
 #### run_chai.py
--   **Script:** `example_scripts/run_chai.py`
+-   **Script:** `example_scripts/folding/Chai/run_chai.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library.
 -   **[Full Documentation](docs/run_chai.md)**
 
 #### chai_with_msa.py
--   **Script:** `example_scripts/chai_with_msa.py`
+-   **Script:** `example_scripts/folding/Chai/chai_with_msa.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
 -   **[Full Documentation](docs/chai_with_msa.md)**
 
 #### submit_chai.sh & submit_chai_with_msa.sh
--   **Scripts:** `example_scripts/submit_chai.sh`, `example_scripts/submit_chai_with_msa.sh`
+-   **Scripts:** `example_scripts/folding/Chai/submit_chai.sh`, `example_scripts/folding/Chai/submit_chai_with_msa.sh`
 -   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
 -   **[Full Documentation](docs/submit_chai.md)**
 
 ### LigandMPNN
 
--   **Script:** `example_scripts/submit_ligandMPNN.sh`
+-   **Script:** `example_scripts/design/LigandMPNN/submit_ligandMPNN.sh`
 -   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/ligandmpnn.md)**
