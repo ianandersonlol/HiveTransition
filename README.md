@@ -360,3 +360,9 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Scripts:** `example_scripts/submit_chai.sh`, `example_scripts/submit_chai_with_msa.sh`
 -   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
 -   **[Full Documentation](docs/submit_chai.md)**
+
+### LigandMPNN
+
+-   **Script:** `example_scripts/submit_ligandMPNN.sh`
+-   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
+-   **[Full Documentation](docs/ligandmpnn.md)**
