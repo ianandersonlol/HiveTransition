@@ -172,6 +172,13 @@ Updates RFdiffusion scripts:
 
 **[Full Documentation](docs/rfdiffusion_fix.md)**
 
+### 8. rf_diffusion_aa.sh
+Example script for running RFdiffusion for amino acid design:
+- Demonstrates how to set up and run RFdiffusion jobs on a SLURM cluster.
+- Configurable parameters for protein design tasks.
+
+**[Full Documentation](docs/rf_diffusion_aa.md)**
+
 ### 6. rosetta_fix.py
 Updates Rosetta scripts:
 - Migrates to Rosetta 3.14
@@ -337,6 +344,8 @@ If you find issues or have improvements:
 │   └───submit_chai.md
 └───example_scripts/
     ├───design/
+    │   ├───Diffusion/
+    │   │   └───rf_diffusion_aa.sh
     │   └───LigandMPNN/
     │       └───submit_ligandMPNN.sh
     ├───docking/
@@ -388,11 +397,15 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 ### LigandMPNN
 
-### LigandMPNN
-
 -   **Script:** `example_scripts/design/LigandMPNN/submit_ligandMPNN.sh`
 -   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/ligandmpnn.md)**
+
+### RFdiffusion
+
+-   **Script:** `example_scripts/design/Diffusion/rf_diffusion_aa.sh`
+-   **Description:** A SLURM submission script for running RFdiffusion for *de novo* protein design. It is pre-configured with common parameters for protein design tasks.
+-   **[Full Documentation](docs/rf_diffusion_aa.md)**
 
 ### GaliGand Dock
 
