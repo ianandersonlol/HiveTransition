@@ -29,6 +29,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
     - [submit_chai.sh & submit_chai_with_msa.sh](#submit_chaish_&_submit_chai_with_msash)
   - [LigandMPNN](#ligandmpnn)
   - [GaliGand Dock](#galigand-dock)
+  - [Relaxation](#relaxation)
 
 ## HIVE vs Cacao Comparison
 
@@ -320,6 +321,7 @@ HiveTransition/
 │   ├── rfdiffusion_fix.md
 │   ├── rosetta_fix.md
 │   ├── galigand_dock.md
+│   ├── relax.md
 │   └── broken.md
 └── .github/
     └── ISSUE_TEMPLATE/
@@ -365,4 +367,10 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 -   **Script:** `example_scripts/docking/galigand_dock/submit.sh`
 -   **Description:** A SLURM submission script for running the GaliGand docking protocol. It is pre-configured with resource requests and sets up the necessary environment.
--   **[Full Documentation](docs/galigand_dock.md)`**
+-   **[Full Documentation](docs/galigand_dock.md)`
+
+### Relaxation
+
+-   **Script:** `example_scripts/docking/relaxation/relax.sh`
+-   **Description:** A SLURM submission script for running Rosetta relaxation. It is pre-configured with resource requests and sets up the necessary environment.
+-   **[Full Documentation](docs/relax.md)`**
