@@ -11,6 +11,8 @@ This repository contains scripts to help migrate from the old HPC cluster to the
   - [SLURM Changes](#slurm-changes)
   - [Interactive Sessions](#interactive-sessions)
 - [Quick Start](#quick-start)
+  - [Step 1: Migrate Your Shell Configuration (Run from Cacao/Barbera)](#step-1-migrate-your-shell-configuration-run-from-cacaobarbera)
+  - [Step 2: Fix Your Job Scripts](#step-2-fix-your-job-scripts)
 - [Available Scripts](#available-scripts)
 - [Common Migration Tasks](#common-migration-tasks)
   - [Setting Up Your Environment](#setting-up-your-environment)
