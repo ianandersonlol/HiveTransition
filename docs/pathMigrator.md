@@ -1,4 +1,4 @@
-[View Script: pathMigrator.py](../../pathMigrator.py)
+[View Script: pathMigrator.py](../pathMigrator.py)
 
 # Path Migrator - Comprehensive Software Path Migration
 

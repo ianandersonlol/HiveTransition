@@ -1,4 +1,4 @@
-[View Script: rfdiffusion_fix.py](../../rfdiffusion_fix.py)
+[View Script: rfdiffusion_fix.py](../rfdiffusion_fix.py)
 
 # RFdiffusion Script Migration
 

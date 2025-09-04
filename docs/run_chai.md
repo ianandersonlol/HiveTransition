@@ -1,4 +1,4 @@
-[View Script: run_chai.py](../../example_scripts/run_chai.py)
+[View Script: run_chai.py](../example_scripts/run_chai.py)
 
 # `run_chai.py`
 

@@ -1,4 +1,4 @@
-[View Script: rosetta_fix.py](../../rosetta_fix.py)
+[View Script: rosetta_fix.py](../rosetta_fix.py)
 
 # Rosetta Script Migration
 

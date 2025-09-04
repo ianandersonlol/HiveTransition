@@ -1,4 +1,4 @@
-[View Script: ligandmpnn_fix.py](../../ligandmpnn_fix.py)
+[View Script: ligandmpnn_fix.py](../ligandmpnn_fix.py)
 
 # LigandMPNN Script Migration
 

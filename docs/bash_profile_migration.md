@@ -1,4 +1,4 @@
-[View Script: bash_profile_migration.py](../../bash_profile_migration.py)
+[View Script: bash_profile_migration.py](../bash_profile_migration.py)
 
 # Bash Profile Migration Script
 

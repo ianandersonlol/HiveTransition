@@ -1,4 +1,4 @@
-[View Script: submit_ligandMPNN.sh](../../example_scripts/submit_ligandMPNN.sh)
+[View Script: submit_ligandMPNN.sh](../example_scripts/submit_ligandMPNN.sh)
 
 # LigandMPNN Submission Script
 
