@@ -192,6 +192,11 @@ This script performs protein structure prediction using the `chai_lab` library w
 
 **[Full Documentation](docs/chai_with_msa.md)**
 
+### 10. submit_chai.sh & submit_chai_with_msa.sh
+These scripts are used to submit ChAI jobs to a SLURM cluster. They handle the setup of the environment and the execution of the ChAI python scripts.
+
+**[Full Documentation](docs/submit_chai.md)**
+
 
 ## Common Migration Tasks
 
@@ -325,7 +330,8 @@ HiveTransition/
 │   ├── rosetta_fix.md
 │   └── broken.md
 │   ├── run_chai.md
-│   └── chai_with_msa.md
+│   ├── chai_with_msa.md
+│   └── submit_chai.md
 └── .github/
     └── ISSUE_TEMPLATE/
         └── script_not_working.md
@@ -350,3 +356,7 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/chai_with_msa.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
 -   **[Full Documentation](docs/chai_with_msa.md)**
+
+-   **Scripts:** `example_scripts/submit_chai.sh`, `example_scripts/submit_chai_with_msa.sh`
+-   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
+-   **[Full Documentation](docs/submit_chai.md)**
