@@ -24,9 +24,9 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Example Scripts](#example-scripts)
   - [ColabFold](#colabfold)
   - [Chai](#chai)
-    - [run_chai.py](#run_chai.py)
-    - [chai_with_msa.py](#chai_with_msa.py)
-    - [submit_chai.sh & submit_chai_with_msa.sh](#submit_chai.sh-&-submit_chai_with_msa.sh)
+    - [run_chai.py](#run_chaipy)
+    - [chai_with_msa.py](#chai_with_msapy)
+    - [submit_chai.sh & submit_chai_with_msa.sh](#submit_chaish-&-submit_chai_with_msash)
   - [LigandMPNN](#ligandmpnn)
 
 ## HIVE vs Cacao Comparison
