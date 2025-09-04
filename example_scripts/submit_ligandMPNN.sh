@@ -8,32 +8,6 @@
 #SBATCH --mem=128G
 #SBATCH --output=logs/%j.out
 
-# --- Help/Usage Message ---
-usage() {
-  echo "Usage: sbatch $(basename "$0") <pdb_file> <out_folder>"
-  echo
-  echo "Submits a LigandMPNN job to the SLURM scheduler."
-  echo
-  echo "Arguments:"
-  echo "  pdb_file      Path to the input PDB file (can be relative)."
-  echo "  out_folder    Path to the output directory (can be relative)."
-  echo
-  echo "Example:"
-  echo "  sbatch $(basename "$0") inputs/my_protein.pdb results/mpnn_designs"
-  exit 1
-}
-
-# Check for help flag or incorrect number of arguments
-if [[ "$1" == "-h" || "$1" == "--help" ]]; then
-  usage
-  exit 0
-fi
-
-if [ "$#" -ne 2 ]; then
-  echo "Error: You must provide a PDB file and an output folder." >&2
-  usage
-fi
-# --- End of Help/Usage Message ---
 
 export TORCH_HOME=/quobyte/jbsiegelgrp/software/LigandMPNN/.cache
 
@@ -45,7 +19,6 @@ conda activate /quobyte/jbsiegelgrp/software/envs/ligandmpnn_env
 
 LIGAND_MPNN_DIR="/quobyte/jbsiegelgrp/software/LigandMPNN"
 
-# Resolve absolute paths for inputs/outputs
 if [[ "$1" == /* ]]; then
   pdb_file="$1"
 else
