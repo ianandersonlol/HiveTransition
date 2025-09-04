@@ -304,28 +304,59 @@ If you find issues or have improvements:
 ## File Structure
 
 ```
-HiveTransition/
-├── README.md                    # This file
-├── pathMigrator.py             # Comprehensive path migration (all software)
-├── bash_profile_migration.py    # Shell config migration
-├── colab_fix.py                # ColabFold script fixer (with SLURM)
-├── ligandmpnn_fix.py           # LigandMPNN script fixer (with SLURM)
-├── rfdiffusion_fix.py          # RFdiffusion script fixer (with SLURM)
-├── rosetta_fix.py              # Rosetta script fixer (with SLURM)
-├── broken.py                   # Issue reporter
-├── docs/                       # Detailed documentation
-│   ├── pathMigrator.md
-│   ├── bash_profile_migration.md
-│   ├── colab_fix.md
-│   ├── ligandmpnn_fix.md
-│   ├── rfdiffusion_fix.md
-│   ├── rosetta_fix.md
-│   ├── galigand_dock.md
-│   ├── relax.md
-│   └── broken.md
-└── .github/
-    └── ISSUE_TEMPLATE/
-        └── script_not_working.md
+/Users/iananderson/Desktop/HiveTransition/
+├───.gitignore
+├───bash_profile_migration.py
+├───broken.py
+├───colab_fix.py
+├───ligandmpnn_fix.py
+├───pathMigrator.py
+├───README.md
+├───rfdiffusion_fix.py
+├───rosetta_fix.py
+├───.claude/
+│   └───settings.local.json
+├───.git/...
+├───.github/
+│   └───ISSUE_TEMPLATE/
+│       └───script_not_working.yml
+├───docs/
+│   ├───bash_profile_migration.md
+│   ├───broken.md
+│   ├───chai_with_msa.md
+│   ├───colab_fix.md
+│   ├───colabfold.md
+│   ├───galigand_dock.md
+│   ├───ligandmpnn_fix.md
+│   ├───ligandmpnn.md
+│   ├───pathMigrator.md
+│   ├───relax.md
+│   ├───rfdiffusion_fix.py
+│   ├───rosetta_fix.py
+│   ├───run_chai.md
+│   └───submit_chai.md
+└───example_scripts/
+    ├───design/
+    │   └───LigandMPNN/
+    │       └───submit_ligandMPNN.sh
+    ├───docking/
+    │   ├───galigand_dock/
+    │   │   ├───4Epimv7.cst
+    │   │   ├───DF6.params
+    │   │   ├───docking.xml
+    │   │   ├───flags
+    │   │   ├───GatZ_F6P.pdb
+    │   │   └───submit.sh
+    │   └───relaxation/
+    │       └───relax.sh
+    └───folding/
+        ├───Alphafold2/
+        │   └───colabfold.sh
+        └───Chai/
+            ├───chai_with_msa.py
+            ├───run_chai.py
+            ├───submit_chai_with_msa.sh
+            └───submit_chai.sh
 ```
 
 ## Example Scripts
