@@ -28,6 +28,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
     - [chai_with_msa.py](#chai_with_msapy)
     - [submit_chai.sh & submit_chai_with_msa.sh](#submit_chaish_&_submit_chai_with_msash)
   - [LigandMPNN](#ligandmpnn)
+  - [GaliGand Dock](#galigand-dock)
 
 ## HIVE vs Cacao Comparison
 
@@ -318,6 +319,7 @@ HiveTransition/
 │   ├── ligandmpnn_fix.md
 │   ├── rfdiffusion_fix.md
 │   ├── rosetta_fix.md
+│   ├── galigand_dock.md
 │   └── broken.md
 └── .github/
     └── ISSUE_TEMPLATE/
@@ -353,6 +355,14 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 ### LigandMPNN
 
+### LigandMPNN
+
 -   **Script:** `example_scripts/design/LigandMPNN/submit_ligandMPNN.sh`
 -   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
--   **[Full Documentation](docs/ligandmpnn.md)**
+-   **[Full Documentation](docs/ligandmpnn.md)
+
+### GaliGand Dock
+
+-   **Script:** `example_scripts/docking/galigand_dock/submit.sh`
+-   **Description:** A SLURM submission script for running the GaliGand docking protocol. It is pre-configured with resource requests and sets up the necessary environment.
+-   **[Full Documentation](docs/galigand_dock.md)`**
