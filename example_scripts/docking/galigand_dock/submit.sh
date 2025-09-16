@@ -9,7 +9,7 @@
 #SBATCH --requeue
 /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/source/bin/rosetta_scripts.static.linuxgccrelease -database /quobyte/jbsiegelgrp/software/Rosetta_314/rosetta/main/database \
   @flags \
-  -parser:protocol docking.xml \e
+  -parser:protocol docking.xml \
   -s GatZ_F6P.pdb \
   -enzdes::cstfile 4Epimv7.cst \
   -nstruct 1 \
