@@ -6,8 +6,8 @@
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
 #SBATCH --time=12:00:00
-#SBATCH --output=logs/colabfold_%j.out
-#SBATCH --error=logs/colabfold_%j.err
+#SBATCH --output=logs/colabfold_%A_%a.out
+#SBATCH --error=logs/colabfold_%A_%a.err
 
 
 if [ $# -ne 2 ]; then

@@ -7,8 +7,8 @@
 #SBATCH --mem=128G
 #SBATCH --gres=gpu:1
 #SBATCH --time=48:00:00
-#SBATCH --output=logs/chai_%j.out
-#SBATCH --error=logs/chai_%j.err
+#SBATCH --output=logs/chai_%A_%a.out
+#SBATCH --error=logs/chai_%A_%a.err
 
 
 

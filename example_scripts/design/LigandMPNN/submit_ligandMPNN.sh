@@ -6,7 +6,7 @@
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
-#SBATCH --output=logs/%j.out
+#SBATCH --output=logs/%A_%a.out
 
 
 export TORCH_HOME=/quobyte/jbsiegelgrp/software/LigandMPNN/.cache
