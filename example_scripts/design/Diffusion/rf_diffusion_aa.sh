@@ -7,8 +7,8 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --ntasks=1
 #SBATCH --job-name=AD2-linker-v1
-#SBATCH --output=AD2-12.out
-#SBATCH --error=AD2-12.err
+#SBATCH --output=AD2-12_%A_%a.out
+#SBATCH --error=AD2-12_%A_%a.err
 
 
 module load apptainer/latest
