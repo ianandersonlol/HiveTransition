@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=MPNN
+#SBATCH --job-name=LigandMPNN
 #SBATCH --partition=gpu-a100
 #SBATCH --account=genome-center-grp
 #SBATCH --time=12:00:00
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=128G
-#SBATCH --output=logs/%A_%a.out
+#SBATCH --output=logs/ligandMPNN_%A_%a.out
 
 
 export TORCH_HOME=/quobyte/jbsiegelgrp/software/LigandMPNN/.cache
