@@ -3,6 +3,13 @@
 Unified Protein Design Pipeline
 ================================
 
+Based on the methodology described in:
+King et al., "Computational Stabilization of a Non-Heme Iron Enzyme Enables
+Efficient Evolution of New Function"
+Brianne R. King, Kiera H. Sumida, Jessica L. Caruso, David Baker, Jesse G. Zalatan
+Angewandte Chemie International Edition (2024)
+https://doi.org/10.1002/anie.202414705
+
 Complete automated pipeline from sequence to structure:
 1. HHblits MSA generation and conservation analysis
 2. Reference structure prediction (ColabFold)

@@ -336,6 +336,7 @@ If you find issues or have improvements:
 │   ├───galigand_dock.md
 │   ├───ligandmpnn_fix.md
 │   ├───ligandmpnn.md
+│   ├───mpnnp_pipeline.md
 │   ├───pathMigrator.md
 │   ├───relax.md
 │   ├───rfdiffusion_fix.py
@@ -346,8 +347,10 @@ If you find issues or have improvements:
     ├───design/
     │   ├───Diffusion/
     │   │   └───rf_diffusion_aa.sh
-    │   └───LigandMPNN/
-    │       └───submit_ligandMPNN.sh
+    │   ├───LigandMPNN/
+    │   │   └───submit_ligandMPNN.sh
+    │   └───MPNNP_Pipeline/
+    │       └───run_pipeline.py
     ├───docking/
     │   ├───galigand_dock/
     │   │   ├───4Epimv7.cst
@@ -406,6 +409,12 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/design/Diffusion/rf_diffusion_aa.sh`
 -   **Description:** A SLURM submission script for running RFdiffusion for *de novo* protein design. It is pre-configured with common parameters for protein design tasks.
 -   **[Full Documentation](docs/rf_diffusion_aa.md)**
+
+### MPNNP Pipeline
+
+-   **Script:** `example_scripts/design/MPNNP_Pipeline/run_pipeline.py`
+-   **Description:** A unified, automated protein design pipeline that integrates MSA generation, conservation analysis, structure prediction, and LigandMPNN design. Takes a protein sequence and produces structurally-validated designed variants.
+-   **[Full Documentation](docs/mpnnp_pipeline.md)**
 
 ### GaliGand Dock
 
