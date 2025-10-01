@@ -89,14 +89,14 @@ SLURM_ACCOUNT_GPU = "genome-center-grp"
 def validate_fasta(fasta_path):
     """Validate that the input FASTA file exists and is valid."""
     if not os.path.isfile(fasta_path):
-        print(f"❌ ERROR: FASTA file not found: {fasta_path}")
+        print(f"[ERROR] ERROR: FASTA file not found: {fasta_path}")
         return False
 
     # Basic FASTA validation
     with open(fasta_path, 'r') as f:
         content = f.read()
         if not content.startswith('>'):
-            print(f"❌ ERROR: Invalid FASTA format (missing header)")
+            print(f"[ERROR] ERROR: Invalid FASTA format (missing header)")
             return False
 
     return True
@@ -131,24 +131,24 @@ def validate_fixed_residues(fixed_residues_str, chain, sequence_length):
 
         # Parse chain and residue number
         if len(res) < 2:
-            print(f"❌ ERROR: Invalid residue format '{res}'. Expected format: 'A10'")
+            print(f"[ERROR] ERROR: Invalid residue format '{res}'. Expected format: 'A10'")
             return None
 
         res_chain = res[0]
         try:
             res_num = int(res[1:])
         except ValueError:
-            print(f"❌ ERROR: Invalid residue number in '{res}'. Expected format: 'A10'")
+            print(f"[ERROR] ERROR: Invalid residue number in '{res}'. Expected format: 'A10'")
             return None
 
         # Validate chain matches
         if res_chain != chain:
-            print(f"❌ ERROR: Residue '{res}' chain '{res_chain}' does not match design chain '{chain}'")
+            print(f"[ERROR] ERROR: Residue '{res}' chain '{res_chain}' does not match design chain '{chain}'")
             return None
 
         # Validate residue number is within sequence length
         if res_num < 1 or res_num > sequence_length:
-            print(f"❌ ERROR: Residue number {res_num} is out of range (sequence length: {sequence_length})")
+            print(f"[ERROR] ERROR: Residue number {res_num} is out of range (sequence length: {sequence_length})")
             return None
 
         residues.append(res_num)
@@ -178,7 +178,7 @@ def setup_job_directory(base_dir, job_name):
     for subdir in subdirs:
         os.makedirs(os.path.join(job_dir, subdir), exist_ok=True)
 
-    print(f"✅ Created job directory: {job_dir}")
+    print(f"[OK] Created job directory: {job_dir}")
     return job_dir
 
 def copy_input_fasta(source_fasta, job_dir, job_name):
@@ -200,7 +200,7 @@ def copy_input_fasta(source_fasta, job_dir, job_name):
         for line in lines[1:] if lines[0].startswith('>') else lines:
             outfile.write(line)
 
-    print(f"✅ Copied input FASTA to: {dest_fasta}")
+    print(f"[OK] Copied input FASTA to: {dest_fasta}")
     return dest_fasta
 
 # ================================
@@ -261,7 +261,7 @@ hhblits -cpu 4 -i {current_input} \\
         scripts.append(script_file)
         current_input = a3m_file  # Chain outputs
 
-    print(f"✅ Generated {len(scripts)} HHblits scripts")
+    print(f"[OK] Generated {len(scripts)} HHblits scripts")
     return scripts
 
 def create_hhfilter_script(job_dir, job_name):
@@ -304,7 +304,7 @@ hhfilter \\
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated HHfilter script")
+    print(f"[OK] Generated HHfilter script")
     return script_file
 
 def create_conservation_script(job_dir, job_name, conservation_threshold):
@@ -382,10 +382,10 @@ def parse_a3m(filename):
 msa_file = "{hhblits_dir}/{job_name}_id{HHFILTER_PARAMS['id']}cov{HHFILTER_PARAMS['cov']}qid{HHFILTER_PARAMS['qid']}.a3m"
 
 if not os.path.isfile(msa_file):
-    print(f"❌ ERROR: Filtered MSA not found: {{msa_file}}")
+    print(f"[ERROR] ERROR: Filtered MSA not found: {{msa_file}}")
     sys.exit(1)
 
-print(f"🔍 Analyzing conserved residues from: {{msa_file}}")
+print(f"[ANALYZING] Analyzing conserved residues from: {{msa_file}}")
 
 aln = parse_a3m(msa_file)
 msa_num = aln["msa_num"]
@@ -413,15 +413,15 @@ df = pd.DataFrame(results)
 output_path = "{hhblits_dir}/{job_name}_conserved_residues.xlsx"
 df.to_excel(output_path, index=False)
 
-print(f"✅ Conserved residues saved to: {{output_path}}")
-print(f"📊 Found {{len(conserved)}} conserved residues at {{int(frac*100)}}% threshold")
+print(f"[OK] Conserved residues saved to: {{output_path}}")
+print(f"[STATS] Found {{len(conserved)}} conserved residues at {{int(frac*100)}}% threshold")
 PYTHON_SCRIPT
 """
 
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated conservation analysis script")
+    print(f"[OK] Generated conservation analysis script")
     return script_file
 
 # ================================
@@ -463,7 +463,7 @@ colabfold_batch --model-order {COLABFOLD_MODEL_ORDER} --num-models {COLABFOLD_NU
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated reference ColabFold script")
+    print(f"[OK] Generated reference ColabFold script")
     return script_file
 
 # ================================
@@ -512,7 +512,7 @@ cd {LIGANDMPNN_ROOT}
 REF_PDB=$(ls {ref_pdb_pattern} 2>/dev/null | head -1)
 
 if [ -z "$REF_PDB" ]; then
-    echo "❌ ERROR: Reference PDB not found"
+    echo "[ERROR] ERROR: Reference PDB not found"
     exit 1
 fi
 
@@ -520,7 +520,7 @@ fi
 CONSERVED_FILE="{job_dir}/hhblits/{job_name}_conserved_residues.xlsx"
 
 if [ ! -f "$CONSERVED_FILE" ]; then
-    echo "❌ ERROR: Conserved residues file not found"
+    echo "[ERROR] ERROR: Conserved residues file not found"
     exit 1
 fi
 
@@ -543,18 +543,18 @@ USER_FIXED_RESIDUES="{' '.join(f'{design_chain}{r}' for r in fixed_residues)}"
 
 # Combine conserved and user-specified residues
 if [ -z "$CONSERVED_RESIDUES" ] && [ -z "$USER_FIXED_RESIDUES" ]; then
-    echo "⚠️ WARNING: No conserved or fixed residues specified"
+    echo "[WARNING] WARNING: No conserved or fixed residues specified"
     FIXED_ARG=""
 elif [ -z "$CONSERVED_RESIDUES" ]; then
-    echo "✅ Using user-specified fixed residues: $USER_FIXED_RESIDUES"
+    echo "[OK] Using user-specified fixed residues: $USER_FIXED_RESIDUES"
     FIXED_ARG="--fixed_residues \\"$USER_FIXED_RESIDUES\\""
 elif [ -z "$USER_FIXED_RESIDUES" ]; then
-    echo "✅ Using conserved residues: $CONSERVED_RESIDUES"
+    echo "[OK] Using conserved residues: $CONSERVED_RESIDUES"
     FIXED_ARG="--fixed_residues \\"$CONSERVED_RESIDUES\\""
 else
     ALL_FIXED="$CONSERVED_RESIDUES $USER_FIXED_RESIDUES"
-    echo "✅ Using conserved residues: $CONSERVED_RESIDUES"
-    echo "✅ Using additional fixed residues: $USER_FIXED_RESIDUES"
+    echo "[OK] Using conserved residues: $CONSERVED_RESIDUES"
+    echo "[OK] Using additional fixed residues: $USER_FIXED_RESIDUES"
     FIXED_ARG="--fixed_residues \\"$ALL_FIXED\\""
 fi
 
@@ -577,7 +577,7 @@ eval python run.py \\
 
         scripts.append(script_file)
 
-    print(f"✅ Generated {len(scripts)} LigandMPNN scripts")
+    print(f"[OK] Generated {len(scripts)} LigandMPNN scripts")
     return scripts
 
 def create_ligandmpnn_postprocess_script(job_dir, job_name, design_chain, temperatures):
@@ -626,13 +626,13 @@ with open(cf_tasks_path, "w") as cf_tasks_file:
 
         # Find the multi-FASTA file (name depends on reference PDB)
         if not os.path.isdir(seqs_dir):
-            print(f"⚠️ Skipping T{{temp}}: seqs directory not found")
+            print(f"[WARNING] Skipping T{{temp}}: seqs directory not found")
             continue
 
         # Find .fa file
         fa_files = list(Path(seqs_dir).glob("*.fa"))
         if not fa_files:
-            print(f"⚠️ Skipping T{{temp}}: no .fa files found")
+            print(f"[WARNING] Skipping T{{temp}}: no .fa files found")
             continue
 
         multi_fasta_path = fa_files[0]
@@ -677,15 +677,15 @@ with open(cf_tasks_path, "w") as cf_tasks_file:
                 cf_tasks_file.write(str(fasta_path) + "\\n")
                 total_written += 1
 
-print(f"✅ Created {{total_written}} FASTA files for ColabFold")
-print(f"✅ cf_tasks.txt written to: {{cf_tasks_path}}")
+print(f"[OK] Created {{total_written}} FASTA files for ColabFold")
+print(f"[OK] cf_tasks.txt written to: {{cf_tasks_path}}")
 PYTHON_SCRIPT
 """
 
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated post-processing script")
+    print(f"[OK] Generated post-processing script")
     return script_file
 
 # ================================
@@ -731,7 +731,7 @@ colabfold_batch --model-order {COLABFOLD_MODEL_ORDER} --num-models {COLABFOLD_NU
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated ColabFold monomer script")
+    print(f"[OK] Generated ColabFold monomer script")
     return script_file
 
 # ================================
@@ -777,14 +777,14 @@ from pathlib import Path
 try:
     from pymol import cmd
 except ImportError:
-    print("❌ ERROR: PyMOL not available!")
+    print("[ERROR] ERROR: PyMOL not available!")
     print("Please ensure PyMOL is installed: conda install -c conda-forge pymol-open-source")
     sys.exit(1)
 
 def initialize_pymol():
     \"\"\"Initialize PyMOL for scripting.\"\"\"
     cmd.reinitialize()
-    print("✅ PyMOL initialized")
+    print("[OK] PyMOL initialized")
 
 def calculate_ca_rmsd(ref_pdb, pred_pdb, chain="{design_chain}"):
     \"\"\"Calculate untrimmed CA RMSD between structures.\"\"\"
@@ -808,21 +808,21 @@ ref_dir = "{ref_dir}"
 ref_pdbs = list(Path(ref_dir).glob("*_unrelaxed_rank_001*.pdb"))
 
 if not ref_pdbs:
-    print(f"❌ ERROR: No reference PDB found in {{ref_dir}}")
+    print(f"[ERROR] ERROR: No reference PDB found in {{ref_dir}}")
     sys.exit(1)
 
 ref_pdb = str(ref_pdbs[0])
-print(f"🔍 Reference: {{os.path.basename(ref_pdb)}}")
+print(f"[ANALYZING] Reference: {{os.path.basename(ref_pdb)}}")
 
 # Find all predicted structures
 colabfold_dir = "{colabfold_dir}"
 pred_pdbs = sorted(Path(colabfold_dir).glob("*_unrelaxed_rank_001*.pdb"))
 
 if not pred_pdbs:
-    print(f"❌ ERROR: No predicted structures found in {{colabfold_dir}}")
+    print(f"[ERROR] ERROR: No predicted structures found in {{colabfold_dir}}")
     sys.exit(1)
 
-print(f"📊 Found {{len(pred_pdbs)}} predicted structures to analyze")
+print(f"[STATS] Found {{len(pred_pdbs)}} predicted structures to analyze")
 
 # Initialize PyMOL
 initialize_pymol()
@@ -862,7 +862,7 @@ for i, pred_pdb in enumerate(pred_pdbs, 1):
         }})
 
     except Exception as e:
-        print(f"⚠️  Error processing {{basename}}: {{e}}")
+        print(f"[WARNING]  Error processing {{basename}}: {{e}}")
         continue
 
 # Sort by RMSD
@@ -876,9 +876,9 @@ with open(output_csv, 'w', newline='') as csvfile:
     writer.writeheader()
     writer.writerows(results)
 
-print(f"\\n✅ RMSD analysis complete!")
-print(f"✅ Results saved to: {{output_csv}}")
-print(f"\\n🏆 Top 10 designs by RMSD:")
+print(f"\\n[OK] RMSD analysis complete!")
+print(f"[OK] Results saved to: {{output_csv}}")
+print(f"\\n[RESULTS] Top 10 designs by RMSD:")
 print(f"{{'='*60}}")
 
 for i, result in enumerate(results[:10], 1):
@@ -887,15 +887,15 @@ for i, result in enumerate(results[:10], 1):
     print(f"  {{i:2d}}. T={{temp:<4s}} ID={{seq_id:<4s}} RMSD={{result['rmsd_angstroms']:.3f}} Å")
 
 print(f"{{'='*60}}")
-print(f"📈 Total structures analyzed: {{len(results)}}")
+print(f"[METRICS] Total structures analyzed: {{len(results)}}")
 
 if results:
     best = results[0]
     worst = results[-1]
     avg = sum(r['rmsd_angstroms'] for r in results) / len(results)
-    print(f"📊 Best RMSD:    {{best['rmsd_angstroms']:.3f}} Å ({{best['structure']}})")
-    print(f"📊 Worst RMSD:   {{worst['rmsd_angstroms']:.3f}} Å")
-    print(f"📊 Average RMSD: {{avg:.3f}} Å")
+    print(f"[STATS] Best RMSD:    {{best['rmsd_angstroms']:.3f}} Å ({{best['structure']}})")
+    print(f"[STATS] Worst RMSD:   {{worst['rmsd_angstroms']:.3f}} Å")
+    print(f"[STATS] Average RMSD: {{avg:.3f}} Å")
 
 PYTHON_SCRIPT
 """
@@ -903,7 +903,7 @@ PYTHON_SCRIPT
     with open(script_file, 'w') as f:
         f.write(script_content)
 
-    print(f"✅ Generated PyMOL comparison script")
+    print(f"[OK] Generated PyMOL comparison script")
     return script_file
 
 # ================================
@@ -922,13 +922,13 @@ def submit_job(script_path, dependency=None):
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
-        print(f"❌ Failed to submit {script_path}")
+        print(f"[ERROR] Failed to submit {script_path}")
         print(f"Error: {result.stderr}")
         return None
 
     output = result.stdout.strip()
     job_id = int(output.split()[-1])
-    print(f"✅ Submitted job {job_id}: {os.path.basename(script_path)}")
+    print(f"[OK] Submitted job {job_id}: {os.path.basename(script_path)}")
 
     return job_id
 
@@ -944,13 +944,13 @@ def submit_array_job(script_path, num_tasks, dependency=None):
     result = subprocess.run(cmd, capture_output=True, text=True)
 
     if result.returncode != 0:
-        print(f"❌ Failed to submit {script_path}")
+        print(f"[ERROR] Failed to submit {script_path}")
         print(f"Error: {result.stderr}")
         return None
 
     output = result.stdout.strip()
     job_id = int(output.split()[-1])
-    print(f"✅ Submitted array job {job_id} ({num_tasks} tasks): {os.path.basename(script_path)}")
+    print(f"[OK] Submitted array job {job_id} ({num_tasks} tasks): {os.path.basename(script_path)}")
 
     return job_id
 
@@ -1009,7 +1009,7 @@ All outputs will be organized in: jobs/JOBNAME/
 
     # Validate conservation threshold
     if args.conservation_threshold <= 0 or args.conservation_threshold > 1:
-        print(f"❌ ERROR: Conservation threshold must be between 0 and 1 (got {args.conservation_threshold})")
+        print(f"[ERROR] ERROR: Conservation threshold must be between 0 and 1 (got {args.conservation_threshold})")
         sys.exit(1)
 
     # Validate fixed residues if provided
@@ -1045,7 +1045,7 @@ All outputs will be organized in: jobs/JOBNAME/
     # STAGE 1: GENERATE ALL SCRIPTS
     # ================================
 
-    print("\n📝 STAGE 1: Generating all pipeline scripts...")
+    print("\n[INFO] STAGE 1: Generating all pipeline scripts...")
 
     # HHblits scripts
     hhblits_scripts = create_hhblits_scripts(job_dir, job_name, input_fasta)
@@ -1067,10 +1067,10 @@ All outputs will be organized in: jobs/JOBNAME/
     # PyMOL comparison script
     pymol_script = create_pymol_comparison_script(job_dir, job_name, args.chain)
 
-    print("✅ All scripts generated!")
+    print("[OK] All scripts generated!")
 
     if args.dry_run:
-        print("\n🏁 Dry run complete. Scripts generated but not submitted.")
+        print("\n[INFO] Dry run complete. Scripts generated but not submitted.")
         print(f"\nTo submit manually, use the scripts in: {job_dir}")
         return
 
@@ -1078,7 +1078,7 @@ All outputs will be organized in: jobs/JOBNAME/
     # STAGE 2: SUBMIT JOBS WITH DEPENDENCIES
     # ================================
 
-    print("\n🚀 STAGE 2: Submitting jobs with dependencies...")
+    print("\n[STARTING] STAGE 2: Submitting jobs with dependencies...")
 
     job_ids = {}
 
@@ -1088,7 +1088,7 @@ All outputs will be organized in: jobs/JOBNAME/
     for script in hhblits_scripts:
         job_id = submit_job(script, dependency=prev_job_id)
         if not job_id:
-            print("❌ Failed to submit HHblits chain")
+            print("[ERROR] Failed to submit HHblits chain")
             sys.exit(1)
         prev_job_id = job_id
     job_ids['hhblits_final'] = prev_job_id
@@ -1097,7 +1097,7 @@ All outputs will be organized in: jobs/JOBNAME/
     print("\n--- HHfilter ---")
     job_id = submit_job(hhfilter_script, dependency=job_ids['hhblits_final'])
     if not job_id:
-        print("❌ Failed to submit HHfilter")
+        print("[ERROR] Failed to submit HHfilter")
         sys.exit(1)
     job_ids['hhfilter'] = job_id
 
@@ -1105,7 +1105,7 @@ All outputs will be organized in: jobs/JOBNAME/
     print("\n--- Conservation Analysis ---")
     job_id = submit_job(conservation_script, dependency=job_ids['hhfilter'])
     if not job_id:
-        print("❌ Failed to submit conservation analysis")
+        print("[ERROR] Failed to submit conservation analysis")
         sys.exit(1)
     job_ids['conservation'] = job_id
 
@@ -1113,7 +1113,7 @@ All outputs will be organized in: jobs/JOBNAME/
     print("\n--- Reference Structure (ColabFold) ---")
     job_id = submit_job(reference_script)
     if not job_id:
-        print("❌ Failed to submit reference ColabFold")
+        print("[ERROR] Failed to submit reference ColabFold")
         sys.exit(1)
     job_ids['reference'] = job_id
 
@@ -1125,14 +1125,14 @@ All outputs will be organized in: jobs/JOBNAME/
         cmd = ["sbatch", "--dependency", f"afterok:{dependency_str}", script]
         result = subprocess.run(cmd, capture_output=True, text=True)
         if result.returncode != 0:
-            print(f"❌ Failed to submit {script}")
+            print(f"[ERROR] Failed to submit {script}")
             continue
         job_id = int(result.stdout.strip().split()[-1])
         ligandmpnn_job_ids.append(job_id)
-        print(f"✅ Submitted job {job_id}: {os.path.basename(script)}")
+        print(f"[OK] Submitted job {job_id}: {os.path.basename(script)}")
 
     if not ligandmpnn_job_ids:
-        print("❌ Failed to submit LigandMPNN jobs")
+        print("[ERROR] Failed to submit LigandMPNN jobs")
         sys.exit(1)
     job_ids['ligandmpnn'] = ligandmpnn_job_ids
 
@@ -1142,11 +1142,11 @@ All outputs will be organized in: jobs/JOBNAME/
     cmd = ["sbatch", "--dependency", f"afterok:{lmpnn_dependency}", postprocess_script]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"❌ Failed to submit post-processing")
+        print(f"[ERROR] Failed to submit post-processing")
         sys.exit(1)
     job_id = int(result.stdout.strip().split()[-1])
     job_ids['postprocess'] = job_id
-    print(f"✅ Submitted job {job_id}: {os.path.basename(postprocess_script)}")
+    print(f"[OK] Submitted job {job_id}: {os.path.basename(postprocess_script)}")
 
     # Submit ColabFold monomer (depends on post-processing)
     # We need to estimate the number of tasks (will be finalized after post-processing)
@@ -1155,9 +1155,9 @@ All outputs will be organized in: jobs/JOBNAME/
     estimated_tasks = len(args.temperatures) * args.num_batches * args.batch_size
     estimated_tasks = estimated_tasks - len(args.temperatures)  # Subtract first seqs
 
-    print(f"📊 Estimated ~{estimated_tasks} sequences to predict")
-    print(f"⚠️  Note: Actual number determined after post-processing completes")
-    print(f"💡 To submit ColabFold after post-processing finishes:")
+    print(f"[STATS] Estimated ~{estimated_tasks} sequences to predict")
+    print(f"[WARNING]  Note: Actual number determined after post-processing completes")
+    print(f"[TIP] To submit ColabFold after post-processing finishes:")
     print(f"   NUM_TASKS=$(wc -l < {job_dir}/ligandmpnn/cf_tasks.txt)")
     print(f"   sbatch --array=1-$NUM_TASKS --dependency=afterok:{job_ids['postprocess']} {colabfold_script}")
 
@@ -1165,12 +1165,12 @@ All outputs will be organized in: jobs/JOBNAME/
     cmd = ["sbatch", f"--array=1-{estimated_tasks}", "--dependency", f"afterok:{job_ids['postprocess']}", colabfold_script]
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.returncode != 0:
-        print(f"⚠️  ColabFold submission may have failed (task count estimation)")
+        print(f"[WARNING]  ColabFold submission may have failed (task count estimation)")
         print(f"Error: {result.stderr}")
     else:
         job_id = int(result.stdout.strip().split()[-1])
         job_ids['colabfold'] = job_id
-        print(f"✅ Submitted array job {job_id}: {os.path.basename(colabfold_script)}")
+        print(f"[OK] Submitted array job {job_id}: {os.path.basename(colabfold_script)}")
 
     # Submit PyMOL comparison (depends on ColabFold)
     print("\n--- PyMOL RMSD Comparison ---")
@@ -1178,21 +1178,21 @@ All outputs will be organized in: jobs/JOBNAME/
         job_id = submit_job(pymol_script, dependency=job_ids['colabfold'])
         if job_id:
             job_ids['pymol'] = job_id
-            print(f"✅ Submitted PyMOL comparison job {job_id}")
+            print(f"[OK] Submitted PyMOL comparison job {job_id}")
         else:
-            print("⚠️  PyMOL comparison submission failed (non-critical)")
+            print("[WARNING]  PyMOL comparison submission failed (non-critical)")
     else:
-        print("⚠️  Skipping PyMOL comparison (ColabFold not submitted)")
+        print("[WARNING]  Skipping PyMOL comparison (ColabFold not submitted)")
 
     # ================================
     # STAGE 3: SUMMARY
     # ================================
 
     print("\n" + "=" * 60)
-    print("🎉 PIPELINE SUBMITTED SUCCESSFULLY!")
+    print("[SUCCESS] PIPELINE SUBMITTED SUCCESSFULLY!")
     print("=" * 60)
-    print(f"\n📁 Job Directory: {job_dir}")
-    print(f"\n📋 Submitted Jobs:")
+    print(f"\nJob Directory: {job_dir}")
+    print(f"\nSubmitted Jobs:")
     print(f"   HHblits chain:        Job {job_ids['hhblits_final']}")
     print(f"   HHfilter:             Job {job_ids['hhfilter']}")
     print(f"   Conservation:         Job {job_ids['conservation']}")
@@ -1204,16 +1204,16 @@ All outputs will be organized in: jobs/JOBNAME/
     if 'pymol' in job_ids:
         print(f"   PyMOL comparison:     Job {job_ids['pymol']}")
 
-    print(f"\n📊 Monitor jobs with: squeue -u $USER")
-    print(f"📂 View logs in: {job_dir}/logs/")
-    print(f"\n🎯 Expected outputs:")
+    print(f"\n[STATS] Monitor jobs with: squeue -u $USER")
+    print(f"View logs in: {job_dir}/logs/")
+    print(f"\nExpected outputs:")
     print(f"   - Conserved residues: {job_dir}/hhblits/{job_name}_conserved_residues.xlsx")
     print(f"   - Reference structure: {job_dir}/reference/colabfold_output/")
     print(f"   - LigandMPNN designs: {job_dir}/ligandmpnn/T*/")
     print(f"   - Structure predictions: {job_dir}/colabfold/colabfold_output/")
     print(f"   - RMSD analysis: {job_dir}/pymol_analysis/{job_name}_rmsd_results.csv")
 
-    print(f"\n✅ Complete pipeline submitted for {job_name}!")
+    print(f"\n[OK] Complete pipeline submitted for {job_name}!")
 
 if __name__ == "__main__":
     main()
