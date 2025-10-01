@@ -20,6 +20,10 @@ Usage:
     python run_pipeline.py input.fasta
     python run_pipeline.py input.fasta --chain A
     python run_pipeline.py input.fasta --dry-run
+    python run_pipeline.py input.fasta --conservation-threshold 0.6
+    python run_pipeline.py input.fasta --fixed-residues A10,A25,A100
+    python run_pipeline.py input.fasta --temperatures 0.1 0.2 0.3 0.5
+    python run_pipeline.py input.fasta --batch-size 32 --num-batches 8
 
 Output Structure:
     jobs/JOBNAME/
@@ -96,6 +100,60 @@ def validate_fasta(fasta_path):
             return False
 
     return True
+
+def get_sequence_length(fasta_path):
+    """Get the length of the sequence in a FASTA file."""
+    with open(fasta_path, 'r') as f:
+        lines = f.readlines()
+
+    # Skip header and concatenate sequence lines
+    sequence = ''.join(line.strip() for line in lines[1:] if not line.startswith('>'))
+    return len(sequence)
+
+def validate_fixed_residues(fixed_residues_str, chain, sequence_length):
+    """
+    Validate fixed residues format and check against sequence length.
+
+    Args:
+        fixed_residues_str: String like "A10,A25,A100"
+        chain: Expected chain identifier
+        sequence_length: Length of the sequence
+
+    Returns:
+        List of residue numbers if valid, None if invalid
+    """
+    if not fixed_residues_str:
+        return []
+
+    residues = []
+    for res in fixed_residues_str.split(','):
+        res = res.strip()
+
+        # Parse chain and residue number
+        if len(res) < 2:
+            print(f"❌ ERROR: Invalid residue format '{res}'. Expected format: 'A10'")
+            return None
+
+        res_chain = res[0]
+        try:
+            res_num = int(res[1:])
+        except ValueError:
+            print(f"❌ ERROR: Invalid residue number in '{res}'. Expected format: 'A10'")
+            return None
+
+        # Validate chain matches
+        if res_chain != chain:
+            print(f"❌ ERROR: Residue '{res}' chain '{res_chain}' does not match design chain '{chain}'")
+            return None
+
+        # Validate residue number is within sequence length
+        if res_num < 1 or res_num > sequence_length:
+            print(f"❌ ERROR: Residue number {res_num} is out of range (sequence length: {sequence_length})")
+            return None
+
+        residues.append(res_num)
+
+    return residues
 
 def get_job_name(fasta_path):
     """Extract job name from FASTA filename."""
@@ -249,7 +307,7 @@ hhfilter \\
     print(f"✅ Generated HHfilter script")
     return script_file
 
-def create_conservation_script(job_dir, job_name):
+def create_conservation_script(job_dir, job_name, conservation_threshold):
     """Generate conservation analysis script."""
     hhblits_dir = os.path.join(job_dir, "hhblits")
     logs_dir = os.path.join(job_dir, "logs")
@@ -336,8 +394,8 @@ L = msa_num.shape[1]
 counts = np.stack([np.bincount(col, minlength=21) for col in msa_num.T]).T
 max_count = np.max(counts, axis=0)
 
-# Calculate conservation at 80% threshold
-frac = {CONSERVATION_THRESHOLD}
+# Calculate conservation at specified threshold
+frac = {conservation_threshold}
 freq = counts / msa_num.shape[0]
 freq_norm = freq[:20] / freq[:20].sum(axis=0)
 max_freq_norm = np.max(freq_norm, axis=0)
@@ -412,7 +470,7 @@ colabfold_batch --model-order {COLABFOLD_MODEL_ORDER} --num-models {COLABFOLD_NU
 # LIGANDMPNN DESIGN
 # ================================
 
-def create_ligandmpnn_scripts(job_dir, job_name, design_chain):
+def create_ligandmpnn_scripts(job_dir, job_name, design_chain, temperatures, batch_size, num_batches, fixed_residues, conservation_threshold):
     """Generate LigandMPNN design scripts for all temperatures."""
     ligandmpnn_dir = os.path.join(job_dir, "ligandmpnn")
     logs_dir = os.path.join(job_dir, "logs")
@@ -425,7 +483,7 @@ def create_ligandmpnn_scripts(job_dir, job_name, design_chain):
 
     scripts = []
 
-    for temp in LIGANDMPNN_TEMPERATURES:
+    for temp in temperatures:
         temp_dir = os.path.join(ligandmpnn_dir, f"T{temp}")
         os.makedirs(temp_dir, exist_ok=True)
 
@@ -467,10 +525,10 @@ if [ ! -f "$CONSERVED_FILE" ]; then
 fi
 
 # Extract conserved residues and format for LigandMPNN
-FIXED_RESIDUES=$(python3 <<PYTHON_EOF
+CONSERVED_RESIDUES=$(python3 <<PYTHON_EOF
 import pandas as pd
 df = pd.read_excel("$CONSERVED_FILE")
-row = df[df['fraction_conserved'] == '{int(CONSERVATION_THRESHOLD*100)}%']
+row = df[df['fraction_conserved'] == '{int(conservation_threshold*100)}%']
 if row.empty:
     print("")
 else:
@@ -480,12 +538,24 @@ else:
 PYTHON_EOF
 )
 
-if [ -z "$FIXED_RESIDUES" ]; then
-    echo "⚠️ WARNING: No conserved residues found, proceeding without fixed residues"
+# Add user-specified fixed residues
+USER_FIXED_RESIDUES="{' '.join(f'{design_chain}{r}' for r in fixed_residues)}"
+
+# Combine conserved and user-specified residues
+if [ -z "$CONSERVED_RESIDUES" ] && [ -z "$USER_FIXED_RESIDUES" ]; then
+    echo "⚠️ WARNING: No conserved or fixed residues specified"
     FIXED_ARG=""
+elif [ -z "$CONSERVED_RESIDUES" ]; then
+    echo "✅ Using user-specified fixed residues: $USER_FIXED_RESIDUES"
+    FIXED_ARG="--fixed_residues \\"$USER_FIXED_RESIDUES\\""
+elif [ -z "$USER_FIXED_RESIDUES" ]; then
+    echo "✅ Using conserved residues: $CONSERVED_RESIDUES"
+    FIXED_ARG="--fixed_residues \\"$CONSERVED_RESIDUES\\""
 else
-    echo "✅ Using fixed residues: $FIXED_RESIDUES"
-    FIXED_ARG="--fixed_residues \\"$FIXED_RESIDUES\\""
+    ALL_FIXED="$CONSERVED_RESIDUES $USER_FIXED_RESIDUES"
+    echo "✅ Using conserved residues: $CONSERVED_RESIDUES"
+    echo "✅ Using additional fixed residues: $USER_FIXED_RESIDUES"
+    FIXED_ARG="--fixed_residues \\"$ALL_FIXED\\""
 fi
 
 # Run LigandMPNN
@@ -497,9 +567,9 @@ eval python run.py \\
     --chains_to_design {design_chain} \\
     $FIXED_ARG \\
     --temperature {temp} \\
-    --batch_size {LIGANDMPNN_BATCH_SIZE} \\
+    --batch_size {batch_size} \\
     --omit_AA "{LIGANDMPNN_OMIT_AA}" \\
-    --number_of_batches {LIGANDMPNN_NUM_BATCHES}
+    --number_of_batches {num_batches}
 """
 
         with open(script_file, 'w') as f:
@@ -510,7 +580,7 @@ eval python run.py \\
     print(f"✅ Generated {len(scripts)} LigandMPNN scripts")
     return scripts
 
-def create_ligandmpnn_postprocess_script(job_dir, job_name, design_chain):
+def create_ligandmpnn_postprocess_script(job_dir, job_name, design_chain, temperatures):
     """Generate post-processing script to split LigandMPNN outputs."""
     ligandmpnn_dir = os.path.join(job_dir, "ligandmpnn")
     logs_dir = os.path.join(job_dir, "logs")
@@ -540,7 +610,7 @@ from pathlib import Path
 ligandmpnn_dir = "{ligandmpnn_dir}"
 job_name = "{job_name}"
 design_chain = "{design_chain}"
-temperatures = {LIGANDMPNN_TEMPERATURES}
+temperatures = {temperatures}
 
 # Determine chain index for extraction
 chain_idx = 0 if design_chain == "A" else 3 if design_chain == "D" else 0
@@ -921,11 +991,31 @@ All outputs will be organized in: jobs/JOBNAME/
     parser.add_argument("fasta", help="Input FASTA file")
     parser.add_argument("--chain", default="A", help="Design chain (default: A)")
     parser.add_argument("--dry-run", action="store_true", help="Generate scripts but don't submit jobs")
+    parser.add_argument("--conservation-threshold", type=float, default=CONSERVATION_THRESHOLD,
+                        help=f"Fraction of residues to conserve (default: {CONSERVATION_THRESHOLD}). Use 0.5-0.7 for broader design space")
+    parser.add_argument("--fixed-residues", type=str, help="Additional residues to fix (e.g., 'A10,A25,A100')")
+    parser.add_argument("--batch-size", type=int, default=LIGANDMPNN_BATCH_SIZE,
+                        help=f"LigandMPNN batch size (default: {LIGANDMPNN_BATCH_SIZE})")
+    parser.add_argument("--num-batches", type=int, default=LIGANDMPNN_NUM_BATCHES,
+                        help=f"Number of LigandMPNN batches (default: {LIGANDMPNN_NUM_BATCHES})")
+    parser.add_argument("--temperatures", type=float, nargs='+', default=LIGANDMPNN_TEMPERATURES,
+                        help=f"LigandMPNN sampling temperatures (default: {' '.join(map(str, LIGANDMPNN_TEMPERATURES))})")
 
     args = parser.parse_args()
 
     # Validate input
     if not validate_fasta(args.fasta):
+        sys.exit(1)
+
+    # Validate conservation threshold
+    if args.conservation_threshold <= 0 or args.conservation_threshold > 1:
+        print(f"❌ ERROR: Conservation threshold must be between 0 and 1 (got {args.conservation_threshold})")
+        sys.exit(1)
+
+    # Validate fixed residues if provided
+    sequence_length = get_sequence_length(args.fasta)
+    fixed_residues = validate_fixed_residues(args.fixed_residues, args.chain, sequence_length)
+    if fixed_residues is None:
         sys.exit(1)
 
     # Get job name and setup directories
@@ -941,9 +1031,14 @@ All outputs will be organized in: jobs/JOBNAME/
     print("=" * 60)
     print(f"Job Name: {job_name}")
     print(f"Design Chain: {args.chain}")
+    print(f"Sequence Length: {sequence_length}")
     print(f"Job Directory: {job_dir}")
-    print(f"Temperatures: {LIGANDMPNN_TEMPERATURES}")
-    print(f"Conservation Threshold: {int(CONSERVATION_THRESHOLD*100)}%")
+    print(f"Temperatures: {args.temperatures}")
+    print(f"Batch Size: {args.batch_size}")
+    print(f"Number of Batches: {args.num_batches}")
+    print(f"Conservation Threshold: {int(args.conservation_threshold*100)}%")
+    if fixed_residues:
+        print(f"Additional Fixed Residues: {','.join(f'{args.chain}{r}' for r in fixed_residues)}")
     print("=" * 60)
 
     # ================================
@@ -955,14 +1050,16 @@ All outputs will be organized in: jobs/JOBNAME/
     # HHblits scripts
     hhblits_scripts = create_hhblits_scripts(job_dir, job_name, input_fasta)
     hhfilter_script = create_hhfilter_script(job_dir, job_name)
-    conservation_script = create_conservation_script(job_dir, job_name)
+    conservation_script = create_conservation_script(job_dir, job_name, args.conservation_threshold)
 
     # Reference structure script
     reference_script = create_reference_colabfold_script(job_dir, job_name, input_fasta)
 
     # LigandMPNN scripts
-    ligandmpnn_scripts = create_ligandmpnn_scripts(job_dir, job_name, args.chain)
-    postprocess_script = create_ligandmpnn_postprocess_script(job_dir, job_name, args.chain)
+    ligandmpnn_scripts = create_ligandmpnn_scripts(job_dir, job_name, args.chain, args.temperatures,
+                                                     args.batch_size, args.num_batches, fixed_residues,
+                                                     args.conservation_threshold)
+    postprocess_script = create_ligandmpnn_postprocess_script(job_dir, job_name, args.chain, args.temperatures)
 
     # ColabFold monomer script (will need task count after post-processing)
     colabfold_script = create_colabfold_monomer_script(job_dir, job_name)
@@ -1055,8 +1152,8 @@ All outputs will be organized in: jobs/JOBNAME/
     # We need to estimate the number of tasks (will be finalized after post-processing)
     print("\n--- ColabFold Monomer Predictions ---")
     # Estimate: temperatures * batches * batch_size - 1 (skip first seq)
-    estimated_tasks = len(LIGANDMPNN_TEMPERATURES) * LIGANDMPNN_NUM_BATCHES * LIGANDMPNN_BATCH_SIZE
-    estimated_tasks = estimated_tasks - len(LIGANDMPNN_TEMPERATURES)  # Subtract first seqs
+    estimated_tasks = len(args.temperatures) * args.num_batches * args.batch_size
+    estimated_tasks = estimated_tasks - len(args.temperatures)  # Subtract first seqs
 
     print(f"📊 Estimated ~{estimated_tasks} sequences to predict")
     print(f"⚠️  Note: Actual number determined after post-processing completes")

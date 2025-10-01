@@ -56,6 +56,70 @@ python run_pipeline.py input.fasta --chain A
 python run_pipeline.py input.fasta --dry-run
 ```
 
+### Advanced Options
+
+#### Adjust Conservation Threshold
+
+Control how many residues to fix based on MSA conservation (default: 0.8 = 80%):
+
+```bash
+# More conservative (80% of residues fixed) - default
+python run_pipeline.py input.fasta --conservation-threshold 0.8
+
+# Moderate (60% of residues fixed) - good balance
+python run_pipeline.py input.fasta --conservation-threshold 0.6
+
+# More permissive (50% of residues fixed) - broader design space
+python run_pipeline.py input.fasta --conservation-threshold 0.5
+```
+
+**Recommended ranges:**
+- **0.5-0.7**: Good for enzyme redesign with broader sequence diversity
+- **0.7-0.8**: Balanced approach for most applications
+- **0.8-0.9**: Conservative, maintains more of original sequence
+
+#### Fix Additional Residues
+
+Fix specific residues in addition to those identified by conservation analysis:
+
+```bash
+python run_pipeline.py input.fasta --fixed-residues A10,A25,A100
+```
+
+Format: Chain letter followed by residue number (1-based). Multiple residues separated by commas.
+
+#### Customize Sampling Temperatures
+
+Specify custom LigandMPNN sampling temperatures:
+
+```bash
+python run_pipeline.py input.fasta --temperatures 0.1 0.2 0.3 0.5
+```
+
+Lower temperatures (0.1) produce more conservative designs, higher temperatures (0.5+) produce more diversity.
+
+#### Adjust Batch Parameters
+
+Control the number of sequences generated:
+
+```bash
+python run_pipeline.py input.fasta --batch-size 32 --num-batches 8
+```
+
+Total sequences per temperature = `batch_size × num_batches` (minus 1 reference sequence)
+
+#### Combine Options
+
+```bash
+python run_pipeline.py input.fasta \
+  --chain A \
+  --conservation-threshold 0.6 \
+  --fixed-residues A10,A25,A100 \
+  --temperatures 0.1 0.2 0.3 \
+  --batch-size 32 \
+  --num-batches 4
+```
+
 ## Input Requirements
 
 - **FASTA file**: Single protein sequence in FASTA format
@@ -133,15 +197,34 @@ BASE_CONDA_ENV = "/quobyte/jbsiegelgrp/aian/scripts/.conda/envs/ian_base"
 ```
 
 ### Pipeline Parameters
+
+**Default values** (can be overridden via command-line flags):
+
 ```python
 HHBLITS_E_VALUES = ["1e-50", "1e-30", "1e-10", "1e-4"]
 HHFILTER_PARAMS = {"id": 90, "cov": 50, "qid": 30}
-CONSERVATION_THRESHOLD = 0.8  # 80%
+
+# Can be overridden with --conservation-threshold flag
+CONSERVATION_THRESHOLD = 0.8  # 80% - use 0.5-0.7 for broader design space
+
+# Can be overridden with --temperatures flag
 LIGANDMPNN_TEMPERATURES = [0.1, 0.2, 0.3]
+
+# Can be overridden with --batch-size flag
 LIGANDMPNN_BATCH_SIZE = 16
+
+# Can be overridden with --num-batches flag
 LIGANDMPNN_NUM_BATCHES = 4
+
 LIGANDMPNN_OMIT_AA = "C"  # Omit cysteine
 ```
+
+**Command-line overridable parameters:**
+- `--conservation-threshold`: Fraction of residues to conserve (default: 0.8)
+- `--temperatures`: LigandMPNN sampling temperatures (default: 0.1 0.2 0.3)
+- `--batch-size`: Sequences per batch (default: 16)
+- `--num-batches`: Number of batches (default: 4)
+- `--fixed-residues`: Additional residues to fix (default: none)
 
 ### SLURM Settings
 ```python
@@ -257,26 +340,48 @@ For a typical protein (~200 residues):
 
 ## Advanced Usage
 
-### Modifying Conservation Threshold
+### Using Custom Parameters
 
-Edit `CONSERVATION_THRESHOLD` in the script:
-```python
-CONSERVATION_THRESHOLD = 0.9  # 90% conservation
+All key parameters can now be customized via command-line flags:
+
+**Adjust conservation threshold (recommended for enzyme redesign):**
+```bash
+# 50% conservation - broader design space for enzymes
+python run_pipeline.py input.fasta --conservation-threshold 0.5
+
+# 60% conservation - good balance
+python run_pipeline.py input.fasta --conservation-threshold 0.6
+
+# 70% conservation - more conservative
+python run_pipeline.py input.fasta --conservation-threshold 0.7
 ```
 
-### Adding More Temperatures
-
-Edit `LIGANDMPNN_TEMPERATURES`:
-```python
-LIGANDMPNN_TEMPERATURES = [0.1, 0.2, 0.3, 0.4, 0.5]
+**More temperatures:**
+```bash
+python run_pipeline.py input.fasta --temperatures 0.05 0.1 0.2 0.3 0.5
 ```
 
-### Changing Design Parameters
+**Generate more sequences:**
+```bash
+python run_pipeline.py input.fasta --batch-size 32 --num-batches 8
+# This produces 256 sequences per temperature (minus 1 reference)
+```
 
-```python
-LIGANDMPNN_BATCH_SIZE = 32  # More sequences per batch
-LIGANDMPNN_NUM_BATCHES = 8  # More batches
-LIGANDMPNN_OMIT_AA = "CM"   # Omit cysteine and methionine
+**Fix specific residues:**
+```bash
+python run_pipeline.py input.fasta --fixed-residues A10,A25,A100
+# These residues are fixed IN ADDITION to conserved residues from MSA
+```
+
+**Combine multiple options for enzyme redesign:**
+```bash
+python run_pipeline.py input.fasta \
+  --chain A \
+  --conservation-threshold 0.6 \
+  --temperatures 0.1 0.2 0.3 0.5 \
+  --batch-size 32 \
+  --num-batches 8 \
+  --fixed-residues A45,A67
 ```
 
 ### Using Different Chains
@@ -285,6 +390,13 @@ For multi-chain proteins:
 ```bash
 python run_pipeline.py complex.fasta --chain D
 ```
+
+### Validation Features
+
+The pipeline now validates:
+- Fixed residues are in correct format (e.g., `A10`)
+- Fixed residues match the design chain
+- Fixed residue numbers are within sequence length
 
 ## Best Practices
 
