@@ -23,6 +23,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [File Structure](#file-structure)
 - [Example Scripts](#example-scripts)
   - [ColabFold](#colabfold)
+  - [AlphaFold 3](#alphafold-3)
   - [Chai](#chai)
     - [run_chai.py](#run_chaipy)
     - [chai_with_msa.py](#chai_with_msapy)
@@ -380,6 +381,12 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/folding/Alphafold2/colabfold.sh`
 -   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/colabfold.md)**
+
+### AlphaFold 3
+
+-   **Scripts:** `example_scripts/folding/Alphafold3/submit_af3_single.sh`, `example_scripts/folding/Alphafold3/submit_af3_bulk.py`
+-   **Description:** SLURM submission scripts for running AlphaFold 3 predictions. Supports single predictions and bulk array jobs with GPU monitoring and resource tracking.
+-   **[Full Documentation](docs/alphafold3.md)**
 
 ### Chai
 
