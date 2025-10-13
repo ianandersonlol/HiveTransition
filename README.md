@@ -22,6 +22,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Troubleshooting](#troubleshooting)
 - [File Structure](#file-structure)
 - [Example Scripts](#example-scripts)
+  - [Partitions](#partitions)
   - [ColabFold](#colabfold)
   - [AlphaFold 3](#alphafold-3)
   - [Chai](#chai)
@@ -375,6 +376,12 @@ If you find issues or have improvements:
 ## Example Scripts
 
 This project includes example scripts to demonstrate how to run common bioinformatics tools in a cluster environment.
+
+### Partitions
+
+-   **Scripts:** `example_scripts/partitions/low_cpus.sh`, `example_scripts/partitions/high_cpus.sh`, `example_scripts/partitions/gbsf_cpus.sh`
+-   **Description:** Example SLURM submission scripts demonstrating how to use different partitions on HIVE: low priority (3 day max, can be preempted), high priority with group resources (30 day max, jbsiegelgrp account), and high priority with genome center shared resources (30 day max, genomecentergrp account).
+-   **[Full Documentation](docs/partitions.md)**
 
 ### ColabFold
 
