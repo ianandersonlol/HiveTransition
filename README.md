@@ -25,6 +25,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
   - [Partitions](#partitions)
   - [ColabFold](#colabfold)
   - [AlphaFold 3](#alphafold-3)
+  - [AlphaFold 2 Initial Guess](#alphafold-2-initial-guess)
   - [Chai](#chai)
     - [run_chai.py](#run_chaipy)
     - [chai_with_msa.py](#chai_with_msapy)
@@ -394,6 +395,12 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Scripts:** `example_scripts/folding/Alphafold3/submit_af3_single.sh`, `example_scripts/folding/Alphafold3/submit_af3_bulk.py`
 -   **Description:** SLURM submission scripts for running AlphaFold 3 predictions. Supports single predictions and bulk array jobs with GPU monitoring and resource tracking.
 -   **[Full Documentation](docs/alphafold3.md)**
+
+### AlphaFold 2 Initial Guess
+
+-   **Scripts:** `example_scripts/folding/Alphafold2/AF2_InitialGuess/run_AF2IG.py`, `example_scripts/folding/Alphafold2/AF2_InitialGuess/submit_AF2IG.sh`
+-   **Description:** Scripts for running AlphaFold 2 predictions on multiple sequences using a reference PDB structure as a template. Threads each sequence from a multi-sequence FASTA file onto the reference structure and runs AF2 predictions with structural constraints.
+-   **[Full Documentation](docs/af2_initial_guess.md)**
 
 ### Chai
 
