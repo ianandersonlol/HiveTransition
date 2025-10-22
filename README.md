@@ -104,7 +104,7 @@ The `bash_profile_migration.py` script adds these convenient aliases for request
 ssh username@cacao.genomecenter.ucdavis.edu
 
 # Download just the bash profile migration script
-wget https://raw.githubusercontent.com/ianandersonlol/HiveTransition/main/bash_profile_migration.py
+wget https://raw.githubusercontent.com/ianandersonlol/HiveTransition/main/transition_tools_old/bash_profile_migration.py
 
 # Run it
 python bash_profile_migration.py <ssh_username> <quobyte_dir>
@@ -115,11 +115,13 @@ python bash_profile_migration.py jdoe john
 
 ### Step 2: Fix Your Job Scripts
 
+**NOTE**: The cluster transition scripts are now located in the `transition_tools_old/` directory.
+
 For fixing job scripts, clone the repository where YOUR scripts are located:
 
 ```bash
 git clone https://github.com/ianandersonlol/HiveTransition.git
-cd HiveTransition
+cd HiveTransition/transition_tools_old
 
 # Fix individual scripts
 python colab_fix.py /path/to/colabfold_job.sh      # For ColabFold
@@ -132,6 +134,8 @@ python pathMigrator.py /path/to/scripts/directory    # Update all software paths
 ```
 
 ## Available Scripts
+
+**NOTE**: All cluster transition scripts are now located in the `transition_tools_old/` directory.
 
 ### 1. pathMigrator.py (Comprehensive Path Migration)
 Updates ALL software paths in a directory:
@@ -206,7 +210,7 @@ Reports issues with scripts:
 
 1. **Run the migration script from old cluster (cacao/barbera):**
    ```bash
-   python bash_profile_migration.py myusername mydirectory
+   python transition_tools_old/bash_profile_migration.py myusername mydirectory
    ```
 
 2. **Log into HIVE:**
@@ -223,9 +227,9 @@ Reports issues with scripts:
 
 1. **Identify script type** (ColabFold, Rosetta, etc.)
 
-2. **Run appropriate fix script:**
+2. **Run appropriate fix script from the transition_tools_old/ directory:**
    ```bash
-   python <tool>_fix.py myscript.sh
+   python transition_tools_old/<tool>_fix.py myscript.sh
    ```
 
 3. **Review changes:**
@@ -297,7 +301,7 @@ module load cuda/12.6.2  # For GPU jobs Good to have even when you're not using 
 
 2. **Report issues:**
    ```bash
-   python broken.py problematic_script.sh
+   python transition_tools_old/broken.py problematic_script.sh
    ```
 
 3. **GitHub Issues:**
@@ -307,7 +311,7 @@ module load cuda/12.6.2  # For GPU jobs Good to have even when you're not using 
 
 If you find issues or have improvements:
 
-1. Use `broken.py` to report script issues
+1. Use `transition_tools_old/broken.py` to report script issues
 2. Submit pull requests for fixes
 3. Share working examples with the community
 
@@ -316,14 +320,7 @@ If you find issues or have improvements:
 ```
 /Users/iananderson/Desktop/HiveTransition/
 ├───.gitignore
-├───bash_profile_migration.py
-├───broken.py
-├───colab_fix.py
-├───ligandmpnn_fix.py
-├───pathMigrator.py
 ├───README.md
-├───rfdiffusion_fix.py
-├───rosetta_fix.py
 ├───.claude/
 │   └───settings.local.json
 ├───.git/...
@@ -346,32 +343,40 @@ If you find issues or have improvements:
 │   ├───rosetta_fix.py
 │   ├───run_chai.md
 │   └───submit_chai.md
-└───example_scripts/
-    ├───design/
-    │   ├───Diffusion/
-    │   │   └───rf_diffusion_aa.sh
-    │   ├───LigandMPNN/
-    │   │   └───submit_ligandMPNN.sh
-    │   └───MPNNP_Pipeline/
-    │       └───run_pipeline.py
-    ├───docking/
-    │   ├───galigand_dock/
-    │   │   ├───4Epimv7.cst
-    │   │   ├───DF6.params
-    │   │   ├───docking.xml
-    │   │   ├───flags
-    │   │   ├───GatZ_F6P.pdb
-    │   │   └───submit.sh
-    │   └───relaxation/
-    │       └───relax.sh
-    └───folding/
-        ├───Alphafold2/
-        │   └───colabfold.sh
-        └───Chai/
-            ├───chai_with_msa.py
-            ├───run_chai.py
-            ├───submit_chai_with_msa.sh
-            └───submit_chai.sh
+├───example_scripts/
+│   ├───design/
+│   │   ├───Diffusion/
+│   │   │   └───rf_diffusion_aa.sh
+│   │   ├───LigandMPNN/
+│   │   │   └───submit_ligandMPNN.sh
+│   │   └───MPNNP_Pipeline/
+│   │       └───run_pipeline.py
+│   ├───docking/
+│   │   ├───galigand_dock/
+│   │   │   ├───4Epimv7.cst
+│   │   │   ├───DF6.params
+│   │   │   ├───docking.xml
+│   │   │   ├───flags
+│   │   │   ├───GatZ_F6P.pdb
+│   │   │   └───submit.sh
+│   │   └───relaxation/
+│   │       └───relax.sh
+│   └───folding/
+│       ├───Alphafold2/
+│       │   └───colabfold.sh
+│       └───Chai/
+│           ├───chai_with_msa.py
+│           ├───run_chai.py
+│           ├───submit_chai_with_msa.sh
+│           └───submit_chai.sh
+└───transition_tools_old/
+    ├───bash_profile_migration.py
+    ├───broken.py
+    ├───colab_fix.py
+    ├───ligandmpnn_fix.py
+    ├───pathMigrator.py
+    ├───rfdiffusion_fix.py
+    └───rosetta_fix.py
 ```
 
 ## Example Scripts
