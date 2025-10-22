@@ -13,7 +13,6 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 - [Quick Start](#quick-start)
   - [Step 1: Migrate Your Shell Configuration (Run from Cacao/Barbera)](#step-1-migrate-your-shell-configuration-run-from-cacaobarbera)
   - [Step 2: Fix Your Job Scripts](#step-2-fix-your-job-scripts)
-- [Available Scripts](#available-scripts)
 - [Common Migration Tasks](#common-migration-tasks)
   - [Setting Up Your Environment](#setting-up-your-environment)
   - [Migrating Job Scripts](#migrating-job-scripts)
@@ -33,6 +32,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
   - [LigandMPNN](#ligandmpnn)
   - [GaliGand Dock](#galigand-dock)
   - [Relaxation](#relaxation)
+- [Cluster Transition Tools (Legacy)](#cluster-transition-tools-legacy)
 
 ## HIVE vs Cacao Comparison
 
@@ -132,77 +132,6 @@ python rosetta_fix.py /path/to/rosetta_job.sh       # For Rosetta
 # Or update all paths at once (no SLURM changes)
 python pathMigrator.py /path/to/scripts/directory    # Update all software paths
 ```
-
-## Available Scripts
-
-**NOTE**: All cluster transition scripts are now located in the `transition_tools_old/` directory.
-
-### 1. pathMigrator.py (Comprehensive Path Migration)
-Updates ALL software paths in a directory:
-- Combines path fixes from all other scripts
-- Does NOT modify SLURM settings
-- Can process entire directories at once
-- Includes all software: ColabFold, LigandMPNN, RFdiffusion, Rosetta
-
-**[Full Documentation](docs/pathMigrator.md)**
-
-### 2. bash_profile_migration.py
-Migrates your shell configuration to HIVE:
-- Converts `.bash_profile` to `.bashrc`
-- Sets up conda in quobyte directory
-- Adds interactive session aliases
-- Updates paths and modules
-
-**[Full Documentation](docs/bash_profile_migration.md)**
-
-### 3. colab_fix.py
-Updates ColabFold scripts:
-- Fixes ColabFold installation path
-- Updates GPU partition settings
-- Migrates storage paths
-
-**[Full Documentation](docs/colab_fix.md)**
-
-### 4. ligandmpnn_fix.py
-Updates LigandMPNN scripts:
-- Fixes LigandMPNN installation path
-- Updates GPU partition settings
-- Migrates storage paths
-
-**[Full Documentation](docs/ligandmpnn_fix.md)**
-
-### 5. rfdiffusion_fix.py
-Updates RFdiffusion scripts:
-- Standardizes RFdiffusion installation path
-- Updates conda environment to shared SE3nv
-- Updates GPU partition settings
-
-**[Full Documentation](docs/rfdiffusion_fix.md)**
-
-### 8. rf_diffusion_aa.sh
-Example script for running RFdiffusion for amino acid design:
-- Demonstrates how to set up and run RFdiffusion jobs on a SLURM cluster.
-- Configurable parameters for protein design tasks.
-
-**[Full Documentation](docs/rf_diffusion_aa.md)**
-
-### 6. rosetta_fix.py
-Updates Rosetta scripts:
-- Migrates to Rosetta 3.14
-- Changes binary names (`.default.` → `.static.`)
-- Handles CPU partition selection
-- Enforces time limits
-
-**[Full Documentation](docs/rosetta_fix.md)**
-
-### 7. broken.py
-Reports issues with scripts:
-- Generates GitHub issue URL
-- Pre-fills script content
-- Auto-assigns to maintainer
-
-**[Full Documentation](docs/broken.md)**
-
 
 ## Common Migration Tasks
 
@@ -342,7 +271,8 @@ If you find issues or have improvements:
 │   ├───rfdiffusion_fix.py
 │   ├───rosetta_fix.py
 │   ├───run_chai.md
-│   └───submit_chai.md
+│   ├───submit_chai.md
+│   └───transition_tools.md
 ├───example_scripts/
 │   ├───design/
 │   │   ├───Diffusion/
@@ -453,3 +383,11 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/docking/relaxation/relax.sh`
 -   **Description:** A SLURM submission script for running Rosetta relaxation. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/relax.md)**
+
+## Cluster Transition Tools (Legacy)
+
+These tools were created to help migrate from the old Cacao/Barbera HPC cluster to the new HIVE cluster. As the transition is largely complete, these tools are now considered legacy and are archived in the `transition_tools_old/` directory.
+
+For detailed information about all available transition tools (pathMigrator.py, bash_profile_migration.py, colab_fix.py, ligandmpnn_fix.py, rfdiffusion_fix.py, rosetta_fix.py, and broken.py), see:
+
+**[Cluster Transition Tools Documentation](docs/transition_tools.md)**
