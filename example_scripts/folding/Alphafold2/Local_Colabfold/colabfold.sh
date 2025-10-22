@@ -4,7 +4,7 @@
 #SBATCH --partition=gpu-a100
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=16
-#SBATCH --mem=128G
+#SBATCH --mem=64G
 #SBATCH --time=12:00:00
 #SBATCH --output=logs/colabfold_%A_%a.out
 #SBATCH --error=logs/colabfold_%A_%a.err
