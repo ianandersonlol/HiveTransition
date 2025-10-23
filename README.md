@@ -25,6 +25,9 @@ This repository contains scripts to help migrate from the old HPC cluster to the
   - [ColabFold](#colabfold)
   - [AlphaFold 3](#alphafold-3)
   - [AlphaFold 2 Initial Guess](#alphafold-2-initial-guess)
+  - [Boltz2](#boltz2)
+    - [run_boltz.sh](#run_boltzsh)
+    - [chai_to_boltz.py](#chai_to_boltzpy)
   - [Chai](#chai)
     - [run_chai.py](#run_chaipy)
     - [chai_with_msa.py](#chai_with_msapy)
@@ -336,6 +339,18 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Scripts:** `example_scripts/folding/Alphafold2/AF2_InitialGuess/run_AF2IG.py`, `example_scripts/folding/Alphafold2/AF2_InitialGuess/submit_AF2IG.sh`
 -   **Description:** Scripts for running AlphaFold 2 predictions on multiple sequences using a reference PDB structure as a template. Threads each sequence from a multi-sequence FASTA file onto the reference structure and runs AF2 predictions with structural constraints.
 -   **[Full Documentation](docs/af2_initial_guess.md)**
+
+### Boltz2
+
+#### run_boltz.sh
+-   **Script:** `example_scripts/folding/Boltz2/runners/run_boltz.sh`
+-   **Description:** A SLURM submission script for running Boltz2 structure predictions. Supports proteins, nucleic acids (DNA/RNA), and small molecule ligands using YAML input files.
+-   **[Full Documentation](docs/run_boltz.md)**
+
+#### chai_to_boltz.py
+-   **Script:** `example_scripts/folding/Boltz2/helpers/chai_to_boltz.py`
+-   **Description:** A helper utility to convert Chai FASTA format files to Boltz2 YAML format, enabling easy reuse of Chai input files with Boltz2.
+-   **[Full Documentation](docs/chai_to_boltz.md)**
 
 ### Chai
 
