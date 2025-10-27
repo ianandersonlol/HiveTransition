@@ -4,7 +4,7 @@
 #SBATCH --account=genome-center-grp
 #SBATCH --time=12:00:00
 #SBATCH --gres=gpu:1
-#SBATCH --cpus-per-task=32
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
 #SBATCH --output=logs/ligandMPNN_%A_%a.out
 
