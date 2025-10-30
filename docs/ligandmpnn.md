@@ -1,9 +1,9 @@
-[View Script: submit_ligandMPNN.sh](../example_scripts/design/LigandMPNN/submit_ligandMPNN.sh)
+[View Script: submit_ligandmpnn.sh](../example_scripts/design/ligandmpnn/submit_ligandmpnn.sh)
 
 # LigandMPNN Submission Script
 
 ## Overview
-The `submit_ligandMPNN.sh` script is a SLURM submission script designed to run LigandMPNN jobs on the HIVE cluster. It simplifies the process of submitting jobs by providing a user-friendly interface and handling the necessary environment setup.
+The `submit_ligandmpnn.sh` script is a SLURM submission script designed to run LigandMPNN jobs on the HIVE cluster. It simplifies the process of submitting jobs by providing a user-friendly interface and handling the necessary environment setup.
 
 ## What It Does
 
@@ -35,10 +35,10 @@ The script comes pre-configured with recommended SLURM settings for running Liga
 ## Usage
 
 ### Basic Usage
-To submit a LigandMPNN job, use `sbatch` with the `submit_ligandMPNN.sh` script, providing the input PDB file and output folder as arguments.
+To submit a LigandMPNN job, use `sbatch` with the `submit_ligandmpnn.sh` script, providing the input PDB file and output folder as arguments.
 
 ```bash
-sbatch example_scripts/submit_ligandMPNN.sh /path/to/your/protein.pdb /path/to/your/output_directory
+sbatch example_scripts/submit_ligandmpnn.sh /path/to/your/protein.pdb /path/to/your/output_directory
 ```
 
 ### Arguments
@@ -47,7 +47,7 @@ sbatch example_scripts/submit_ligandMPNN.sh /path/to/your/protein.pdb /path/to/y
 
 ### Example
 ```bash
-sbatch example_scripts/submit_ligandMPNN.sh inputs/my_protein.pdb results/mpnn_designs
+sbatch example_scripts/submit_ligandmpnn.sh inputs/my_protein.pdb results/mpnn_designs
 ```
 
 ## LigandMPNN Parameters
@@ -62,7 +62,7 @@ The script calls `run.py` with several parameters that you can customize within 
 - `--symmetry_residues "residues you are about ie A1,A2,A3"`: Specify symmetric residues.
 - `--symmetry_weights "whatever you care about ie 0.1,0.3,0.5"`: Specify weights for symmetric residues.
 
-To change these parameters, you will need to edit the `submit_ligandMPNN.sh` script directly.
+To change these parameters, you will need to edit the `submit_ligandmpnn.sh` script directly.
 
 ## Troubleshooting
 

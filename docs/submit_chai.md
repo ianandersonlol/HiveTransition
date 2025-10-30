@@ -1,5 +1,5 @@
-[View Script: submit_chai.sh](../example_scripts/folding/Chai/submit_chai.sh)
-[View Script: submit_chai_with_msa.sh](../example_scripts/folding/Chai/submit_chai_with_msa.sh)
+[View Script: submit_chai.sh](../example_scripts/folding/chai/submit_chai.sh)
+[View Script: submit_chai_with_msa.sh](../example_scripts/folding/chai/submit_chai_with_msa.sh)
 
 # Submitting ChAI Jobs
 

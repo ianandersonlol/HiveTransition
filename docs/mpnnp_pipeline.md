@@ -190,7 +190,7 @@ All parameters are hardcoded at the top of `run_pipeline.py`:
 ```python
 HHBLITS_DATABASE = "/quobyte/jbsiegelgrp/databases/hhsuite_databases/..."
 LIGANDMPNN_ROOT = "/quobyte/jbsiegelgrp/software/LigandMPNN"
-LIGANDMPNN_CHECKPOINT = "/quobyte/jbsiegelgrp/software/LigandMPNN/model_params/..."
+LIGANDMPNN_CHECKPOINT = "/quobyte/jbsiegelgrp/software/ligandmpnn/model_params/..."
 LIGANDMPNN_CONDA_ENV = "/quobyte/jbsiegelgrp/software/envs/ligandmpnn_env"
 COLABFOLD_BIN_PATH = "/quobyte/jbsiegelgrp/software/LocalColabFold/..."
 BASE_CONDA_ENV = "/quobyte/jbsiegelgrp/aian/scripts/.conda/envs/ian_base"

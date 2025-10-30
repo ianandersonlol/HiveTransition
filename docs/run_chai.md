@@ -1,4 +1,4 @@
-[View Script: run_chai.py](../example_scripts/folding/Chai/run_chai.py)
+[View Script: run_chai.py](../example_scripts/folding/chai/run_chai.py)
 
 # `run_chai.py`
 

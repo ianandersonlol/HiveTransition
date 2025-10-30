@@ -1,8 +1,8 @@
-[View Scripts: run_AF2IG.py](../example_scripts/folding/Alphafold2/AF2_InitialGuess/run_AF2IG.py) | [submit_AF2IG.sh](../example_scripts/folding/Alphafold2/AF2_InitialGuess/submit_AF2IG.sh)
+[View Scripts: run_af2_initial_guess.py](../example_scripts/folding/alphafold2/af2_initial_guess/run_af2_initial_guess.py) | [submit_af2_initial_guess.sh](../example_scripts/folding/alphafold2/af2_initial_guess/submit_af2_initial_guess.sh)
 
 # AlphaFold 2 Initial Guess Scripts
 
-This document provides a detailed explanation of the AF2 Initial Guess scripts located in `example_scripts/folding/Alphafold2/AF2_InitialGuess/`.
+This document provides a detailed explanation of the AF2 Initial Guess scripts located in `example_scripts/folding/alphafold2/af2_initial_guess/`.
 
 ## Overview
 
@@ -15,7 +15,7 @@ This approach is particularly useful for:
 
 ## Components
 
-### 1. run_AF2IG.py
+### 1. run_af2_initial_guess.py
 
 A Python script that orchestrates the entire AF2 Initial Guess workflow. It performs three main steps:
 
@@ -23,11 +23,11 @@ A Python script that orchestrates the entire AF2 Initial Guess workflow. It perf
 2. **Runlist Creation**: Generates a runlist file containing all sequence tags to be processed
 3. **AF2 Prediction**: Runs the AF2 initial guess prediction script on all threaded structures
 
-### 2. submit_AF2IG.sh
+### 2. submit_af2_initial_guess.sh
 
-A SLURM submission script that wraps `run_AF2IG.py` with proper resource allocation and environment setup.
+A SLURM submission script that wraps `run_af2_initial_guess.py` with proper resource allocation and environment setup.
 
-## SLURM Directives (submit_AF2IG.sh)
+## SLURM Directives (submit_af2_initial_guess.sh)
 
 The submission script includes the following SLURM directives:
 
@@ -47,7 +47,7 @@ The submission script includes the following SLURM directives:
 To submit an AF2 Initial Guess job, provide three required arguments:
 
 ```bash
-sbatch submit_AF2IG.sh <fasta_file> <reference_pdb> <output_dir>
+sbatch submit_af2_initial_guess.sh <fasta_file> <reference_pdb> <output_dir>
 ```
 
 **Arguments:**
@@ -58,7 +58,7 @@ sbatch submit_AF2IG.sh <fasta_file> <reference_pdb> <output_dir>
 ### Example
 
 ```bash
-sbatch submit_AF2IG.sh sequences.fasta template.pdb /path/to/output
+sbatch submit_af2_initial_guess.sh sequences.fasta template.pdb /path/to/output
 ```
 
 ### Advanced Options
@@ -66,7 +66,7 @@ sbatch submit_AF2IG.sh sequences.fasta template.pdb /path/to/output
 You can specify additional options to customize the AF2 prediction:
 
 ```bash
-sbatch submit_AF2IG.sh sequences.fasta template.pdb /path/to/output --recycle 3 --force_monomer
+sbatch submit_af2_initial_guess.sh sequences.fasta template.pdb /path/to/output --recycle 3 --force_monomer
 ```
 
 **Optional Arguments:**
@@ -77,7 +77,7 @@ sbatch submit_AF2IG.sh sequences.fasta template.pdb /path/to/output --recycle 3 
 
 ### Python Dependencies
 
-The `run_AF2IG.py` script requires:
+The `run_af2_initial_guess.py` script requires:
 - `biopython`: For parsing FASTA files
 - `pyrosetta`: For threading sequences onto the reference structure
 

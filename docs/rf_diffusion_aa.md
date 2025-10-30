@@ -1,4 +1,4 @@
-[View Script: ../example_scripts/design/Diffusion/rf_diffusion_aa.sh](../example_scripts/design/Diffusion/rf_diffusion_aa.sh)
+[View Script: ../example_scripts/design/diffusion/rf_diffusion_aa.sh](../example_scripts/design/diffusion/rf_diffusion_aa.sh)
 
 # RFdiffusion Amino Acid Design Script
 
@@ -22,7 +22,7 @@ The script accepts two command-line arguments and requires modification of the c
 sbatch rf_diffusion_aa.sh /path/to/output/prefix /path/to/input.pdb
 
 # Example:
-sbatch example_scripts/design/Diffusion/rf_diffusion_aa.sh \
+sbatch example_scripts/design/diffusion/rf_diffusion_aa.sh \
     /quobyte/jbsiegelgrp/yourname/designs/linker_design \
     /quobyte/jbsiegelgrp/yourname/inputs/protein.pdb
 ```

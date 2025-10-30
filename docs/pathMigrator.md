@@ -1,4 +1,4 @@
-[View Script: pathMigrator.py](../pathMigrator.py)
+[View Script: path_migrator.py](../path_migrator.py)
 
 # Path Migrator - Comprehensive Software Path Migration
 
@@ -11,7 +11,7 @@
 - **ALWAYS use --dry-run first** to preview changes
 
 ## Overview
-The `pathMigrator.py` script is a comprehensive tool that updates ALL software paths in your scripts for the HIVE cluster transition. It combines the path migration functionality from all the individual fix scripts into one powerful tool.
+The `path_migrator.py` script is a comprehensive tool that updates ALL software paths in your scripts for the HIVE cluster transition. It combines the path migration functionality from all the individual fix scripts into one powerful tool.
 
 ## What It Does
 
@@ -45,30 +45,30 @@ The script automatically detects and updates paths for:
 
 ### Basic Usage
 ```bash
-python pathMigrator.py
+python path_migrator.py
 ```
 This processes all files in the current directory and subdirectories.
 
 ### Process Specific Directory
 ```bash
-python pathMigrator.py /path/to/scripts
+python path_migrator.py /path/to/scripts
 ```
 
 ### Preview Mode (Dry Run)
 ```bash
-python pathMigrator.py --dry-run
+python path_migrator.py --dry-run
 ```
 Shows what would be changed without modifying any files.
 
 ### Verbose Mode
 ```bash
-python pathMigrator.py -v
+python path_migrator.py -v
 ```
 Shows detailed line-by-line changes.
 
 ### Combine Options
 ```bash
-python pathMigrator.py /my/scripts --dry-run -v
+python path_migrator.py /my/scripts --dry-run -v
 ```
 
 ## Example Output
@@ -164,21 +164,21 @@ This ensures specific software paths are handled correctly before general replac
 
 2. **Always use dry run first**:
    ```bash
-   python pathMigrator.py . --dry-run
+   python path_migrator.py . --dry-run
    ```
 
 3. **Be specific with paths**:
    ```bash
    # GOOD - specific directory
-   python pathMigrator.py ./my_scripts --dry-run
+   python path_migrator.py ./my_scripts --dry-run
    
    # BAD - too broad!
-   python pathMigrator.py /home --dry-run
+   python path_migrator.py /home --dry-run
    ```
 
 4. **Review verbose output for critical scripts**:
    ```bash
-   python pathMigrator.py important_script.sh --dry-run -v
+   python path_migrator.py important_script.sh --dry-run -v
    ```
 
 5. **Back up your scripts**:
@@ -220,7 +220,7 @@ This tool combines the path-fixing functionality of:
 
 ## When to Use This vs Individual Scripts
 
-**Use pathMigrator.py when**:
+**Use path_migrator.py when**:
 - You have many scripts to update
 - You only need path changes
 - You want to process entire directories

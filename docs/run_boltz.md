@@ -1,8 +1,8 @@
-[View Script: run_boltz.sh](../example_scripts/folding/Boltz2/runners/run_boltz.sh)
+[View Script: run_boltz.sh](../example_scripts/folding/boltz2/runners/run_boltz.sh)
 
 # Boltz2 SLURM Submission Script
 
-This document provides a detailed explanation of the `run_boltz.sh` script located in the `example_scripts/folding/Boltz2/runners/` directory.
+This document provides a detailed explanation of the `run_boltz.sh` script located in the `example_scripts/folding/boltz2/runners/` directory.
 
 ## Overview
 
@@ -298,7 +298,7 @@ EOF
 
 **Step 2: Submit prediction**
 ```bash
-sbatch example_scripts/folding/Boltz2/runners/run_boltz.sh my_complex.yaml --use_msa_server --use_potentials
+sbatch example_scripts/folding/boltz2/runners/run_boltz.sh my_complex.yaml --use_msa_server --use_potentials
 ```
 
 **Step 3: Monitor progress**

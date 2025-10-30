@@ -1,8 +1,8 @@
-[View Script: chai_to_boltz.py](../example_scripts/folding/Boltz2/helpers/chai_to_boltz.py)
+[View Script: chai_to_boltz.py](../example_scripts/folding/boltz2/helpers/chai_to_boltz.py)
 
 # Chai to Boltz2 Format Converter
 
-This document provides a detailed explanation of the `chai_to_boltz.py` helper script located in the `example_scripts/folding/Boltz2/helpers/` directory.
+This document provides a detailed explanation of the `chai_to_boltz.py` helper script located in the `example_scripts/folding/boltz2/helpers/` directory.
 
 ## Overview
 
@@ -177,7 +177,7 @@ EOF
 
 **Step 2: Convert to Boltz2 YAML**
 ```bash
-python example_scripts/folding/Boltz2/helpers/chai_to_boltz.py enzyme_substrate.fasta
+python example_scripts/folding/boltz2/helpers/chai_to_boltz.py enzyme_substrate.fasta
 ```
 
 **Output:**
@@ -195,7 +195,7 @@ To run with Boltz2:
 
 **Step 3: Submit to Boltz2**
 ```bash
-sbatch example_scripts/folding/Boltz2/runners/run_boltz.sh enzyme_substrate.yaml --use_msa_server
+sbatch example_scripts/folding/boltz2/runners/run_boltz.sh enzyme_substrate.yaml --use_msa_server
 ```
 
 ### Example 2: Multi-Component System
@@ -216,8 +216,8 @@ EOF
 
 **Step 2: Convert and submit**
 ```bash
-python example_scripts/folding/Boltz2/helpers/chai_to_boltz.py complex_system.fasta
-sbatch example_scripts/folding/Boltz2/runners/run_boltz.sh complex_system.yaml --use_msa_server --use_potentials
+python example_scripts/folding/boltz2/helpers/chai_to_boltz.py complex_system.fasta
+sbatch example_scripts/folding/boltz2/runners/run_boltz.sh complex_system.yaml --use_msa_server --use_potentials
 ```
 
 ## Validation Tips
@@ -257,7 +257,7 @@ If you have multiple Chai FASTA files to convert:
 ```bash
 # Convert all FASTA files in current directory
 for file in *.fasta; do
-    python example_scripts/folding/Boltz2/helpers/chai_to_boltz.py "$file"
+    python example_scripts/folding/boltz2/helpers/chai_to_boltz.py "$file"
 done
 ```
 
@@ -267,17 +267,17 @@ Combine conversion and submission in a single workflow:
 
 ```bash
 # Convert
-python example_scripts/folding/Boltz2/helpers/chai_to_boltz.py input.fasta
+python example_scripts/folding/boltz2/helpers/chai_to_boltz.py input.fasta
 
 # Submit
-sbatch example_scripts/folding/Boltz2/runners/run_boltz.sh input.yaml --use_msa_server
+sbatch example_scripts/folding/boltz2/runners/run_boltz.sh input.yaml --use_msa_server
 ```
 
 Or as a one-liner:
 
 ```bash
-python example_scripts/folding/Boltz2/helpers/chai_to_boltz.py input.fasta && \
-sbatch example_scripts/folding/Boltz2/runners/run_boltz.sh input.yaml --use_msa_server
+python example_scripts/folding/boltz2/helpers/chai_to_boltz.py input.fasta && \
+sbatch example_scripts/folding/boltz2/runners/run_boltz.sh input.yaml --use_msa_server
 ```
 
 ## Limitations

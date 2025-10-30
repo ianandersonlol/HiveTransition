@@ -44,7 +44,7 @@ python migrate.py rosetta_job.sh --high
 
 The following individual tools are still available but **migrate.py is recommended** for most use cases:
 
-### 1. pathMigrator.py - Comprehensive Path Migration
+### 1. path_migrator.py - Comprehensive Path Migration
 
 Updates ALL software paths in a directory:
 - Combines path fixes from all other scripts
@@ -125,7 +125,7 @@ python colab_fix.py /path/to/script.sh
 python ligandmpnn_fix.py /path/to/script.sh
 python rfdiffusion_fix.py /path/to/script.sh
 python rosetta_fix.py /path/to/script.sh
-python pathMigrator.py /path/to/scripts/directory
+python path_migrator.py /path/to/scripts/directory
 ```
 
 ## When to Use These Tools

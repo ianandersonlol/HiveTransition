@@ -294,7 +294,7 @@ export PATH="/quobyte/jbsiegelgrp/software/LocalColabFold/localcolabfold/colabfo
 | `ligandmpnn_fix.py` | Automatically detects and fixes LigandMPNN paths + SLURM |
 | `rfdiffusion_fix.py` | Automatically detects and fixes RFdiffusion paths + conda envs + SLURM |
 | `rosetta_fix.py` | Automatically detects and fixes Rosetta paths + binaries + SLURM |
-| `pathMigrator.py` | All path fixes PLUS SLURM configurations |
+| `path_migrator.py` | All path fixes PLUS SLURM configurations |
 
 ## Troubleshooting
 

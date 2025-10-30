@@ -139,7 +139,7 @@ python colab_fix.py /path/to/colabfold_job.sh      # For ColabFold
 python ligandmpnn_fix.py /path/to/ligandmpnn_job.sh # For LigandMPNN
 python rfdiffusion_fix.py /path/to/rfdiff_job.sh    # For RFdiffusion
 python rosetta_fix.py /path/to/rosetta_job.sh       # For Rosetta
-python pathMigrator.py /path/to/scripts/directory   # Update all software paths
+python path_migrator.py /path/to/scripts/directory   # Update all software paths
 ```
 
 ## Common Migration Tasks
@@ -289,11 +289,11 @@ If you find issues or have improvements:
 │   └───transition_tools.md
 ├───example_scripts/
 │   ├───design/
-│   │   ├───Diffusion/
+│   │   ├───diffusion/
 │   │   │   └───rf_diffusion_aa.sh
-│   │   ├───LigandMPNN/
-│   │   │   └───submit_ligandMPNN.sh
-│   │   └───MPNNP_Pipeline/
+│   │   ├───ligandmpnn/
+│   │   │   └───submit_ligandmpnn.sh
+│   │   └───mpnnp_pipeline/
 │   │       └───run_pipeline.py
 │   ├───docking/
 │   │   ├───galigand_dock/
@@ -306,9 +306,9 @@ If you find issues or have improvements:
 │   │   └───relaxation/
 │   │       └───relax.sh
 │   └───folding/
-│       ├───Alphafold2/
+│       ├───alphafold2/
 │       │   └───colabfold.sh
-│       └───Chai/
+│       └───chai/
 │           ├───chai_with_msa.py
 │           ├───run_chai.py
 │           ├───submit_chai_with_msa.sh
@@ -318,7 +318,7 @@ If you find issues or have improvements:
     ├───broken.py
     ├───colab_fix.py
     ├───ligandmpnn_fix.py
-    ├───pathMigrator.py
+    ├───path_migrator.py
     ├───rfdiffusion_fix.py
     └───rosetta_fix.py
 ```
@@ -335,66 +335,66 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 ### ColabFold
 
--   **Script:** `example_scripts/folding/Alphafold2/colabfold.sh`
+-   **Script:** `example_scripts/folding/alphafold2/colabfold.sh`
 -   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/colabfold.md)**
 
 ### AlphaFold 3
 
--   **Scripts:** `example_scripts/folding/Alphafold3/submit_af3_single.sh`, `example_scripts/folding/Alphafold3/submit_af3_bulk.py`
+-   **Scripts:** `example_scripts/folding/alphafold3/submit_af3_single.sh`, `example_scripts/folding/alphafold3/submit_af3_bulk.py`
 -   **Description:** SLURM submission scripts for running AlphaFold 3 predictions. Supports single predictions and bulk array jobs with GPU monitoring and resource tracking.
 -   **[Full Documentation](docs/alphafold3.md)**
 
 ### AlphaFold 2 Initial Guess
 
--   **Scripts:** `example_scripts/folding/Alphafold2/AF2_InitialGuess/run_AF2IG.py`, `example_scripts/folding/Alphafold2/AF2_InitialGuess/submit_AF2IG.sh`
+-   **Scripts:** `example_scripts/folding/alphafold2/af2_initial_guess/run_af2_initial_guess.py`, `example_scripts/folding/alphafold2/af2_initial_guess/submit_af2_initial_guess.sh`
 -   **Description:** Scripts for running AlphaFold 2 predictions on multiple sequences using a reference PDB structure as a template. Threads each sequence from a multi-sequence FASTA file onto the reference structure and runs AF2 predictions with structural constraints.
 -   **[Full Documentation](docs/af2_initial_guess.md)**
 
 ### Boltz2
 
 #### run_boltz.sh
--   **Script:** `example_scripts/folding/Boltz2/runners/run_boltz.sh`
+-   **Script:** `example_scripts/folding/boltz2/runners/run_boltz.sh`
 -   **Description:** A SLURM submission script for running Boltz2 structure predictions. Supports proteins, nucleic acids (DNA/RNA), and small molecule ligands using YAML input files.
 -   **[Full Documentation](docs/run_boltz.md)**
 
 #### chai_to_boltz.py
--   **Script:** `example_scripts/folding/Boltz2/helpers/chai_to_boltz.py`
+-   **Script:** `example_scripts/folding/boltz2/helpers/chai_to_boltz.py`
 -   **Description:** A helper utility to convert Chai FASTA format files to Boltz2 YAML format, enabling easy reuse of Chai input files with Boltz2.
 -   **[Full Documentation](docs/chai_to_boltz.md)**
 
 ### Chai
 
 #### run_chai.py
--   **Script:** `example_scripts/folding/Chai/run_chai.py`
+-   **Script:** `example_scripts/folding/chai/run_chai.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library.
 -   **[Full Documentation](docs/run_chai.md)**
 
 #### chai_with_msa.py
--   **Script:** `example_scripts/folding/Chai/chai_with_msa.py`
+-   **Script:** `example_scripts/folding/chai/chai_with_msa.py`
 -   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
 -   **[Full Documentation](docs/chai_with_msa.md)**
 
 #### submit_chai.sh & submit_chai_with_msa.sh
--   **Scripts:** `example_scripts/folding/Chai/submit_chai.sh`, `example_scripts/folding/Chai/submit_chai_with_msa.sh`
+-   **Scripts:** `example_scripts/folding/chai/submit_chai.sh`, `example_scripts/folding/chai/submit_chai_with_msa.sh`
 -   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
 -   **[Full Documentation](docs/submit_chai.md)**
 
 ### LigandMPNN
 
--   **Script:** `example_scripts/design/LigandMPNN/submit_ligandMPNN.sh`
+-   **Script:** `example_scripts/design/ligandmpnn/submit_ligandmpnn.sh`
 -   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/ligandmpnn.md)**
 
 ### RFdiffusion
 
--   **Script:** `example_scripts/design/Diffusion/rf_diffusion_aa.sh`
+-   **Script:** `example_scripts/design/diffusion/rf_diffusion_aa.sh`
 -   **Description:** A SLURM submission script for running RFdiffusion for *de novo* protein design. It is pre-configured with common parameters for protein design tasks.
 -   **[Full Documentation](docs/rf_diffusion_aa.md)**
 
 ### MPNNP Pipeline
 
--   **Script:** `example_scripts/design/MPNNP_Pipeline/run_pipeline.py`
+-   **Script:** `example_scripts/design/mpnnp_pipeline/run_pipeline.py`
 -   **Description:** A unified, automated protein design pipeline that integrates MSA generation, conservation analysis, structure prediction, and LigandMPNN design. Takes a protein sequence and produces structurally-validated designed variants.
 -   **[Full Documentation](docs/mpnnp_pipeline.md)**
 
@@ -414,6 +414,6 @@ This project includes example scripts to demonstrate how to run common bioinform
 
 These tools were created to help migrate from the old Cacao/Barbera HPC cluster to the new HIVE cluster. As the transition is largely complete, these tools are now considered legacy and are archived in the `transition_tools_old/` directory.
 
-For detailed information about all available transition tools (pathMigrator.py, bash_profile_migration.py, colab_fix.py, ligandmpnn_fix.py, rfdiffusion_fix.py, rosetta_fix.py, and broken.py), see:
+For detailed information about all available transition tools (path_migrator.py, bash_profile_migration.py, colab_fix.py, ligandmpnn_fix.py, rfdiffusion_fix.py, rosetta_fix.py, and broken.py), see:
 
 **[Cluster Transition Tools Documentation](docs/transition_tools.md)**

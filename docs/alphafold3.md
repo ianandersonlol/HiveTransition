@@ -510,7 +510,7 @@ For array jobs, total time depends on:
 ## Related Documentation
 
 - [ColabFold Documentation](../../colabfold.md) - Alternative/complementary folding pipeline
-- [AlphaFold 2 Scripts](../Alphafold2/) - Previous version scripts (if available)
+- [AlphaFold 2 Scripts](../alphafold2/) - Previous version scripts (if available)
 - [MPNNP Pipeline](../../../docs/mpnnp_pipeline.md) - Includes structure prediction as part of design pipeline
 
 ## Citation
