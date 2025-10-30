@@ -1,12 +1,48 @@
-# Cluster Transition Tools (Legacy)
+# Cluster Transition Tools
 
-**NOTE**: These tools were created to help migrate from the old Cacao/Barbera HPC cluster to the new HIVE cluster. As the transition is largely complete, these tools are now considered legacy and are archived in the `transition_tools_old/` directory.
+**NOTE**: These tools help migrate from the old Cacao/Barbera HPC cluster to the new HIVE cluster. All tools are archived in the `transition_tools_old/` directory.
 
 ## Overview
 
 The transition tools automate the process of updating job scripts and shell configurations when migrating from the old cluster to HIVE. They handle path updates, SLURM configuration changes, and environment setup.
 
-## Available Tools
+## Recommended Tool
+
+### migrate.py - Unified Migration Script (NEW)
+
+**RECOMMENDED**: This new unified script consolidates all migration functionality into a single tool.
+
+Handles everything in one command:
+- All software path updates (ColabFold, LigandMPNN, RFdiffusion, Rosetta)
+- All SLURM configuration changes (partitions, accounts, requeue flags)
+- Time limit adjustments for partition constraints
+- General path migration from /share/siegellab/ to /quobyte/jbsiegelgrp/
+- Directory or single file processing
+- Dry-run mode for previewing changes
+- In-place or _fixed file creation
+
+**Replaces**: `colab_fix.py`, `ligandmpnn_fix.py`, `rfdiffusion_fix.py`, `rosetta_fix.py`
+
+**[Full Documentation](migrate.md)**
+
+**Quick Examples:**
+```bash
+# Fix a single script
+python migrate.py script.sh
+
+# Fix all scripts in a directory
+python migrate.py /path/to/scripts/
+
+# Preview changes first
+python migrate.py script.sh --dry-run
+
+# Use high partition for long Rosetta jobs
+python migrate.py rosetta_job.sh --high
+```
+
+## Legacy Tools
+
+The following individual tools are still available but **migrate.py is recommended** for most use cases:
 
 ### 1. pathMigrator.py - Comprehensive Path Migration
 

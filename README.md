@@ -118,7 +118,7 @@ python bash_profile_migration.py jdoe john
 
 ### Step 2: Fix Your Job Scripts
 
-**NOTE**: The cluster transition scripts are now located in the `transition_tools_old/` directory.
+**RECOMMENDED**: Use the new unified migration script that handles all fix types automatically.
 
 For fixing job scripts, clone the repository where YOUR scripts are located:
 
@@ -126,14 +126,20 @@ For fixing job scripts, clone the repository where YOUR scripts are located:
 git clone https://github.com/ianandersonlol/HiveTransition.git
 cd HiveTransition/transition_tools_old
 
-# Fix individual scripts
+# RECOMMENDED: Use the unified migration script
+python migrate.py /path/to/script.sh           # Fix single script
+python migrate.py /path/to/scripts/            # Fix entire directory
+python migrate.py /path/to/scripts/ --dry-run  # Preview changes first
+
+# For Rosetta jobs longer than 3 days, use --high flag
+python migrate.py rosetta_job.sh --high
+
+# Legacy: Individual fix scripts (still available but migrate.py is preferred)
 python colab_fix.py /path/to/colabfold_job.sh      # For ColabFold
 python ligandmpnn_fix.py /path/to/ligandmpnn_job.sh # For LigandMPNN
 python rfdiffusion_fix.py /path/to/rfdiff_job.sh    # For RFdiffusion
 python rosetta_fix.py /path/to/rosetta_job.sh       # For Rosetta
-
-# Or update all paths at once (no SLURM changes)
-python pathMigrator.py /path/to/scripts/directory    # Update all software paths
+python pathMigrator.py /path/to/scripts/directory   # Update all software paths
 ```
 
 ## Common Migration Tasks
@@ -157,11 +163,14 @@ python pathMigrator.py /path/to/scripts/directory    # Update all software paths
 
 ### Migrating Job Scripts
 
-1. **Identify script type** (ColabFold, Rosetta, etc.)
-
-2. **Run appropriate fix script from the transition_tools_old/ directory:**
+1. **Preview changes first:**
    ```bash
-   python transition_tools_old/<tool>_fix.py myscript.sh
+   python transition_tools_old/migrate.py myscript.sh --dry-run
+   ```
+
+2. **Run the migration:**
+   ```bash
+   python transition_tools_old/migrate.py myscript.sh
    ```
 
 3. **Review changes:**
@@ -173,6 +182,8 @@ python pathMigrator.py /path/to/scripts/directory    # Update all software paths
    ```bash
    sbatch myscript_fixed.sh
    ```
+
+**Tip**: For long Rosetta jobs (>3 days), add `--high` flag to use the high partition.
 
 ### Interactive Sessions
 
