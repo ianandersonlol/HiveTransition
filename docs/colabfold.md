@@ -17,10 +17,10 @@ The script begins with a series of `#SBATCH` directives that configure the job s
 -   `--partition=gpu-a100`: Requests a node from the `gpu-a100` partition.
 -   `--gres=gpu:1`: Requests one GPU.
 -   `--cpus-per-task=16`: Requests 16 CPU cores.
--   `--mem=128G`: Requests 128GB of memory.
+-   `--mem=64G`: Requests 64GB of memory.
 -   `--time=12:00:00`: Sets a maximum runtime of 12 hours.
--   `--output=logs/colabfold_%j.out`: Specifies the file for standard output, where `%j` is the job ID.
--   `--error=logs/colabfold_%j.err`: Specifies the file for standard error.
+-   `--output=logs/colabfold_%A_%a.out`: Specifies the file for standard output, where `%A` is the job ID and `%a` is the array task ID.
+-   `--error=logs/colabfold_%A_%a.err`: Specifies the file for standard error.
 
 ## Usage
 

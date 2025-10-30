@@ -9,14 +9,14 @@ The `submit_ligandMPNN.sh` script is a SLURM submission script designed to run L
 
 ### 1. SLURM Configuration
 The script comes pre-configured with recommended SLURM settings for running LigandMPNN on a GPU node. These settings include:
-- **Job Name:** `MPNN`
+- **Job Name:** `LigandMPNN`
 - **Partition:** `gpu-a100`
 - **Account:** `genome-center-grp`
 - **Time Limit:** `12:00:00`
 - **GPU Request:** `1`
-- **CPUs per Task:** `32`
+- **CPUs per Task:** `16`
 - **Memory:** `128G`
-- **Output Log:** `logs/%j.out`
+- **Output Log:** `logs/ligandMPNN_%A_%a.out`
 
 ### 2. Environment Setup
 - **Conda Environment:** Activates the correct conda environment for LigandMPNN located at `/quobyte/jbsiegelgrp/software/envs/ligandmpnn_env`.
