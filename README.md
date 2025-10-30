@@ -260,68 +260,122 @@ If you find issues or have improvements:
 
 ## File Structure
 
+**Note:** All directories and files now use consistent `snake_case` naming for better maintainability.
+
 ```
-/Users/iananderson/Desktop/HiveTransition/
-├───.gitignore
-├───README.md
-├───.claude/
-│   └───settings.local.json
-├───.git/...
-├───.github/
-│   └───ISSUE_TEMPLATE/
-│       └───script_not_working.yml
-├───docs/
-│   ├───bash_profile_migration.md
-│   ├───broken.md
-│   ├───chai_with_msa.md
-│   ├───colab_fix.md
-│   ├───colabfold.md
-│   ├───galigand_dock.md
-│   ├───ligandmpnn_fix.md
-│   ├───ligandmpnn.md
-│   ├───mpnnp_pipeline.md
-│   ├───pathMigrator.md
-│   ├───relax.md
-│   ├───rfdiffusion_fix.py
-│   ├───rosetta_fix.py
-│   ├───run_chai.md
-│   ├───submit_chai.md
-│   └───transition_tools.md
-├───example_scripts/
-│   ├───design/
-│   │   ├───diffusion/
-│   │   │   └───rf_diffusion_aa.sh
-│   │   ├───ligandmpnn/
-│   │   │   └───submit_ligandmpnn.sh
-│   │   └───mpnnp_pipeline/
-│   │       └───run_pipeline.py
-│   ├───docking/
-│   │   ├───galigand_dock/
-│   │   │   ├───4Epimv7.cst
-│   │   │   ├───DF6.params
-│   │   │   ├───docking.xml
-│   │   │   ├───flags
-│   │   │   ├───GatZ_F6P.pdb
-│   │   │   └───submit.sh
-│   │   └───relaxation/
-│   │       └───relax.sh
-│   └───folding/
-│       ├───alphafold2/
-│       │   └───colabfold.sh
-│       └───chai/
-│           ├───chai_with_msa.py
-│           ├───run_chai.py
-│           ├───submit_chai_with_msa.sh
-│           └───submit_chai.sh
-└───transition_tools_old/
-    ├───bash_profile_migration.py
-    ├───broken.py
-    ├───colab_fix.py
-    ├───ligandmpnn_fix.py
-    ├───path_migrator.py
-    ├───rfdiffusion_fix.py
-    └───rosetta_fix.py
+HiveTransition/
+├── .gitignore
+├── README.md
+├── CLAUDE.md
+├── docs/
+│   ├── migrate.md
+│   ├── transition_tools.md
+│   ├── partitions.md
+│   ├── colabfold.md
+│   ├── alphafold3.md
+│   ├── af2_initial_guess.md
+│   ├── run_boltz.md
+│   ├── chai_to_boltz.md
+│   ├── run_chai.md
+│   ├── chai_with_msa.md
+│   ├── submit_chai.md
+│   ├── ligandmpnn.md
+│   ├── rf_diffusion_aa.md
+│   ├── mpnnp_pipeline.md
+│   ├── galigand_dock.md
+│   ├── relax.md
+│   ├── path_migrator.md
+│   ├── colab_fix.md
+│   ├── ligandmpnn_fix.md
+│   ├── rfdiffusion_fix.md
+│   ├── rosetta_fix.md
+│   ├── bash_profile_migration.md
+│   └── broken.md
+│
+├── example_scripts/
+│   ├── partitions/
+│   │   ├── low_cpus.sh
+│   │   ├── high_cpus.sh
+│   │   └── gbsf_cpus.sh
+│   │
+│   ├── folding/
+│   │   ├── alphafold2/
+│   │   │   ├── local_colabfold/
+│   │   │   │   └── colabfold.sh
+│   │   │   └── af2_initial_guess/
+│   │   │       ├── run_af2_initial_guess.py
+│   │   │       └── submit_af2_initial_guess.sh
+│   │   ├── alphafold3/
+│   │   │   ├── submit_af3_single.sh
+│   │   │   └── submit_af3_bulk.py
+│   │   ├── boltz2/
+│   │   │   ├── runners/
+│   │   │   │   └── run_boltz.sh
+│   │   │   └── helpers/
+│   │   │       └── chai_to_boltz.py
+│   │   └── chai/
+│   │       ├── run_chai.py
+│   │       ├── chai_with_msa.py
+│   │       ├── submit_chai.sh
+│   │       └── submit_chai_with_msa.sh
+│   │
+│   ├── design/
+│   │   ├── diffusion/
+│   │   │   └── rf_diffusion_aa.sh
+│   │   ├── ligandmpnn/
+│   │   │   └── submit_ligandmpnn.sh
+│   │   └── mpnnp_pipeline/
+│   │       └── run_pipeline.py
+│   │
+│   └── docking/
+│       ├── galigand_dock/
+│       │   └── submit.sh
+│       └── relaxation/
+│           └── relax.sh
+│
+└── transition_tools_old/
+    ├── migrate.py
+    ├── path_migrator.py
+    ├── colab_fix.py
+    ├── ligandmpnn_fix.py
+    ├── rfdiffusion_fix.py
+    ├── rosetta_fix.py
+    ├── bash_profile_migration.py
+    └── broken.py
 ```
+
+## Recent Improvements
+
+### Resource Standardization (Latest Update)
+All structure prediction scripts have been standardized for consistency and reliability:
+
+**GPU Structure Prediction Standard: 16 CPU, 64G**
+- ✅ ColabFold: 16 CPU, 64G (baseline)
+- ✅ Boltz2: 16 CPU, 64G (increased from 32G)
+- ✅ AlphaFold3: 16 CPU, 64G, **gpu-a100 partition** (fixed from low partition)
+- ✅ AF2 Initial Guess: 16 CPU, 64G (increased from 4 CPU, 16G)
+- ℹ️ Chai: 16 CPU, 128G (appropriate for large complexes)
+
+**CPU Jobs Standard:**
+- ✅ Rosetta Relax: 4 CPU, 8G, low partition with --requeue
+
+**Benefits:**
+- Prevents resource-related failures (OOM errors, timeout)
+- Consistent baseline for all GPU workloads
+- Improved cluster utilization
+- Clear standards for users
+
+### Naming Standardization
+All files and directories now use consistent `snake_case` naming:
+- Directories: `alphafold2/`, `boltz2/`, `chai/`, `diffusion/`, `ligandmpnn/`, `mpnnp_pipeline/`
+- Scripts: `submit_ligandmpnn.sh`, `run_af2_initial_guess.py`, `path_migrator.py`
+
+### New Unified Migration Tool
+The new `migrate.py` script consolidates all migration functionality:
+- Replaces 4 separate fix scripts (colab, ligandmpnn, rfdiffusion, rosetta)
+- Eliminates ~70% code duplication
+- Adds --dry-run, --in-place, and --verbose modes
+- See [migrate.md](docs/migrate.md) for details
 
 ## Example Scripts
 
@@ -330,60 +384,44 @@ This project includes example scripts to demonstrate how to run common bioinform
 ### Partitions
 
 -   **Scripts:** `example_scripts/partitions/low_cpus.sh`, `example_scripts/partitions/high_cpus.sh`, `example_scripts/partitions/gbsf_cpus.sh`
--   **Description:** Example SLURM submission scripts demonstrating how to use different partitions on HIVE: low priority (3 day max, can be preempted), high priority with group resources (30 day max, jbsiegelgrp account), and high priority with genome center shared resources (30 day max, genomecentergrp account).
+-   **Description:** Example SLURM submission scripts demonstrating how to use different partitions on HIVE.
 -   **[Full Documentation](docs/partitions.md)**
 
 ### ColabFold
 
--   **Script:** `example_scripts/folding/alphafold2/colabfold.sh`
--   **Description:** A SLURM submission script for running ColabFold. It is pre-configured with resource requests and sets up the necessary environment.
+-   **Script:** `example_scripts/folding/alphafold2/local_colabfold/colabfold.sh`
+-   **Description:** SLURM submission script for running ColabFold structure predictions.
 -   **[Full Documentation](docs/colabfold.md)**
 
 ### AlphaFold 3
 
 -   **Scripts:** `example_scripts/folding/alphafold3/submit_af3_single.sh`, `example_scripts/folding/alphafold3/submit_af3_bulk.py`
--   **Description:** SLURM submission scripts for running AlphaFold 3 predictions. Supports single predictions and bulk array jobs with GPU monitoring and resource tracking.
+-   **Description:** SLURM submission scripts for AlphaFold 3 predictions. Supports single predictions and bulk array jobs with GPU monitoring.
 -   **[Full Documentation](docs/alphafold3.md)**
 
 ### AlphaFold 2 Initial Guess
 
 -   **Scripts:** `example_scripts/folding/alphafold2/af2_initial_guess/run_af2_initial_guess.py`, `example_scripts/folding/alphafold2/af2_initial_guess/submit_af2_initial_guess.sh`
--   **Description:** Scripts for running AlphaFold 2 predictions on multiple sequences using a reference PDB structure as a template. Threads each sequence from a multi-sequence FASTA file onto the reference structure and runs AF2 predictions with structural constraints.
+-   **Description:** Runs AlphaFold 2 predictions using a reference PDB structure as a template.
 -   **[Full Documentation](docs/af2_initial_guess.md)**
 
 ### Boltz2
 
-#### run_boltz.sh
 -   **Script:** `example_scripts/folding/boltz2/runners/run_boltz.sh`
--   **Description:** A SLURM submission script for running Boltz2 structure predictions. Supports proteins, nucleic acids (DNA/RNA), and small molecule ligands using YAML input files.
--   **[Full Documentation](docs/run_boltz.md)**
-
-#### chai_to_boltz.py
--   **Script:** `example_scripts/folding/boltz2/helpers/chai_to_boltz.py`
--   **Description:** A helper utility to convert Chai FASTA format files to Boltz2 YAML format, enabling easy reuse of Chai input files with Boltz2.
--   **[Full Documentation](docs/chai_to_boltz.md)**
+-   **Description:** SLURM submission script for Boltz2 structure predictions. Supports proteins, nucleic acids, and small molecules.
+-   **Helper:** `chai_to_boltz.py` converts Chai FASTA format to Boltz2 YAML format.
+-   **[Full Documentation](docs/run_boltz.md)** | **[chai_to_boltz.md](docs/chai_to_boltz.md)**
 
 ### Chai
 
-#### run_chai.py
--   **Script:** `example_scripts/folding/chai/run_chai.py`
--   **Description:** A script to run protein structure prediction using the `chai_lab` library.
--   **[Full Documentation](docs/run_chai.md)**
-
-#### chai_with_msa.py
--   **Script:** `example_scripts/folding/chai/chai_with_msa.py`
--   **Description:** A script to run protein structure prediction using the `chai_lab` library with MSA support.
--   **[Full Documentation](docs/chai_with_msa.md)**
-
-#### submit_chai.sh & submit_chai_with_msa.sh
 -   **Scripts:** `example_scripts/folding/chai/submit_chai.sh`, `example_scripts/folding/chai/submit_chai_with_msa.sh`
--   **Description:** SLURM submission scripts for `run_chai.py` and `chai_with_msa.py`.
--   **[Full Documentation](docs/submit_chai.md)**
+-   **Description:** SLURM submission scripts for Chai structure predictions with or without MSA.
+-   **[Full Documentation](docs/submit_chai.md)** | **[run_chai.md](docs/run_chai.md)** | **[chai_with_msa.md](docs/chai_with_msa.md)**
 
 ### LigandMPNN
 
 -   **Script:** `example_scripts/design/ligandmpnn/submit_ligandmpnn.sh`
--   **Description:** A SLURM submission script for running LigandMPNN. It is pre-configured with resource requests and sets up the necessary environment.
+-   **Description:** SLURM submission script for LigandMPNN protein design.
 -   **[Full Documentation](docs/ligandmpnn.md)**
 
 ### RFdiffusion
