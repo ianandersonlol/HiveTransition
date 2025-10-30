@@ -15,7 +15,7 @@ The script begins with a series of `#SBATCH` directives that configure the job s
 -   `--account=genome-center-grp`: Specifies the account to use for the job.
 -   `--partition=gpu-a100`: Requests a node from the `gpu-a100` partition.
 -   `--cpus-per-task=16`: Requests 16 CPU cores.
--   `--mem=32G`: Requests 32GB of memory.
+-   `--mem=64G`: Requests 64GB of memory.
 -   `--gres=gpu:1`: Requests one GPU.
 -   `--time=12:00:00`: Sets a maximum runtime of 12 hours.
 -   `--output=logs/boltz_%A_%a.out`: Specifies the file for standard output, where `%A` is the job ID and `%a` is the array task ID.
@@ -214,7 +214,7 @@ Boltz2 predictions generate output files in the working directory:
 
 ```bash
 #SBATCH --cpus-per-task=16        # CPU cores
-#SBATCH --mem=32G                 # RAM
+#SBATCH --mem=64G                 # RAM
 #SBATCH --gres=gpu:1              # 1 GPU required
 #SBATCH --time=12:00:00           # Max runtime (12 hours)
 ```
@@ -368,7 +368,7 @@ python -c "from rdkit import Chem; print(Chem.MolFromSmiles('YOUR_SMILES'))"
 3. **Test interactively:**
 ```bash
 # Request interactive GPU node
-srun --partition=gpu-a100 --account=genome-center-grp --gres=gpu:1 --mem=32G --cpus-per-task=16 --pty bash
+srun --partition=gpu-a100 --account=genome-center-grp --gres=gpu:1 --mem=64G --cpus-per-task=16 --pty bash
 
 # Load conda
 module load conda/latest

@@ -1,11 +1,12 @@
-#!/bin/bash 
-#SBATCH -J hello.pdb
-#SBATCH -t 3000
-#SBATCH -n 1
-#SBATCH --mem 4GB
-#SBATCH -p low
-#SBATCH --output=logs/relax_hello_%A_%a.out
-#SBATCH --error=logs/relax_hello_%A_%a.err
+#!/bin/bash
+#SBATCH --job-name=rosetta_relax
+#SBATCH --partition=low
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=8G
+#SBATCH --time=12:00:00
+#SBATCH --requeue
+#SBATCH --output=logs/relax_%A_%a.out
+#SBATCH --error=logs/relax_%A_%a.err
 #SBATCH --array=1-100
 
 

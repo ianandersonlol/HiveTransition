@@ -166,9 +166,9 @@ For detailed JSON format specifications, see the [AlphaFold 3 documentation](htt
 ### SLURM Settings (Default)
 
 ```bash
-#SBATCH --partition=low          # Queue name
+#SBATCH --partition=gpu-a100          # Queue name
 #SBATCH --time=24:00:00          # Max runtime (24 hours)
-#SBATCH --cpus-per-task=8        # CPU cores
+#SBATCH --cpus-per-task=16        # CPU cores
 #SBATCH --mem=64G                # RAM
 #SBATCH --gres=gpu:1             # GPUs (1 required)
 ```
@@ -320,7 +320,7 @@ Edit the `#SBATCH` directives at the top of the scripts:
 
 ### Using Different Partitions
 
-The scripts default to `--partition=low`. For faster turnaround:
+The scripts default to `--partition=gpu-a100`. For faster turnaround:
 
 ```bash
 # Edit script to use different partition
@@ -431,7 +431,7 @@ python -m json.tool your_file.json
 2. **Run interactively:**
 ```bash
 # Request interactive GPU node
-srun --partition=low --gres=gpu:1 --mem=64G --cpus-per-task=8 --pty bash
+srun --partition=gpu-a100 --gres=gpu:1 --mem=64G --cpus-per-task=16 --pty bash
 
 # Load modules
 module load apptainer/latest

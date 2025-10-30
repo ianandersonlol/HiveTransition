@@ -33,11 +33,11 @@ The submission script includes the following SLURM directives:
 
 -   `--job-name=af2_from_fasta`: Sets the name of the job
 -   `--partition=gpu-a100`: Requests a node from the GPU partition
--   `--account=jbsiegelgrp`: Specifies the account for GPU access
+-   `--account=genome-center-grp`: Specifies the account for GPU access
 -   `--ntasks=1`: Runs as a single task
--   `--cpus-per-task=4`: Requests 4 CPU cores
+-   `--cpus-per-task=16`: Requests 16 CPU cores
 -   `--gres=gpu:1`: Requests 1 GPU
--   `--mem=16G`: Requests 16GB of memory
+-   `--mem=64G`: Requests 64GB of memory
 -   `--time=24:00:00`: Sets a maximum runtime of 24 hours
 
 ## Usage

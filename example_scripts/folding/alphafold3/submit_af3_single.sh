@@ -1,9 +1,10 @@
 #!/bin/bash
-#SBATCH --partition=low
-#SBATCH --time=24:00:00
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=64G
+#SBATCH --partition=gpu-a100
+#SBATCH --account=genome-center-grp
 #SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=16
+#SBATCH --mem=64G
+#SBATCH --time=24:00:00
 #SBATCH --job-name=af3_single
 #SBATCH --output=af3_%j.txt
 #SBATCH --error=af3_%j.txt

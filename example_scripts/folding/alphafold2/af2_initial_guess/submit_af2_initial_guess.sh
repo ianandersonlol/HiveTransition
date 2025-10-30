@@ -1,11 +1,11 @@
 #!/bin/bash --norc
 #SBATCH --job-name=af2_from_fasta
 #SBATCH --partition=gpu-a100
-#SBATCH --account=jbsiegelgrp
+#SBATCH --account=genome-center-grp
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
+#SBATCH --cpus-per-task=16
 #SBATCH --gres=gpu:1
-#SBATCH --mem=16G
+#SBATCH --mem=64G
 #SBATCH --time=24:00:00
 
 # Submit AF2 initial guess job on multi-sequence FASTA with reference PDB
