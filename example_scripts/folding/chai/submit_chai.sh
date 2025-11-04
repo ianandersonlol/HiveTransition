@@ -23,7 +23,6 @@ INPUT_FASTA="$1"
 OUTPUT_DIR="$2"
 
 module load conda/latest
-module load cuda/12.6.2
 
 eval "$(conda shell.bash hook)"
 conda activate /quobyte/jbsiegelgrp/software/envs/chai
