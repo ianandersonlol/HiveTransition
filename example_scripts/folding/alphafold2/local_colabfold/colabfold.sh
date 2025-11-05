@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --norc
 #SBATCH --job-name=colabfold_job
 #SBATCH --account=genome-center-grp
 #SBATCH --partition=gpu-a100

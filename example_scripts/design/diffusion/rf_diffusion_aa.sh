@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --norc
 #SBATCH --partition=gpu-a100
 #SBATCH --account=genome-center-grp
 #SBATCH --time=24:00:00

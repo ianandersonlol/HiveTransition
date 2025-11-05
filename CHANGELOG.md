@@ -34,3 +34,10 @@ The new `migrate.py` script consolidates all migration functionality:
 - Eliminates ~70% code duplication
 - Adds --dry-run, --in-place, and --verbose modes
 - See [migrate.md](docs/migrate.md) for details
+
+### Shell Configuration Standardization
+All SLURM submission scripts now use `#!/bin/bash --norc` shebang:
+- Ensures clean shell environment without ~/.bashrc interference
+- Prevents unexpected behavior from user-specific bash configurations
+- Improves reproducibility and reliability of jobs
+- Updated 11 scripts across all example_scripts subdirectories

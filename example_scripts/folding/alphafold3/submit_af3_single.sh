@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --norc
 #SBATCH --partition=gpu-a100
 #SBATCH --account=genome-center-grp
 #SBATCH --gres=gpu:1

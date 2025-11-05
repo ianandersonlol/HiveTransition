@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash --norc
 #SBATCH -J hello_test
 #SBATCH -t 3000
 #SBATCH -n 1

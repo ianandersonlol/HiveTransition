@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --norc
 #SBATCH --job-name=galiganddock
 #SBATCH --partition=low
 #SBATCH --cpus-per-task=1

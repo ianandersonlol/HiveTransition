@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash --norc
 #SBATCH --job-name=LigandMPNN
 #SBATCH --partition=gpu-a100
 #SBATCH --account=genome-center-grp
