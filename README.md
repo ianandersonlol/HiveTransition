@@ -5,6 +5,7 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 ## Table of Contents
 
 - [Getting Started](#getting-started)
+  - [Understanding Shell Configuration Files](#understanding-shell-configuration-files)
   - [Logging into HIVE](#logging-into-hive)
   - [Interactive Sessions](#interactive-sessions)
 - [HIVE vs Cacao Comparison](#hive-vs-cacao-comparison)
@@ -33,6 +34,37 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 
 ## Getting Started
 
+### Understanding Shell Configuration Files
+
+Before getting started, it's important to understand the difference between `.bashrc` and `.bash_profile`:
+
+**`.bash_profile`:**
+- Sourced for **login shells** (when you SSH into a server)
+- Runs once when you first log in
+- Best for setting up environment variables, PATH, and one-time setup
+
+**`.bashrc`:**
+- Sourced for **non-login interactive shells** (when you open a new terminal window or run `bash`)
+- Runs every time you start a new shell
+- Best for aliases, functions, and shell settings
+
+**HIVE Configuration:**
+On HIVE, we use a minimal `.bash_profile` that sources `.bashrc`. This gives us the best of both worlds:
+- Your environment loads automatically when you SSH in (via `.bash_profile`)
+- All your customizations live in `.bashrc` for consistency
+
+The `bash_profile_migration.py` script sets this up automatically. If you didn't use the migration script, your `.bash_profile` should contain:
+```bash
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+```
+
+If your `.bash_profile` doesn't have this, you can manually load your environment after logging in:
+```bash
+source ~/.bashrc
+```
+
 ### Logging into HIVE
 
 To access the HIVE cluster, use SSH with your campus credentials:
@@ -41,11 +73,7 @@ To access the HIVE cluster, use SSH with your campus credentials:
 ssh username@hive.hpc.ucdavis.edu
 ```
 
-Once logged in, source your `.bashrc` to load your environment:
-
-```bash
-source ~/.bashrc
-```
+Your environment will be automatically loaded if your `.bash_profile` sources `.bashrc` (which the migration script sets up for you).
 
 ### Interactive Sessions
 
