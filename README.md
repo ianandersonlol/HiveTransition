@@ -4,38 +4,92 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 
 ## Table of Contents
 
+- [Getting Started](#getting-started)
+  - [Logging into HIVE](#logging-into-hive)
+  - [Interactive Sessions](#interactive-sessions)
 - [HIVE vs Cacao Comparison](#hive-vs-cacao-comparison)
   - [Key Differences Between Clusters](#key-differences-between-clusters)
   - [Software Locations](#software-locations)
   - [Storage Management](#storage-management)
   - [SLURM Changes](#slurm-changes)
-  - [Interactive Sessions](#interactive-sessions)
-- [Quick Start](#quick-start)
-  - [Step 1: Migrate Your Shell Configuration (Run from Cacao/Barbera)](#step-1-migrate-your-shell-configuration-run-from-cacaobarbera)
-  - [Step 2: Fix Your Job Scripts](#step-2-fix-your-job-scripts)
-- [Common Migration Tasks](#common-migration-tasks)
-  - [Setting Up Your Environment](#setting-up-your-environment)
-  - [Migrating Job Scripts](#migrating-job-scripts)
-  - [Interactive Sessions](#interactive-sessions-1)
+  - [Interactive Sessions Reference](#interactive-sessions-reference)
+- [File Structure](#file-structure)
 - [Important Notes](#important-notes)
 - [Troubleshooting](#troubleshooting)
-- [File Structure](#file-structure)
 - [Example Scripts](#example-scripts)
   - [Partitions](#partitions)
   - [ColabFold](#colabfold)
   - [AlphaFold 3](#alphafold-3)
   - [AlphaFold 2 Initial Guess](#alphafold-2-initial-guess)
   - [Boltz2](#boltz2)
-    - [run_boltz.sh](#run_boltzsh)
-    - [chai_to_boltz.py](#chai_to_boltzpy)
   - [Chai](#chai)
-    - [run_chai.py](#run_chaipy)
-    - [chai_with_msa.py](#chai_with_msapy)
-    - [submit_chai.sh & submit_chai_with_msa.sh](#submit_chaish_&_submit_chai_with_msash)
   - [LigandMPNN](#ligandmpnn)
-  - [GaliGand Dock](#galigand-dock)
+  - [RFdiffusion](#rfdiffusion)
+  - [MPNNP Pipeline](#mpnnp-pipeline)
+  - [GALigandDock](#galigand-dock)
   - [Relaxation](#relaxation)
 - [Cluster Transition Tools (Legacy)](#cluster-transition-tools-legacy)
+- [Contributing](#contributing)
+
+## Getting Started
+
+### Logging into HIVE
+
+To access the HIVE cluster, use SSH with your campus credentials:
+
+```bash
+ssh username@hive.hpc.ucdavis.edu
+```
+
+Once logged in, source your `.bashrc` to load your environment:
+
+```bash
+source ~/.bashrc
+```
+
+### Interactive Sessions
+
+On Cacao, we were used to running commands directly on the head node for quick testing and development. On HIVE, running jobs on the head node is not allowed. Instead, we use **interactive sessions** to create a sandbox-like environment similar to what we had on Cacao.
+
+Interactive sessions allocate resources on compute nodes where you can run commands interactively. Here are the commands and convenient aliases:
+
+**High Priority CPU Session:**
+```bash
+# Full command:
+srun -p high -c 8 --mem=16G -t 1-00:00:00 --pty bash
+
+# Convenient alias (if you used bash_profile_migration.py):
+sandbox
+```
+
+**Low Priority CPU Session:**
+```bash
+# Full command:
+srun -p low -c 16 --mem=32G -t 1-00:00:00 --requeue --pty bash
+
+# Convenient alias:
+sandboxlow
+```
+
+**High Priority GPU Session:**
+```bash
+# Full command:
+srun -p gpu-a100 --account=genome-center-grp -c 8 --mem=16G --gres=gpu:1 -t 1-00:00:00 --pty bash
+
+# Convenient alias:
+sandboxgpu
+```
+
+**Low Priority GPU Session:**
+```bash
+# Full command:
+srun -p gpu-a100 --account=genome-center-grp -c 8 --mem=16G --gres=gpu:1 -t 1-00:00:00 --requeue --pty bash
+
+# Convenient alias:
+sandboxlowgpu
+```
+
+**Note:** The aliases (`sandbox`, `sandboxlow`, etc.) are automatically added to your `.bashrc` if you used the `bash_profile_migration.py` script. If you didn't use the migration script, you can still use the full `srun` commands above, or add the aliases manually to your `.bashrc`.
 
 ## HIVE vs Cacao Comparison
 
@@ -85,188 +139,27 @@ This repository contains scripts to help migrate from the old HPC cluster to the
 | **Low Priority** | N/A | `#SBATCH --requeue` (auto-requeue if preempted) |
 | **Time Limits** | 30 days max | `low`: 3 days max<br>`high`: 30 days max |
 
-### Interactive Sessions
+### Interactive Sessions Reference
 
-The `bash_profile_migration.py` script adds these convenient aliases for requesting interactive sessions:
+Convenient aliases and their full `srun` commands for interactive sessions:
 
-| Command | Resources | Partition |
-|---------|-----------|-----------|
-| `sandbox` | 8 CPU, 16GB RAM, 1 day | high |
-| `sandboxlow` | 16 CPU, 32GB RAM, 1 day | low |
-| `sandboxgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | high |
-| `sandboxlowgpu` | 8 CPU, 16GB RAM, 1 GPU, 1 day | low |
+| Alias | Full Command | Resources | Partition |
+|-------|--------------|-----------|-----------|
+| `sandbox` | `srun -p high -c 8 --mem=16G -t 1-00:00:00 --pty bash` | 8 CPU, 16GB RAM, 1 day | high |
+| `sandboxlow` | `srun -p low -c 16 --mem=32G -t 1-00:00:00 --requeue --pty bash` | 16 CPU, 32GB RAM, 1 day | low |
+| `sandboxgpu` | `srun -p gpu-a100 --account=genome-center-grp -c 8 --mem=16G --gres=gpu:1 -t 1-00:00:00 --pty bash` | 8 CPU, 16GB RAM, 1 GPU, 1 day | gpu-a100 |
+| `sandboxlowgpu` | `srun -p gpu-a100 --account=genome-center-grp -c 8 --mem=16G --gres=gpu:1 -t 1-00:00:00 --requeue --pty bash` | 8 CPU, 16GB RAM, 1 GPU, 1 day | gpu-a100 (low priority) |
 
-## Quick Start
-
-### Step 1: Migrate Your Shell Configuration (Run from Cacao/Barbera)
-
-**IMPORTANT**: Run this from your old cluster (cacao/barbera), NOT from HIVE!
-
-```bash
-# SSH to cacao or barbera first
-ssh username@cacao.genomecenter.ucdavis.edu
-
-# Download just the bash profile migration script
-wget https://raw.githubusercontent.com/ianandersonlol/HiveTransition/main/transition_tools_old/bash_profile_migration.py
-
-# Run it
-python bash_profile_migration.py <ssh_username> <quobyte_dir>
-
-# Example:
-python bash_profile_migration.py jdoe john
-```
-
-### Step 2: Fix Your Job Scripts
-
-**RECOMMENDED**: Use the new unified migration script that handles all fix types automatically.
-
-For fixing job scripts, clone the repository where YOUR scripts are located:
-
-```bash
-git clone https://github.com/ianandersonlol/HiveTransition.git
-cd HiveTransition/transition_tools_old
-
-# RECOMMENDED: Use the unified migration script
-python migrate.py /path/to/script.sh           # Fix single script
-python migrate.py /path/to/scripts/            # Fix entire directory
-python migrate.py /path/to/scripts/ --dry-run  # Preview changes first
-
-# For Rosetta jobs longer than 3 days, use --high flag
-python migrate.py rosetta_job.sh --high
-
-# Legacy: Individual fix scripts (still available but migrate.py is preferred)
-python colab_fix.py /path/to/colabfold_job.sh      # For ColabFold
-python ligandmpnn_fix.py /path/to/ligandmpnn_job.sh # For LigandMPNN
-python rfdiffusion_fix.py /path/to/rfdiff_job.sh    # For RFdiffusion
-python rosetta_fix.py /path/to/rosetta_job.sh       # For Rosetta
-python path_migrator.py /path/to/scripts/directory   # Update all software paths
-```
-
-## Common Migration Tasks
-
-### Setting Up Your Environment
-
-1. **Run the migration script from old cluster (cacao/barbera):**
-   ```bash
-   python transition_tools_old/bash_profile_migration.py myusername mydirectory
-   ```
-
-2. **Log into HIVE:**
-   ```bash
-   ssh myusername@hive.hpc.ucdavis.edu
-   ```
-
-3. **Source your configuration:**
-   ```bash
-   source ~/.bashrc
-   ```
-
-### Migrating Job Scripts
-
-1. **Preview changes first:**
-   ```bash
-   python transition_tools_old/migrate.py myscript.sh --dry-run
-   ```
-
-2. **Run the migration:**
-   ```bash
-   python transition_tools_old/migrate.py myscript.sh
-   ```
-
-3. **Review changes:**
-   ```bash
-   diff myscript.sh myscript_fixed.sh
-   ```
-
-4. **Test on HIVE:**
-   ```bash
-   sbatch myscript_fixed.sh
-   ```
-
-**Tip**: For long Rosetta jobs (>3 days), add `--high` flag to use the high partition.
-
-### Interactive Sessions
-
-Use the aliases added by bash_profile_migration.py:
-
-```bash
-sandbox      # 8 CPU, 16GB RAM, high priority
-sandboxlow   # 16 CPU, 32GB RAM, low priority
-sandboxgpu   # 8 CPU, 16GB RAM, 1 GPU, high priority
-sandboxlowgpu # 8 CPU, 16GB RAM, 1 GPU, low priority
-```
-
-## Important Notes
-
-### Storage Management
-- Home directory: 20GB limit
-- Store everything in `/quobyte/jbsiegelgrp/{your_directory}/`
-- Conda environments go in `.conda/envs/`
-- Package caches go in `.cache/`
-
-### Module Loading
-Instead of local conda:
-```bash
-module load conda/latest
-module load cuda/12.6.2  # For GPU jobs Good to have even when you're not using a GPU so you have the drivers up!
-```
-**IF YOU USED MY BASH MIGRATION TOOL IT WILL PUT IT IN YOUR BASHRC**
-### Partition Selection
-- Use `low` for most jobs (< 3 days)
-- Use `high` for long jobs (> 3 days)
-- GPU jobs need `--account=genome-center-grp`
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Module not found"**
-   - Use `module avail <name>` to find the new module name
-   - Some modules have different names on HIVE
-
-2. **"Permission denied"**
-   - Check you're writing to your quobyte directory
-   - Create directories if they don't exist
-
-3. **"Command not found"**
-   - Ensure you've sourced `~/.bashrc`
-   - Check if software is in a different location
-
-4. **Time limit errors**
-   - Use `--high` flag for Rosetta jobs > 3 days
-   - Break large jobs into smaller chunks
-
-### Getting Help
-
-1. **Check documentation:**
-   - See `docs/` folder for detailed guides
-   - Each script has `--help` option
-
-2. **Report issues:**
-   ```bash
-   python transition_tools_old/broken.py problematic_script.sh
-   ```
-
-3. **GitHub Issues:**
-   - https://github.com/ianandersonlol/HiveTransition/issues
-
-## Contributing
-
-If you find issues or have improvements:
-
-1. Use `transition_tools_old/broken.py` to report script issues
-2. Submit pull requests for fixes
-3. Share working examples with the community
+**Note:** These aliases are added automatically by the `bash_profile_migration.py` script. See [Getting Started](#getting-started) for more information on interactive sessions.
 
 ## File Structure
-
-**Note:** All directories and files now use consistent `snake_case` naming for better maintainability.
 
 ```
 HiveTransition/
 ├── .gitignore
 ├── README.md
 ├── CLAUDE.md
+├── CHANGELOG.md
 ├── docs/
 │   ├── migrate.md
 │   ├── transition_tools.md
@@ -344,6 +237,60 @@ HiveTransition/
     └── broken.py
 ```
 
+## Important Notes
+
+### Storage Management
+- Home directory: 20GB limit
+- Store everything in `/quobyte/jbsiegelgrp/{your_directory}/`
+- Conda environments go in `.conda/envs/`
+- Package caches go in `.cache/`
+
+### Module Loading
+Instead of local conda:
+```bash
+module load conda/latest
+module load cuda/12.6.2  # For GPU jobs Good to have even when you're not using a GPU so you have the drivers up!
+```
+**IF YOU USED MY BASH MIGRATION TOOL IT WILL PUT IT IN YOUR BASHRC**
+### Partition Selection
+- Use `low` for most jobs (< 3 days)
+- Use `high` for long jobs (> 3 days)
+- GPU jobs need `--account=genome-center-grp`
+
+## Troubleshooting
+
+### Common Issues
+
+1. **"Module not found"**
+   - Use `module avail <name>` to find the new module name
+   - Some modules have different names on HIVE
+
+2. **"Permission denied"**
+   - Check you're writing to your quobyte directory
+   - Create directories if they don't exist
+
+3. **"Command not found"**
+   - Ensure you've sourced `~/.bashrc`
+   - Check if software is in a different location
+
+4. **Time limit errors**
+   - Use `--high` flag for Rosetta jobs > 3 days
+   - Break large jobs into smaller chunks
+
+### Getting Help
+
+1. **Check documentation:**
+   - See `docs/` folder for detailed guides
+   - Each script has `--help` option
+
+2. **Report issues:**
+   ```bash
+   python transition_tools_old/broken.py problematic_script.sh
+   ```
+
+3. **GitHub Issues:**
+   - https://github.com/ianandersonlol/HiveTransition/issues
+
 ## Example Scripts
 
 This project includes example scripts to demonstrate how to run common bioinformatics tools in a cluster environment.
@@ -403,10 +350,10 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Description:** A unified, automated protein design pipeline that integrates MSA generation, conservation analysis, structure prediction, and LigandMPNN design. Takes a protein sequence and produces structurally-validated designed variants.
 -   **[Full Documentation](docs/mpnnp_pipeline.md)**
 
-### GaliGand Dock
+### GALigandDock
 
 -   **Script:** `example_scripts/docking/galigand_dock/submit.sh`
--   **Description:** A SLURM submission script for running the GaliGand docking protocol. It is pre-configured with resource requests and sets up the necessary environment.
+-   **Description:** A SLURM submission script for running the GALigandDock protocol. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/galigand_dock.md)**
 
 ### Relaxation
@@ -422,6 +369,14 @@ These tools were created to help migrate from the old Cacao/Barbera HPC cluster 
 For detailed information about all available transition tools (path_migrator.py, bash_profile_migration.py, colab_fix.py, ligandmpnn_fix.py, rfdiffusion_fix.py, rosetta_fix.py, and broken.py), see:
 
 **[Cluster Transition Tools Documentation](docs/transition_tools.md)**
+
+## Contributing
+
+If you find issues or have improvements:
+
+1. Use `transition_tools_old/broken.py` to report script issues
+2. Submit pull requests for fixes
+3. Share working examples with the lab
 
 ---
 
