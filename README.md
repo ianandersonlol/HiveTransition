@@ -2,8 +2,106 @@
 
 This repository contains scripts to help migrate from the old HPC cluster to the new HIVE cluster.
 
+## Create a HIVE Account
+
+Before you can use the HIVE cluster, you need to create an account.
+
+### Step 1: Request Access
+
+1. Go to [https://hippo.ucdavis.edu/](https://hippo.ucdavis.edu/)
+2. Sign in with your Kerberos (campus) credentials
+3. Select **"HIVE"** to create a HIVE account
+
+![HIVE selection screen on hippo.ucdavis.edu](images/hive_setup_1.png)
+
+### Step 2: Fill Out the Registration Form
+
+Complete the form with your information. You'll need to provide an SSH public key. If you don't have one, follow the instructions below to create one.
+
+![HIVE registration form](images/hive_setup_2.png)
+
+### Setting Up an SSH Key
+
+An SSH key allows you to securely connect to HIVE without entering a password each time. Follow the instructions for your operating system.
+
+#### Windows (PowerShell)
+
+**1. Check if an SSH key already exists:**
+
+```powershell
+Test-Path "$HOME\.ssh\id_ed25519.pub"
+```
+
+- If it returns `True`, you already have an SSH key—skip to step 3.
+- If it returns `False`, proceed to step 2.
+
+**2. Create an SSH key (if needed):**
+
+```powershell
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+- Press **Enter** to accept the default file location
+- Optionally, enter a passphrase for added security (recommended)
+
+**3. Copy the public key to your clipboard:**
+
+```powershell
+Get-Content "$HOME\.ssh\id_ed25519.pub" | Set-Clipboard
+```
+
+Your public key is now copied and ready to paste into the HIVE registration form.
+
+#### macOS and Linux
+
+**1. Check if an SSH key already exists:**
+
+```bash
+if [ -f ~/.ssh/id_ed25519.pub ]; then echo "SSH key exists"; else echo "No SSH key found"; fi
+```
+
+- If the message confirms an existing key, skip to step 3.
+- If not, proceed to step 2.
+
+**2. Create an SSH key (if needed):**
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+- Press **Enter** to confirm the default location
+- Optionally, add a passphrase for additional security (recommended)
+
+**3. Copy the public key:**
+
+On **macOS**:
+```bash
+pbcopy < ~/.ssh/id_ed25519.pub
+```
+
+On **Linux** (with xclip installed):
+```bash
+xclip -selection clipboard < ~/.ssh/id_ed25519.pub
+```
+
+Or display the key and copy it manually:
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+#### Windows Subsystem for Linux (WSL)
+
+WSL maintains its own SSH configuration separate from Windows:
+
+- **In PowerShell:** Follow the Windows instructions above to manage your native Windows SSH keys
+- **In WSL Terminal:** Follow the macOS/Linux instructions within your WSL environment
+
+---
+
 ## Table of Contents
 
+- [Create a HIVE Account](#create-a-hive-account)
+  - [Setting Up an SSH Key](#setting-up-an-ssh-key)
 - [Getting Started](#getting-started)
   - [Understanding Shell Configuration Files](#understanding-shell-configuration-files)
   - [Logging into HIVE](#logging-into-hive)
@@ -188,6 +286,9 @@ HiveTransition/
 ├── README.md
 ├── CLAUDE.md
 ├── CHANGELOG.md
+├── images/
+│   ├── hive_setup_1.png
+│   └── hive_setup_2.png
 ├── docs/
 │   ├── migrate.md
 │   ├── transition_tools.md
