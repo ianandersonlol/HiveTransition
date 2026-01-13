@@ -12,13 +12,13 @@ Before you can use the HIVE cluster, you need to create an account.
 2. Sign in with your Kerberos (campus) credentials
 3. Select **"HIVE"** to create a HIVE account
 
-<img src="images/hive_setup_1.png" alt="HIVE selection screen on hippo.ucdavis.edu" width="900">
+<img src="images/hive_setup_1.png" alt="HIVE selection screen on hippo.ucdavis.edu" width="1200">
 
 ### Step 2: Fill Out the Registration Form
 
 Complete the form with your information. You'll need to provide an SSH public key. If you don't have one, follow the instructions below to create one.
 
-<img src="images/hive_setup_2.png" alt="HIVE registration form" width="900">
+<img src="images/hive_setup_2.png" alt="HIVE registration form" width="1200">
 
 ### Setting Up an SSH Key
 
