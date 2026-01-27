@@ -38,23 +38,13 @@ def parse_chai_fasta(fasta_path: str) -> Tuple[List[Dict], Dict[str, str], Dict[
                 'sequence': ''.join(current_sequence)
             })
 
-    # Parse headers to extract chain information
+    # Assign chain IDs as A, B, C, D, etc. in order
     chains = {}
     headers = {}
-    for seq_data in sequences:
+    for i, seq_data in enumerate(sequences):
         header = seq_data['header']
         sequence = seq_data['sequence']
-
-        # Extract chain identifier from header
-        # Common patterns: "Chain A", "chain_A", "A:", etc.
-        chain_match = re.search(r'[Cc]hain[_\s]*([A-Za-z0-9])', header)
-        if not chain_match:
-            chain_match = re.search(r'^([A-Za-z0-9]):', header)
-        if not chain_match:
-            # Default to using first character if no pattern found
-            chain_id = header[0] if header else 'A'
-        else:
-            chain_id = chain_match.group(1).upper()
+        chain_id = chr(ord('A') + i)  # A, B, C, D, ...
 
         chains[chain_id] = sequence
         headers[chain_id] = header
@@ -118,11 +108,18 @@ def determine_entity_type(sequence: str, header: str = "") -> str:
         return 'protein'
 
 
+def sanitize_sequence(sequence: str) -> str:
+    """Remove truncation markers ('-') from sequences."""
+    return sequence.replace('-', '')
+
+
 def create_af3_json(chains: Dict[str, str], headers: Dict[str, str], job_name: str = "chai_to_af3_conversion") -> Dict:
     """Create AlphaFold3 formatted JSON from parsed chains."""
     af3_json = {
         "name": job_name,
-        "sequences": []
+        "sequences": [],
+        "dialect": "alphafold3",
+        "version": 1
     }
 
     # Process each chain
@@ -134,24 +131,25 @@ def create_af3_json(chains: Dict[str, str], headers: Dict[str, str], job_name: s
             entity = {
                 "protein": {
                     "id": chain_id,
-                    "sequence": sequence
+                    "sequence": sanitize_sequence(sequence)
                 }
             }
         elif entity_type == 'dna':
             entity = {
                 "dna": {
                     "id": chain_id,
-                    "sequence": sequence
+                    "sequence": sanitize_sequence(sequence)
                 }
             }
         elif entity_type == 'rna':
             entity = {
                 "rna": {
                     "id": chain_id,
-                    "sequence": sequence
+                    "sequence": sanitize_sequence(sequence)
                 }
             }
         elif entity_type == 'ligand':
+            # Don't sanitize SMILES - dashes are valid in SMILES notation
             entity = {
                 "ligand": {
                     "id": chain_id,
@@ -173,6 +171,7 @@ def main():
     )
     parser.add_argument('input_fasta', help='Input FASTA file in Chai Discovery format')
     parser.add_argument('output_json', nargs='?', help='Output JSON file (default: input filename with .json extension)')
+    parser.add_argument('--output-dir', '-o', help='Output directory for JSON file (overrides output_json path)')
     parser.add_argument('--name', default='chai_to_af3_conversion',
                        help='Job name for the AlphaFold3 run')
     parser.add_argument('--seeds', nargs='+', type=int, default=[42],
@@ -180,11 +179,23 @@ def main():
 
     args = parser.parse_args()
 
+    import os
+
+    # Get base name from input file
+    base_name = os.path.splitext(os.path.basename(args.input_fasta))[0]
+
+    # Use input filename as job name if not specified
+    if args.name == 'chai_to_af3_conversion':
+        args.name = base_name
+
     # Auto-generate output filename if not provided
     if not args.output_json:
-        import os
-        base_name = os.path.splitext(args.input_fasta)[0]
         args.output_json = base_name + '.json'
+
+    # If output directory is specified, place the output file there
+    if args.output_dir:
+        os.makedirs(args.output_dir, exist_ok=True)
+        args.output_json = os.path.join(args.output_dir, os.path.basename(args.output_json))
 
     # Parse the FASTA file
     print(f"Reading Chai Discovery FASTA from: {args.input_fasta}")
