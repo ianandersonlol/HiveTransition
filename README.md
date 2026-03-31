@@ -458,12 +458,16 @@ Scripts generated with the skill are stamped with `# Generated with Siegel Lab H
 
 ### Codex CLI
 
-1. Copy the `AGENTS.md` file from this repo to your project or home directory:
+1. Copy `AGENTS.md` from this repo to your Codex global config so it applies to all projects:
    ```bash
-   cp /quobyte/jbsiegelgrp/software/HiveTransition/AGENTS.md ~/AGENTS.md
+   mkdir -p ~/.codex
+   cp AGENTS.md ~/.codex/AGENTS.md
    ```
 
-2. Or paste the contents of `AGENTS.md` into your Codex system prompt / instructions.
+2. Or copy it into any project root for project-level use (Codex auto-detects `AGENTS.md` at the repo root):
+   ```bash
+   cp path/to/HiveTransition/AGENTS.md ./AGENTS.md
+   ```
 
 ### What the skill does
 
