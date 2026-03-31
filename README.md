@@ -125,6 +125,7 @@ WSL maintains its own SSH configuration separate from Windows:
   - [MPNNP Pipeline](#mpnnp-pipeline)
   - [GALigandDock](#galigand-dock)
   - [Relaxation](#relaxation)
+- [AI Coding Assistant Setup](#ai-coding-assistant-setup-claude-code--codex)
 - [Contributing](#contributing)
 
 ## Getting Started
@@ -433,6 +434,45 @@ This project includes example scripts to demonstrate how to run common bioinform
 -   **Script:** `example_scripts/docking/relaxation/relax.sh`
 -   **Description:** A SLURM submission script for running Rosetta relaxation. It is pre-configured with resource requests and sets up the necessary environment.
 -   **[Full Documentation](docs/relax.md)**
+
+## AI Coding Assistant Setup (Claude Code / Codex)
+
+This repo includes a **HIVE Cluster Skill** that teaches AI coding assistants (Claude Code, Codex, etc.) how to generate correct SLURM submission scripts for our cluster. It knows our partitions, accounts, software paths, conda environments, and best practices.
+
+Scripts generated with the skill are stamped with `# Generated with Siegel Lab HIVE Cluster Skill v1.0` so you can tell they were made correctly.
+
+### Claude Code
+
+1. Copy or symlink the skill folder into your Claude Code skills directory:
+   ```bash
+   # Option A: Symlink (recommended — stays up to date automatically)
+   mkdir -p ~/.claude/skills
+   ln -s /quobyte/jbsiegelgrp/software/HiveTransition/.claude/skills/hive_cluster ~/.claude/skills/hive_cluster
+
+   # Option B: Copy (works if you're not on the cluster filesystem)
+   mkdir -p ~/.claude/skills
+   cp -r /quobyte/jbsiegelgrp/software/HiveTransition/.claude/skills/hive_cluster ~/.claude/skills/hive_cluster
+   ```
+
+2. That's it. Claude Code will automatically use the skill when you ask it to create submission scripts, run cluster jobs, or work with any of our installed tools (AlphaFold, Boltz, Chai, RFdiffusion, LigandMPNN, Rosetta, etc.).
+
+### Codex CLI
+
+1. Copy the agent instructions file to your project or home directory:
+   ```bash
+   cp /quobyte/jbsiegelgrp/software/HiveTransition/.claude/skills/hive_cluster/AGENTS.md ~/AGENTS.md
+   ```
+
+2. Or paste the contents of `AGENTS.md` into your Codex system prompt / instructions.
+
+### What the skill does
+
+- Generates correct `#SBATCH` headers with the right partition/account combinations
+- Knows paths to all lab software and their conda environments
+- Writes wrappers instead of modifying existing scripts
+- Uses array jobs instead of submitting many individual jobs
+- Handles conda activation correctly in batch scripts
+- Prevents common mistakes (wrong account, missing `--gres`, output in home dir, etc.)
 
 ## Contributing
 
