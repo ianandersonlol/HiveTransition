@@ -458,9 +458,9 @@ Scripts generated with the skill are stamped with `# Generated with Siegel Lab H
 
 ### Codex CLI
 
-1. Copy the agent instructions file to your project or home directory:
+1. Copy the `AGENTS.md` file from this repo to your project or home directory:
    ```bash
-   cp /quobyte/jbsiegelgrp/software/HiveTransition/.claude/skills/hive_cluster/AGENTS.md ~/AGENTS.md
+   cp /quobyte/jbsiegelgrp/software/HiveTransition/AGENTS.md ~/AGENTS.md
    ```
 
 2. Or paste the contents of `AGENTS.md` into your Codex system prompt / instructions.

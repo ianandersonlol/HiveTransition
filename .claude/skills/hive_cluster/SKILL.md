@@ -105,22 +105,18 @@ mkdir -p logs
 | **CPU job, not time-sensitive** | `low` | `publicgrp` | `--requeue` |
 | **CPU job, needs >7 days or priority** | `high` | `jbsiegelgrp` | — |
 | **GPU job, not time-sensitive** | `low` (with `--gres=gpu:1`) | `publicgrp` | `--requeue` |
-| **GPU job, needs >7 days or priority** | `gpu-a100` | `genome-center-grp` | — |
-| **GPU job, A100 specifically needed** | `gpu-a100` | `genome-center-grp` | — |
-| **GPU job, A6000 specifically needed** | `gpu-a6000` | `genome-center-grp` | — |
-| **GPU job, Blackwell needed** | `gpu-6000-blackwell` | `genome-center-grp` | — |
+| **GPU job, needs >7 days or dedicated A100** | `gpu-a100` | `genome-center-grp` | — |
 
 **Important:**
 - `low` partition has a 7-day time limit. Jobs may be preempted — always use `--requeue`.
 - `high` partition has a 30-day time limit.
-- GPU partitions (`gpu-a100`, `gpu-a6000`, `gpu-6000-blackwell`) have 30-day limits.
-- When using `low` with GPUs, you can get A100s, A6000s, or Blackwell GPUs depending on availability.
+- `gpu-a100` partition has a 30-day time limit.
+- The lab only has dedicated access to `gpu-a100` (via `genome-center-grp`). We do NOT have access to `gpu-a6000` or `gpu-6000-blackwell` partitions.
+- When using `low` with GPUs, you may get A100s, A6000s, or Blackwell GPUs depending on availability — this is the only way to access non-A100 GPUs.
 
 ### Available GPU resources:
-- **gpu-a100**: 3 nodes, 4-8 A100 GPUs per node
-- **gpu-a6000**: 1 node, 4 A6000 GPUs
-- **gpu-6000-blackwell**: 1 node, 4 Blackwell 6000 GPUs
-- **low partition GPU nodes**: access to all of the above (preemptible)
+- **gpu-a100** (dedicated): 3 nodes, 4-8 A100 GPUs per node — use `genome-center-grp` account
+- **low partition** (preemptible): access to A100, A6000, and Blackwell GPUs — use `publicgrp` account with `--requeue`
 
 ### Node specs:
 - CPU nodes: 64-128 cores, 100-200GB RAM
@@ -134,6 +130,21 @@ mkdir -p logs
 - **Shared software**: `/quobyte/jbsiegelgrp/software/`
 - **Shared databases**: `/quobyte/jbsiegelgrp/databases/`
 - **Shared conda envs**: `/quobyte/jbsiegelgrp/software/envs/`
+
+### Shared Databases (`/quobyte/jbsiegelgrp/databases/`)
+
+| Database | Path | Used by |
+|----------|------|---------|
+| **AlphaFast** | `databases/alphafast/` | AlphaFast (MSA DBs, mmCIF files, MMseqs indices) |
+| **BLAST (nr)** | `databases/blastdb/` | BLAST sequence searches |
+| **Boltz cache** | `databases/boltz/cache/` | Boltz2 model weights/cache |
+| **Foundry weights** | `databases/foundry/` | Foundry models (RF3 checkpoint) |
+| **GigaRef** | `databases/gigaref/` | Dayhoff / large-scale sequence search |
+| **GigaSeq** | `databases/gigaseq/` | Large-scale sequence database |
+| **HHsuite** | `databases/hhsuite_databases/uniclust30_2023_02/` | HHblits / MSA generation |
+| **RFD3 weights** | `databases/rfd3/` | RFdiffusion3, ProteinMPNN, LigandMPNN checkpoints |
+
+Note: AlphaFold 3 databases are in `/quobyte/jbsiegelgrp/software/alphafold3/public_databases/` (bundled with the AF3 install, not in the shared databases dir).
 
 ### Cache directories (should be in quobyte, NOT home):
 | Cache | Recommended path |

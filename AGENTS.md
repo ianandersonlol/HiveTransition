@@ -85,14 +85,13 @@ Prefer `low` when possible — it's more efficient for the lab.
 | CPU job, not time-sensitive | `low` | `publicgrp` | `--requeue` |
 | CPU job, needs >7 days or priority | `high` | `jbsiegelgrp` | — |
 | GPU job, not time-sensitive | `low` + `--gres=gpu:1` | `publicgrp` | `--requeue` |
-| GPU job, needs >7 days or priority | `gpu-a100` | `genome-center-grp` | — |
-| GPU job, A100 specifically needed | `gpu-a100` | `genome-center-grp` | — |
-| GPU job, A6000 specifically needed | `gpu-a6000` | `genome-center-grp` | — |
-| GPU job, Blackwell needed | `gpu-6000-blackwell` | `genome-center-grp` | — |
+| GPU job, needs >7 days or dedicated A100 | `gpu-a100` | `genome-center-grp` | — |
 
 - `low` = 7-day limit, jobs may be preempted → always `--requeue`
 - `high` = 30-day limit
-- GPU partitions = 30-day limit
+- `gpu-a100` = 30-day limit
+- The lab only has dedicated access to `gpu-a100` (via `genome-center-grp`). We do NOT have access to `gpu-a6000` or `gpu-6000-blackwell` partitions.
+- On `low` with GPUs, you may get A100s, A6000s, or Blackwell GPUs depending on availability.
 
 ## Storage
 
@@ -102,6 +101,18 @@ Prefer `low` when possible — it's more efficient for the lab.
 - Shared software: `/quobyte/jbsiegelgrp/software/`
 - Shared databases: `/quobyte/jbsiegelgrp/databases/`
 - Shared conda envs: `/quobyte/jbsiegelgrp/software/envs/`
+
+### Shared Databases (`/quobyte/jbsiegelgrp/databases/`)
+- **AlphaFast**: `databases/alphafast/` — MSA DBs, mmCIF files, MMseqs indices
+- **BLAST (nr)**: `databases/blastdb/` — BLAST sequence searches
+- **Boltz cache**: `databases/boltz/cache/` — Boltz2 model weights/cache
+- **Foundry weights**: `databases/foundry/` — Foundry models (RF3 checkpoint)
+- **GigaRef**: `databases/gigaref/` — Dayhoff / large-scale sequence search
+- **GigaSeq**: `databases/gigaseq/` — Large-scale sequence database
+- **HHsuite**: `databases/hhsuite_databases/uniclust30_2023_02/` — HHblits / MSA generation
+- **RFD3 weights**: `databases/rfd3/` — RFdiffusion3, ProteinMPNN, LigandMPNN checkpoints
+
+Note: AlphaFold 3 databases are at `/quobyte/jbsiegelgrp/software/alphafold3/public_databases/` (bundled with AF3 install).
 
 ## Software Catalog
 
