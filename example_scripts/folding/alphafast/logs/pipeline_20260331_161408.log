@@ -1,0 +1,218 @@
+INFO:    Environment variable SINGULARITYENV_CUDA_VISIBLE_DEVICES is set, but APPTAINERENV_CUDA_VISIBLE_DEVICES is preferred
+I0331 16:14:14.084370 12306482799360 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:14:14.084469 12306482799360 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:14:14.084536 12306482799360 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:14:14.084564 12306482799360 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:14:14.084635 12306482799360 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:14:14.084836 12306482799360 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:14:14.084872 12306482799360 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:14:14.084898 12306482799360 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:14:14.084920 12306482799360 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:14:14.084980 12306482799360 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:14:14.085071 12306482799360 pipeline.py:128] Getting protein MSAs for sequence MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ
+I0331 16:14:14.085770 12305766721216 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:14:14.086001 12305764603584 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:14:14.086304 12305762485952 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:14:14.086570 12305760368320 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:14:14.087980 12305764603584 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp8q_q5g2i/query.fasta /tmp/tmp8q_q5g2i/queryDB"
+I0331 16:14:14.088123 12305766721216 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpg_u8v0t3/query.fasta /tmp/tmpg_u8v0t3/queryDB"
+I0331 16:14:14.088546 12305760368320 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpteidqu6m/query.fasta /tmp/tmpteidqu6m/queryDB"
+I0331 16:14:14.088689 12305762485952 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp5is4c563/query.fasta /tmp/tmp5is4c563/queryDB"
+I0331 16:14:14.412348 12305764603584 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.324 seconds
+I0331 16:14:14.412488 12305764603584 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp8q_q5g2i/queryDB /root/mmseqs_databases/mgnify_padded /tmp/tmp8q_q5g2i/resultDB /tmp/tmp8q_q5g2i/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:14:14.412631 12305766721216 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.324 seconds
+I0331 16:14:14.412772 12305766721216 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpg_u8v0t3/queryDB /root/mmseqs_databases/uniref90_padded /tmp/tmpg_u8v0t3/resultDB /tmp/tmpg_u8v0t3/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 10000 --gpu 1"
+I0331 16:14:14.413069 12305760368320 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.324 seconds
+I0331 16:14:14.413269 12305760368320 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpteidqu6m/queryDB /root/mmseqs_databases/uniprot_padded /tmp/tmpteidqu6m/resultDB /tmp/tmpteidqu6m/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 50000 --gpu 1"
+I0331 16:14:14.413372 12305762485952 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.325 seconds
+I0331 16:14:14.413445 12305762485952 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp5is4c563/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp5is4c563/resultDB /tmp/tmp5is4c563/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:15:05.792722 12305762485952 subprocess_utils.py:111] Finished MMseqs2 search in 51.379 seconds
+I0331 16:15:05.792858 12305762485952 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs result2msa /tmp/tmp5is4c563/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp5is4c563/resultDB /tmp/tmp5is4c563/msaDB --msa-format-mode 5"
+I0331 16:16:53.988225 12305762485952 subprocess_utils.py:111] Finished MMseqs2 result2msa in 108.194 seconds
+I0331 16:16:54.115130 12305762485952 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs unpackdb /tmp/tmp5is4c563/msaDB /tmp/tmp5is4c563/output"
+I0331 16:16:54.182990 12305762485952 subprocess_utils.py:111] Finished MMseqs2 unpackdb in 0.068 seconds
+I0331 16:16:54.250174 12305762485952 mmseqs.py:172] MMseqs2 search completed in 160.16 seconds for sequence MQIFVKTLTGKTITLE
+E0331 16:18:25.163264 12305760368320 subprocess_utils.py:97] MMseqs2 search failed. MMseqs2 search stderr begin:
+E0331 16:18:25.166432 12305760368320 subprocess_utils.py:101] MMseqs2 search stderr end.
+E0331 16:19:22.878500 12305764603584 subprocess_utils.py:97] MMseqs2 search failed. MMseqs2 search stderr begin:
+E0331 16:19:22.878620 12305764603584 subprocess_utils.py:101] MMseqs2 search stderr end.
+I0331 16:23:01.439434 12305766721216 subprocess_utils.py:111] Finished MMseqs2 search in 527.027 seconds
+I0331 16:23:01.643251 12305766721216 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs result2msa /tmp/tmpg_u8v0t3/queryDB /root/mmseqs_databases/uniref90_padded /tmp/tmpg_u8v0t3/resultDB /tmp/tmpg_u8v0t3/msaDB --msa-format-mode 5"
+I0331 16:27:51.963394 12305766721216 subprocess_utils.py:111] Finished MMseqs2 result2msa in 290.320 seconds
+I0331 16:27:51.963636 12305766721216 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs unpackdb /tmp/tmpg_u8v0t3/msaDB /tmp/tmpg_u8v0t3/output"
+I0331 16:27:51.991827 12305766721216 subprocess_utils.py:111] Finished MMseqs2 unpackdb in 0.028 seconds
+I0331 16:27:52.082957 12305766721216 mmseqs.py:172] MMseqs2 search completed in 818.00 seconds for sequence MQIFVKTLTGKTITLE
+Loaded 1 fold input(s)
+
+Processing fold job ubiquitin_human...
+Output will be written to /root/af_output/ubiquitin_human
+Running data pipeline...
+Running data pipeline for chain A...
+Traceback (most recent call last):
+  File "/app/alphafold/src/alphafold3/data/tools/subprocess_utils.py", line 86, in run
+    completed_process = subprocess.run(
+                        ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/usr/local/bin/mmseqs', 'search', '/tmp/tmp8q_q5g2i/queryDB', '/root/mmseqs_databases/mgnify_padded', '/tmp/tmp8q_q5g2i/resultDB', '/tmp/tmp8q_q5g2i/tmp', '-a', '-s', '7.5', '-e', '0.0001', '--threads', '16', '--max-seqs', '5000', '--gpu', '1']' returned non-zero exit status 1.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/app/alphafold/run_data_pipeline.py", line 729, in <module>
+    app.run(main)
+  File "/alphafold3_venv/lib/python3.12/site-packages/absl/app.py", line 316, in run
+    _run_main(main, args)
+  File "/alphafold3_venv/lib/python3.12/site-packages/absl/app.py", line 261, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/app/alphafold/run_data_pipeline.py", line 642, in main
+    output_path = process_fold_input(
+                  ^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/run_data_pipeline.py", line 467, in process_fold_input
+    processed_input = data_pipeline.process(fold_input)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/src/alphafold3/data/pipeline.py", line 1283, in process
+    processed_chains.append(self.process_protein_chain(chain))
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/src/alphafold3/data/pipeline.py", line 1135, in process_protein_chain
+    unpaired_msa, paired_msa, template_hits = _get_protein_msa_and_templates(
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/src/alphafold3/data/pipeline.py", line 241, in _get_protein_msa_and_templates
+    mgnify_msa = mgnify_msa_future.result()
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/src/alphafold3/data/msa.py", line 354, in get_msa
+    a3m=get_msa_tool(run_config.config).query(target_sequence).a3m,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/app/alphafold/src/alphafold3/data/tools/mmseqs.py", line 141, in query
+    self._run_search(
+  File "/app/alphafold/src/alphafold3/data/tools/mmseqs.py", line 388, in _run_search
+    subprocess_utils.run(
+  File "/app/alphafold/src/alphafold3/data/tools/subprocess_utils.py", line 108, in run
+    raise RuntimeError(error_msg) from e
+RuntimeError: MMseqs2 search failed
+stdout:
+search /tmp/tmp8q_q5g2i/queryDB /root/mmseqs_databases/mgnify_padded /tmp/tmp8q_q5g2i/resultDB /tmp/tmp8q_q5g2i/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1 
+
+MMseqs Version:                        	bd01c2229f027d8d8e61947f44d11ef1a7669212
+Substitution matrix                    	aa:blosum62.out,nucl:nucleotide.out
+Add backtrace                          	true
+Alignment mode                         	2
+Alignment mode                         	0
+Allow wrapped scoring                  	false
+E-value threshold                      	0.0001
+Seq. id. threshold                     	0
+Min alignment length                   	0
+Seq. id. mode                          	0
+Alternative alignments                 	0
+Coverage threshold                     	0
+Coverage mode                          	0
+Max sequence length                    	65535
+Compositional bias                     	1
+Compositional bias scale               	1
+Max reject                             	2147483647
+Max accept                             	2147483647
+Include identical seq. id.             	false
+Preload mode                           	0
+Pseudo count a                         	substitution:1.100,context:1.400
+Pseudo count b                         	substitution:4.100,context:5.800
+Score bias                             	0
+Realign hits                           	false
+Realign score bias                     	-0.2
+Realign max seqs                       	2147483647
+Correlation score weight               	0
+Gap open cost                          	aa:11,nucl:5
+Gap extension cost                     	aa:1,nucl:2
+Zdrop                                  	40
+Threads                                	16
+Compressed                             	0
+Verbosity                              	3
+Seed substitution matrix               	aa:VTML80.out,nucl:nucleotide.out
+Sensitivity                            	7.5
+k-mer length                           	0
+Target search mode                     	0
+k-score                                	seq:2147483647,prof:2147483647
+Alphabet size                          	aa:21,nucl:5
+Max results per query                  	5000
+Split database                         	0
+Split mode                             	2
+Split memory limit                     	0
+Diagonal scoring                       	true
+Exact k-mer matching                   	0
+Mask residues                          	1
+Mask residues probability              	0.9
+Mask lower case residues               	0
+Mask lower letter repeating N times    	0
+Minimum diagonal score                 	15
+Selected taxa                          	
+Spaced k-mers                          	1
+Spaced k-mer pattern                   	
+Local temporary path                   	
+Use GPU                                	1
+Use GPU server                         	0
+Wait for GPU server                    	600
+Prefilter mode                         	0
+Rescore mode                           	0
+Remove hits by seq. id. and coverage   	false
+Sort results                           	0
+Mask profile                           	1
+Profile E-value threshold              	0.1
+Global sequence weighting              	false
+Allow deletions                        	false
+Filter MSA                             	1
+Use filter only at N seqs              	0
+Maximum seq. id. threshold             	0.9
+Minimum seq. id.                       	0.0
+Minimum score per column               	-20
+Minimum coverage                       	0
+Select N most diverse seqs             	1000
+Pseudo count mode                      	0
+Profile output mode                    	0
+Min codons in orf                      	30
+Max codons in length                   	32734
+Max orf gaps                           	2147483647
+Contig start mode                      	2
+Contig end mode                        	2
+Orf start mode                         	1
+Forward frames                         	1,2,3
+Reverse frames                         	1,2,3
+Translation table                      	1
+Translate orf                          	0
+Use all table starts                   	false
+Offset of numeric ids                  	0
+Create lookup                          	0
+Overlap between sequences              	0
+Sequence split mode                    	1
+Header split mode                      	0
+Chain overlapping alignments           	0
+Merge query                            	1
+Search type                            	0
+Search iterations                      	1
+Start sensitivity                      	4
+Search steps                           	1
+Exhaustive search mode                 	false
+Filter results during exhaustive search	0
+Strand selection                       	1
+LCA search mode                        	false
+Disk space limit                       	0
+MPI runner                             	
+Force restart with latest tmp          	false
+Remove temporary files                 	false
+Translation mode                       	0
+
+ungappedprefilter /tmp/tmp8q_q5g2i/queryDB /root/mmseqs_databases/mgnify_padded /tmp/tmp8q_q5g2i/tmp/11981096118325678117/pref_0 --sub-mat 'aa:blosum62.out,nucl:nucleotide.out' -c 0 -e 0.0001 --cov-mode 0 --comp-bias-corr 1 --comp-bias-corr-scale 1 --min-ungapped-score 15 --max-seqs 5000 --db-load-mode 0 --gpu 1 --gpu-server 0 --gpu-server-wait-timeout 600 --prefilter-mode 1 --threads 16 --compressed 0 -v 3 
+
+CUDA error: out of memory : /work/lib/libmarv/src/cudasw4.cuh, line 1276
+Error: Ungapped prefilter died
+
+
+stderr:
+

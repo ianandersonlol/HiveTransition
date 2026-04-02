@@ -1,0 +1,84 @@
+============================================
+OpenFold 3 Prediction
+============================================
+Job ID:    11502235
+Host:      hive-dc-7-10-50
+GPU:       0
+Input:     example_input.json
+Output:    ./test_output_low
+Date:      Tue Mar 31 16:05:32 PDT 2026
+============================================
+Starting OpenFold 3 prediction at Tue Mar 31 16:05:33 PDT 2026
+Submitting 1 sequences to the Colabfold MSA server for main MSAs...
+No complexes found for paired MSA generation. Skipping...
+Predicting: |          | 0/? [00:00<?, ?it/s]Predicting: |          | 0/? [00:00<?, ?it/s]Predicting DataLoader 0:   0%|          | 0/1 [00:00<?, ?it/s]Predicting DataLoader 0: 100%|██████████| 1/1 [00:37<00:00,  0.03it/s]
+==================================================
+    PREDICTION SUMMARY (COMPLETE)    
+==================================================
+Total Queries Processed: 1
+  - Successful Queries:  1
+  - Failed Queries:      0
+==================================================
+
+Predicting DataLoader 0: 100%|██████████| 1/1 [00:37<00:00,  0.03it/s]
+Removing empty log directory...
+Cleaning up MSA directories...
+============================================
+Done. Results saved to: ./test_output_low
+Finished at Tue Mar 31 16:08:58 PDT 2026
+============================================
+
+############### Job 11502235 summary from hive-dc-7-10-50 ###############
+Name                : openfold3
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-31T16:05:26
+Start               : 2026-03-31T16:05:32
+End                 : 2026-03-31T16:08:58
+Reserved walltime   : 1-00:00:00
+Used walltime       :   00:03:26
+Used CPU time       :   00:03:06
+% User (Computation): 86.87%
+% System (I/O)      : 13.12%
+Mem reserved        : 64G
+Max Mem used        : 11.27G (hive-dc-7-10-50)
+Max Disk Write      : 7.92M (hive-dc-7-10-50)
+Max Disk Read       : 2.70G (hive-dc-7-10-50)
+
+############### Job 11502235 info ###############
+JobId=11502235 JobName=openfold3
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:03:26 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:05:26 EligibleTime=2026-03-31T16:05:26
+   AccrueTime=2026-03-31T16:05:26
+   StartTime=2026-03-31T16:05:32 EndTime=2026-03-31T16:08:58 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:05:32 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:05:32 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:739527
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=64G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/submit_openfold3.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_openfold3.sh example_input.json ./test_output_low
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/logs/openfold3_11502235_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/logs/openfold3_11502235_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

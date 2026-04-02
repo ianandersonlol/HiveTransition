@@ -1,0 +1,66 @@
+===== ESMFold Job Info =====
+SLURM_JOB_ID:  11502346
+Hostname:      hive-dc-7-10-54
+GPU:           NVIDIA RTX A6000
+Input FASTA:   example_input.fasta
+Output dir:    ./test_output_low3
+Date:          Tue Mar 31 16:30:57 PDT 2026
+===========================
+26/03/31 16:31:05 | INFO | root | Reading sequences from example_input.fasta
+26/03/31 16:31:05 | INFO | root | Loaded 1 sequences from example_input.fasta
+26/03/31 16:31:05 | INFO | root | Loading model
+
+############### Job 11502346 summary from hive-dc-7-10-54 ###############
+Name                : esmfold
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-54
+Cores               : 16
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-03-31T16:30:39
+Start               : 2026-03-31T16:30:56
+End                 : 2026-03-31T16:31:46
+Reserved walltime   : 04:00:00
+Used walltime       : 00:00:50
+Used CPU time       : 00:01:11
+% User (Computation): 73.23%
+% System (I/O)      : 26.77%
+Mem reserved        : 64G
+Max Mem used        : 12.95G (hive-dc-7-10-54)
+Max Disk Write      : 30.72K (hive-dc-7-10-54)
+Max Disk Read       : 7.92G (hive-dc-7-10-54)
+
+############### Job 11502346 info ###############
+JobId=11502346 JobName=esmfold
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:50 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:30:39 EligibleTime=2026-03-31T16:30:39
+   AccrueTime=2026-03-31T16:30:39
+   StartTime=2026-03-31T16:30:56 EndTime=2026-03-31T16:31:46 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:30:56 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:30:56 Scheduler=Backfill
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:865767
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-54
+   BatchHost=hive-dc-7-10-54
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=64G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/esmfold/submit_esmfold.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_esmfold.sh example_input.fasta ./test_output_low3
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/esmfold
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/esmfold/logs/esmfold_11502346_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/esmfold/logs/esmfold_11502346_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

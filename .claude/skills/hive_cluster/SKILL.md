@@ -46,7 +46,7 @@ the user's path, ask them. Do not guess or use a placeholder like `/path/to/`.
 ### 5. Stamp every generated script
 Every script you generate MUST include this comment as the second line (after the shebang):
 ```bash
-# Generated with Siegel Lab HIVE Cluster Skill v1.0
+# Generated with Siegel Lab HIVE Cluster Skill v1.1
 ```
 
 ### 6. Do not modify shared environments or software
@@ -60,7 +60,7 @@ All SLURM submission scripts should follow this pattern:
 
 ```bash
 #!/bin/bash --norc
-# Generated with Siegel Lab HIVE Cluster Skill v1.0
+# Generated with Siegel Lab HIVE Cluster Skill v1.1
 #SBATCH --job-name=<descriptive_name>
 #SBATCH --partition=<see partition rules below>
 #SBATCH --account=<see partition rules below>
@@ -105,6 +105,7 @@ mkdir -p logs
 | **CPU job, not time-sensitive** | `low` | `publicgrp` | `--requeue` |
 | **CPU job, needs >7 days or priority** | `high` | `jbsiegelgrp` | — |
 | **GPU job, not time-sensitive** | `low` (with `--gres=gpu:1`) | `publicgrp` | `--requeue` |
+| **GPU job, needs ≥80GB VRAM** | `low` (with `--constraint` + `--gres=gpu:1`) | `publicgrp` | `--requeue` (see below) |
 | **GPU job, needs >7 days or dedicated A100** | `gpu-a100` | `genome-center-grp` | — |
 
 **Important:**
@@ -113,6 +114,20 @@ mkdir -p logs
 - `gpu-a100` partition has a 30-day time limit.
 - The lab only has dedicated access to `gpu-a100` (via `genome-center-grp`). We do NOT have access to `gpu-a6000` or `gpu-6000-blackwell` partitions.
 - When using `low` with GPUs, you may get A100s, A6000s, or Blackwell GPUs depending on availability — this is the only way to access non-A100 GPUs.
+
+### GPU constraint for high-VRAM jobs
+
+Some tools require ≥80GB GPU VRAM (e.g., AlphaFast GPU-accelerated MMseqs2 database search). The A6000 (48GB VRAM) will OOM on these workloads. Use the `--constraint` flag on the `low` partition to target only A100 (80GB) or Blackwell GPUs:
+
+```bash
+#SBATCH --partition=low
+#SBATCH --account=publicgrp
+#SBATCH --constraint="gpu:a100|gpu:6000_blackwell"
+#SBATCH --gres=gpu:1
+#SBATCH --requeue
+```
+
+This avoids tying up the dedicated `gpu-a100` partition while ensuring the job gets a GPU with enough VRAM. Use this pattern whenever a tool needs ≥80GB VRAM.
 
 ### Available GPU resources:
 - **gpu-a100** (dedicated): 3 nodes, 4-8 A100 GPUs per node — use `genome-center-grp` account
@@ -268,7 +283,7 @@ When running the same tool on multiple inputs:
 
 ```bash
 #!/bin/bash --norc
-# Generated with Siegel Lab HIVE Cluster Skill v1.0
+# Generated with Siegel Lab HIVE Cluster Skill v1.1
 #SBATCH --job-name=<tool>_array
 #SBATCH --partition=<appropriate>
 #SBATCH --account=<appropriate>
@@ -291,6 +306,127 @@ FILE=${FILES[$SLURM_ARRAY_TASK_ID]}
 ```
 
 For large arrays (>100 jobs), use `--array=0-N%20` to limit concurrent jobs to 20.
+
+## GPU Efficiency Best Practices
+
+Based on a lab-wide GPU audit (April 2025 -- March 2026), these are the most common efficiency
+issues. When generating scripts, apply these rules proactively.
+
+### 1. Never generate sequential multi-design/multi-input GPU jobs
+
+The most common inefficiency is running many independent GPU tasks sequentially inside one job.
+Always split into array tasks instead.
+
+**RFdiffusion:** Never set `num_designs` > 5 in a single job. Use arrays:
+```bash
+#SBATCH --array=0-249%50
+#SBATCH --time=01:00:00
+#SBATCH --gres=gpu:1
+
+inference.num_designs=1
+inference.output_prefix="outputs/${SLURM_ARRAY_TASK_ID}"
+```
+
+**AlphaFold 3:** Never use `--input_dir` to process a directory of JSONs in one job. Use arrays:
+```bash
+#SBATCH --array=0-49%10
+#SBATCH --time=01:00:00
+#SBATCH --gres=gpu:1
+
+JSONS=(inputs/*.json)
+JSON=${JSONS[$SLURM_ARRAY_TASK_ID]}
+# ... run AF3 on single $JSON
+```
+
+**LigandMPNN / ProteinMPNN:** Never loop over PDBs inside a script. One PDB per array task:
+```bash
+#SBATCH --array=0-249%50
+#SBATCH --time=00:30:00
+#SBATCH --gres=gpu:1
+
+PDBS=(input_pdbs/*.pdb)
+PDB=${PDBS[$SLURM_ARRAY_TASK_ID]}
+python ProteinMPNN/run.py --pdb_path "$PDB" --num_seq_per_target 10
+```
+
+### 2. Set realistic walltimes
+
+Over-requesting walltime hurts backfill scheduling for the entire cluster. Use these guidelines:
+
+| Software | Typical Runtime | Recommended --time |
+|----------|-----------------|-------------------|
+| AF3 (single JSON) | 10-30 min | 01:00:00 |
+| ColabFold (single seq) | 5-15 min | 00:30:00 |
+| Boltz2 (single input) | 5-15 min | 00:30:00 |
+| Chai (single input) | 5-15 min | 00:30:00 |
+| RFdiffusion (1 design) | 10-25 min | 01:00:00 |
+| RFdiffusion-AA (1 design, large complex) | 20-40 min | 01:30:00 |
+| LigandMPNN (1 PDB, 10 seqs) | 1-5 min | 00:15:00 |
+| ESM-2 embeddings (batch) | 1-8 hr | 12:00:00 |
+| BindCraft | 2-8 hr | 12:00:00 |
+
+When in doubt, run one test job, check elapsed time with `sacct -j JOBID --format=Elapsed`,
+then set `--time` to 2-3x that value.
+
+### 3. Never submit CPU-only work to GPU partitions
+
+If the script does not use `torch`, `tensorflow`, or a GPU-accelerated tool, it does NOT
+need `--gres=gpu`. Rosetta, Python data processing, and file manipulation should go to
+`high` or `low` without GPU allocation. Submitting CPU jobs to `gpu-a100` blocks GPUs
+that others need.
+
+### 4. Use arrays, not for-loops calling sbatch
+
+When generating submission wrappers for multiple inputs, always use SLURM arrays:
+```bash
+#SBATCH --array=0-99%20
+```
+Do NOT generate wrapper scripts like:
+```bash
+# BAD - do not generate this pattern
+for f in inputs/*.json; do
+    sbatch my_script.sh "$f"
+done
+```
+Arrays are easier to manage (one `scancel`), friendlier to the scheduler, and give
+better monitoring via `squeue`.
+
+### 5. Throttle large arrays
+
+For arrays > 50 tasks, always add a concurrency limit to avoid monopolizing GPUs:
+- Small campaigns: `--array=0-99%20`
+- Medium campaigns: `--array=0-499%50`
+- Large campaigns: `--array=0-1249%50`
+
+### 6. Use constraints for multi-GPU-type submissions
+
+To submit to either A100 or Blackwell GPUs (whichever is available first), use the
+`low` partition with a constraint:
+```bash
+#SBATCH --partition=low
+#SBATCH --account=publicgrp
+#SBATCH --constraint="gpu:a100|gpu:6000_blackwell"
+#SBATCH --gres=gpu:1
+#SBATCH --requeue
+```
+This is especially useful for short jobs that don't need a specific GPU architecture.
+
+### 7. Resource request guidelines
+
+Most bioinformatics GPU tools need far less CPU/RAM than users request:
+
+| Software | CPUs Needed | RAM Needed |
+|----------|------------|------------|
+| RFdiffusion / RFdiffusion-AA | 4 | 16G |
+| LigandMPNN / ProteinMPNN | 2-4 | 8G |
+| AF3 (small complex, <500 res) | 8 | 64G |
+| AF3 (large complex, >500 res) | 16 | 256-512G |
+| ColabFold | 8 | 32G |
+| Boltz2 | 8 | 32G |
+| Chai | 8 | 32G |
+| ESM-2 embeddings | 4 | 16G |
+
+Do not default to 32 CPUs or 128G RAM unless the tool specifically benefits from it.
 
 ## Common Mistakes to Prevent
 

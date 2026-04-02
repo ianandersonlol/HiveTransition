@@ -1,0 +1,68 @@
+=== PLACER Job Info ===
+Job ID:      11502389
+Hostname:    hive-dc-7-10-50
+GPU:         NVIDIA RTX A6000
+Input:       /quobyte/jbsiegelgrp/software/PLACER/examples/inputs/3rgk.pdb
+Output dir:  ./test_output_low5
+N samples:   10
+Start time:  Tue Mar 31 16:43:18 PDT 2026
+======================
+# device:  cuda:0
+Using checkpoint: /quobyte/jbsiegelgrp/software/PLACER/weights/PLACER_model_1.pt
+# variables:  5071802
+# number of PDB files to process: 1
+
+############### Job 11502389 summary from hive-dc-7-10-50 ###############
+Name                : placer
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 8
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-03-31T16:42:07
+Start               : 2026-03-31T16:43:18
+End                 : 2026-03-31T16:44:22
+Reserved walltime   : 04:00:00
+Used walltime       : 00:01:04
+Used CPU time       : 00:00:14
+% User (Computation): 77.72%
+% System (I/O)      : 22.27%
+Mem reserved        : 32G
+Max Mem used        : 1.22G (hive-dc-7-10-50)
+Max Disk Write      : 30.72K (hive-dc-7-10-50)
+Max Disk Read       : 204.31M (hive-dc-7-10-50)
+
+############### Job 11502389 info ###############
+JobId=11502389 JobName=placer
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:01:04 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:42:07 EligibleTime=2026-03-31T16:42:07
+   AccrueTime=2026-03-31T16:42:07
+   StartTime=2026-03-31T16:43:18 EndTime=2026-03-31T16:44:22 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:43:18 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:43:18 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:920373
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=8,mem=32G,node=1,billing=8,gres/gpu=1
+   AllocTRES=cpu=8,mem=32G,node=1,billing=8,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=8 MinMemoryNode=32G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/submit_placer.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_placer.sh /quobyte/jbsiegelgrp/software/PLACER/examples/inputs/3rgk.pdb ./test_output_low5 10
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/logs/placer_11502389_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/logs/placer_11502389_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=8

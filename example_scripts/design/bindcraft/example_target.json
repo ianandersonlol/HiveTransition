@@ -1,0 +1,9 @@
+{
+    "design_path": "/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/bindcraft/test_output/PDL1_binders",
+    "binder_name": "PDL1_test",
+    "starting_pdb": "/quobyte/jbsiegelgrp/software/BindCraft/example/PDL1.pdb",
+    "chains": "A",
+    "target_hotspot_residues": "56",
+    "lengths": [50, 70],
+    "number_of_final_designs": 1
+}

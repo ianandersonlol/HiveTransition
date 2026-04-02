@@ -1,0 +1,11 @@
+[
+  {
+    "name": "ubiquitin_test",
+    "components": [
+      {
+        "seq": "MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ",
+        "chain_id": "A"
+      }
+    ]
+  }
+]

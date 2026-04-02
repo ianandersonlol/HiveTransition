@@ -1,0 +1,121 @@
+==========================================
+AlphaFast Structure Prediction
+==========================================
+SLURM Job ID:  11502196
+Hostname:      hive-dc-7-10-50
+GPU:           NVIDIA RTX A6000
+Input dir:     /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/example_inputs
+Output dir:    /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/test_output_low
+JSON files:    1
+Container:     /quobyte/jbsiegelgrp/software/alphafast/alphafast.sif
+Weights dir:   /quobyte/jbsiegelgrp/software/alphafold3
+Database dir:  /quobyte/jbsiegelgrp/databases/alphafast
+Start time:    Tue Mar 31 16:03:00 PDT 2026
+==========================================
+
+Using orchestration script: /quobyte/jbsiegelgrp/software/alphafast/scripts/run_alphafast.sh
+
+==========================================
+AlphaFast Run
+==========================================
+Backend:    singularity
+Container:  /quobyte/jbsiegelgrp/software/alphafast/alphafast.sif
+Input dir:  /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/example_inputs
+Output dir: /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/test_output_low
+DB dir:     /quobyte/jbsiegelgrp/databases/alphafast
+MMseqs dir: /quobyte/jbsiegelgrp/databases/alphafast/mmseqs
+Weights:    /quobyte/jbsiegelgrp/software/alphafold3
+GPUs:       1 (devices: 0)
+Batch size: 1
+Start time: Tue Mar 31 16:03:00 PDT 2026
+==========================================
+
+=== Stage 1: Data Pipeline (MSA search) ===
+GPU: 0
+Log: logs/pipeline_20260331_160300.log
+
+INFO:    Environment variable SINGULARITYENV_CUDA_VISIBLE_DEVICES is set, but APPTAINERENV_CUDA_VISIBLE_DEVICES is preferred
+I0331 16:03:06.324926 8759873168128 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:03:06.325038 8759873168128 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:03:06.325108 8759873168128 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:03:06.325138 8759873168128 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:03:06.325208 8759873168128 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:03:06.325410 8759873168128 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:03:06.325446 8759873168128 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:03:06.325473 8759873168128 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:03:06.325495 8759873168128 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:03:06.325553 8759873168128 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:03:06.325640 8759873168128 pipeline.py:128] Getting protein MSAs for sequence MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ
+I0331 16:03:06.326407 8759157073600 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.326772 8759154972352 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.327136 8759152854720 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.327327 8759150737088 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.328420 8759157073600 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpdinn5k85/query.fasta /tmp/tmpdinn5k85/queryDB"
+I0331 16:03:06.328593 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp0d5d7q58/query.fasta /tmp/tmp0d5d7q58/queryDB"
+I0331 16:03:06.328761 8759150737088 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpoh445xoh/query.fasta /tmp/tmpoh445xoh/queryDB"
+I0331 16:03:06.329087 8759154972352 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp_81prvbg/query.fasta /tmp/tmp_81prvbg/queryDB"
+I0331 16:03:06.692947 8759152854720 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.364 seconds
+I0331 16:03:06.693054 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp0d5d7q58/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp0d5d7q58/resultDB /tmp/tmp0d5d7q58/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:03:06.693449 8759157073600 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.693600 8759157073600 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpdinn5k85/queryDB /root/mmseqs_databases/uniref90_padded /tmp/tmpdinn5k85/resultDB /tmp/tmpdinn5k85/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 10000 --gpu 1"
+I0331 16:03:06.693715 8759154972352 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.693787 8759154972352 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp_81prvbg/queryDB /root/mmseqs_databases/mgnify_padded /tmp/tmp_81prvbg/resultDB /tmp/tmp_81prvbg/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:03:06.693961 8759150737088 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.694032 8759150737088 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpoh445xoh/queryDB /root/mmseqs_databases/uniprot_padded /tmp/tmpoh445xoh/resultDB /tmp/tmpoh445xoh/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 50000 --gpu 1"
+I0331 16:03:53.061815 8759152854720 subprocess_utils.py:111] Finished MMseqs2 search in 46.369 seconds
+I0331 16:03:53.061962 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs result2msa /tmp/tmp0d5d7q58/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp0d5d7q58/resultDB /tmp/tmp0d5d7q58/msaDB --msa-format-mode 5"
+
+############### Job 11502196 summary from hive-dc-7-10-50 ###############
+Name                : alphafast
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : CANCELLED by 1928590,CANCELLED
+ExitCode            : 0:0
+Submit              : 2026-03-31T16:01:23
+Start               : 2026-03-31T16:03:00
+End                 : 2026-03-31T16:05:30
+Reserved walltime   : 12:00:00
+Used walltime       : 00:02:30
+Used CPU time       : 00:05:49
+% User (Computation): 27.80%
+% System (I/O)      : 72.20%
+Mem reserved        : 64G
+Max Mem used        : 63.96G (hive-dc-7-10-50)
+Max Disk Write      : 96.98M (hive-dc-7-10-50)
+Max Disk Read       : 58.89M (hive-dc-7-10-50)
+
+############### Job 11502196 info ###############
+JobId=11502196 JobName=alphafast
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:15
+   RunTime=00:02:26 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:01:23 EligibleTime=2026-03-31T16:01:23
+   AccrueTime=2026-03-31T16:01:23
+   StartTime=2026-03-31T16:03:00 EndTime=2026-03-31T16:05:26 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:03:00 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:03:00 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:719283
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=64G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/submit_alphafast.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_alphafast.sh ./example_inputs ./test_output_low
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/logs/alphafast_11502196_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/logs/alphafast_11502196_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

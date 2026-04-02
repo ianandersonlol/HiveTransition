@@ -1,0 +1,14 @@
+{
+  "name": "ubiquitin_human",
+  "sequences": [
+    {
+      "protein": {
+        "id": ["A"],
+        "sequence": "MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ"
+      }
+    }
+  ],
+  "modelSeeds": [1],
+  "dialect": "alphafold3",
+  "version": 1
+}

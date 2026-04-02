@@ -1,0 +1,70 @@
+========================================
+BindCraft Binder Design
+========================================
+SLURM_JOB_ID:    11502243
+Hostname:        hive-dc-7-10-54
+GPU:             NVIDIA RTX A6000
+Date:            Tue Mar 31 16:25:52 PDT 2026
+
+Target settings:   example_target.json
+Filter settings:   /quobyte/jbsiegelgrp/software/BindCraft/settings_filters/default_filters.json
+Advanced settings: /quobyte/jbsiegelgrp/software/BindCraft/settings_advanced/default_4stage_multimer.json
+========================================
+No GPU device found, terminating.
+
+BindCraft finished at Tue Mar 31 16:26:11 PDT 2026
+
+############### Job 11502243 summary from hive-dc-7-10-54 ###############
+Name                : bindcraft
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-54
+Cores               : 16
+GPUs                : 1
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-31T16:05:26
+Start               : 2026-03-31T16:25:52
+End                 : 2026-03-31T16:26:11
+Reserved walltime   : 01:00:00
+Used walltime       : 00:00:19
+Used CPU time       : 00:00:05
+% User (Computation): 82.71%
+% System (I/O)      : 17.28%
+Mem reserved        : 128G
+Max Mem used        : 27.86M (hive-dc-7-10-54)
+Max Disk Write      : 0.00  (hive-dc-7-10-54)
+Max Disk Read       : 0.00  (hive-dc-7-10-54)
+
+############### Job 11502243 info ###############
+JobId=11502243 JobName=bindcraft
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=139 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:00:19 TimeLimit=01:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:05:26 EligibleTime=2026-03-31T16:05:26
+   AccrueTime=2026-03-31T16:05:26
+   StartTime=2026-03-31T16:25:52 EndTime=2026-03-31T16:26:11 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:25:52 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:25:52 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:739527
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-54
+   BatchHost=hive-dc-7-10-54
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=128G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=128G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=128G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/bindcraft/submit_bindcraft.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue --time=01:00:00 submit_bindcraft.sh example_target.json
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/bindcraft
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/bindcraft/logs/bindcraft_11502243_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/bindcraft/logs/bindcraft_11502243_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

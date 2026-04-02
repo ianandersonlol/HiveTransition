@@ -1,0 +1,9 @@
+16:42:18 DEBUG transforms: Debug mode is on
+16:42:19 INFO rf3.inference_engines.rf3: [rank: 0] Loading checkpoint from /quobyte/jbsiegelgrp/databases/foundry/rf3_foundry_01_24_latest_remapped.ckpt...
+16:42:27 WARNING atomworks.ml: Using element type for atom names of atomized tokens.
+Using bfloat16 Automatic Mixed Precision (AMP)
+You are using a CUDA device ('NVIDIA RTX A6000') that has Tensor Cores. To properly utilize them, you should set `torch.set_float32_matmul_precision('medium' | 'high')` which will trade-off precision for performance. For more details, read https://pytorch.org/docs/stable/generated/torch.set_float32_matmul_precision.html#torch.set_float32_matmul_precision
+16:42:36 INFO rf3.inference_engines.rf3: [rank: 0] Outputs will be written to /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/rosettafold3/test_output_low6.
+16:42:39 INFO rf3.inference_engines.rf3: [rank: 0] Found 1 structures to predict!
+16:42:39 INFO rf3.inference_engines.rf3: [rank: 0] Predicting structure 1/1: ubiquitin_test
+16:43:14 INFO rf3.inference_engines.rf3: [rank: 0] Outputs for ubiquitin_test written to test_output_low6/ubiquitin_test!

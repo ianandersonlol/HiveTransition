@@ -1,0 +1,65 @@
+============================================
+OpenFold 3 Prediction
+============================================
+Job ID:    11502192
+Host:      hive-dc-7-10-50
+GPU:       0
+Input:     example_input.json
+Output:    ./test_output_low
+Date:      Tue Mar 31 16:02:48 PDT 2026
+============================================
+
+############### Job 11502192 summary from hive-dc-7-10-50 ###############
+Name                : openfold3
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-03-31T16:01:23
+Start               : 2026-03-31T16:02:48
+End                 : 2026-03-31T16:02:49
+Reserved walltime   : 1-00:00:00
+Used walltime       :   00:00:01
+Used CPU time       :   00:00:00
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 64G
+Max Mem used        : 1.03M (hive-dc-7-10-50)
+Max Disk Write      : 0.00  (hive-dc-7-10-50)
+Max Disk Read       : 0.00  (hive-dc-7-10-50)
+
+############### Job 11502192 info ###############
+JobId=11502192 JobName=openfold3
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:01 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:01:23 EligibleTime=2026-03-31T16:01:23
+   AccrueTime=2026-03-31T16:01:23
+   StartTime=2026-03-31T16:02:48 EndTime=2026-03-31T16:02:49 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:02:48 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:02:48 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:719283
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=64G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/submit_openfold3.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_openfold3.sh example_input.json ./test_output_low
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/logs/openfold3_11502192_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/openfold3/logs/openfold3_11502192_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

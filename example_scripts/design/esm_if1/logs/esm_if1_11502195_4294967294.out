@@ -1,0 +1,65 @@
+===== ESM-IF1 Inverse Folding Job Info =====
+SLURM_JOB_ID:  11502195
+Hostname:      hive-dc-7-10-50
+GPU:           NVIDIA RTX A6000
+Input PDB:     /quobyte/jbsiegelgrp/software/esm/examples/inverse_folding/data/5YH2.pdb
+Chain:         A
+Num samples:   5
+Output FASTA:  ./test_output_low.fasta
+Date:          Tue Mar 31 16:02:56 PDT 2026
+=============================================
+
+############### Job 11502195 summary from hive-dc-7-10-50 ###############
+Name                : esm_if1
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-03-31T16:01:23
+Start               : 2026-03-31T16:02:56
+End                 : 2026-03-31T16:02:57
+Reserved walltime   : 02:00:00
+Used walltime       : 00:00:01
+Used CPU time       : 00:00:00
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 32G
+Max Mem used        : 1.18M (hive-dc-7-10-50)
+Max Disk Write      : 0.00  (hive-dc-7-10-50)
+Max Disk Read       : 0.00  (hive-dc-7-10-50)
+
+############### Job 11502195 info ###############
+JobId=11502195 JobName=esm_if1
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:01 TimeLimit=02:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:01:23 EligibleTime=2026-03-31T16:01:23
+   AccrueTime=2026-03-31T16:01:23
+   StartTime=2026-03-31T16:02:56 EndTime=2026-03-31T16:02:57 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:02:56 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:02:56 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:719283
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=32G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=32G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=32G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/esm_if1/submit_esm_if1.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_esm_if1.sh /quobyte/jbsiegelgrp/software/esm/examples/inverse_folding/data/5YH2.pdb A 5 ./test_output_low.fasta
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/esm_if1
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/esm_if1/logs/esm_if1_11502195_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/design/esm_if1/logs/esm_if1_11502195_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

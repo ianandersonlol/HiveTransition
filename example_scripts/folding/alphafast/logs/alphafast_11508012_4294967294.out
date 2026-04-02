@@ -1,0 +1,89 @@
+==========================================
+AlphaFast Structure Prediction
+==========================================
+SLURM Job ID:  11508012
+Hostname:      hive-dc-7-10-50
+GPU:           NVIDIA RTX A6000
+Input dir:     /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/example_inputs
+Output dir:    /quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/test_output_final
+JSON files:    1
+Container:     /quobyte/jbsiegelgrp/software/alphafast/alphafast.sif
+Weights dir:   /quobyte/jbsiegelgrp/software/alphafold3
+Database dir:  /quobyte/jbsiegelgrp/databases/alphafast
+Start time:    Wed Apr  1 12:30:24 PDT 2026
+==========================================
+
+Using orchestration script: /quobyte/jbsiegelgrp/software/alphafast/scripts/run_alphafast.sh
+
+Unknown argument: --mmseqs_sequential
+Usage: /quobyte/jbsiegelgrp/software/alphafast/scripts/run_alphafast.sh --input_dir DIR --output_dir DIR --db_dir DIR --weights_dir DIR [OPTIONS]
+
+Required:
+  --input_dir DIR       Directory containing input JSON files
+  --output_dir DIR      Output directory for results
+  --db_dir DIR          Database directory (from setup_databases.sh)
+  --weights_dir DIR     Directory containing af3.bin.zst
+
+Optional:
+  --num_gpus N          Number of GPUs (default: 1)
+  --container IMAGE     Container image or .sif path
+                        (default: romerolabduke/alphafast:latest)
+  --batch_size N        MSA batch size (default: auto = number of inputs)
+  --gpu_devices IDS     Comma-separated GPU IDs (default: 0 for single,
+                        0,1,...,N-1 for multi)
+  --backend TYPE        Force 'docker' or 'singularity' (default: auto-detect)
+
+############### Job 11508012 summary from hive-dc-7-10-50 ###############
+Name                : alphafast
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-04-01T12:27:56
+Start               : 2026-04-01T12:30:24
+End                 : 2026-04-01T12:30:24
+Reserved walltime   : 12:00:00
+Used walltime       : 00:00:00
+Used CPU time       : 00:00:00
+% User (Computation): --
+% System (I/O)      : --
+Mem reserved        : 128G
+Max Mem used        : 468.00K (hive-dc-7-10-50)
+Max Disk Write      : 0.00  (hive-dc-7-10-50)
+Max Disk Read       : 0.00  (hive-dc-7-10-50)
+
+############### Job 11508012 info ###############
+JobId=11508012 JobName=alphafast
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=142 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=3 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:00 TimeLimit=12:00:00 TimeMin=N/A
+   SubmitTime=2026-04-01T12:27:56 EligibleTime=2026-04-01T12:29:57
+   AccrueTime=2026-04-01T12:29:57
+   StartTime=2026-04-01T12:30:24 EndTime=2026-04-01T12:30:24 Deadline=N/A
+   PreemptEligibleTime=2026-04-01T12:30:24 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-04-01T12:30:24 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:1091740
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=128G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=128G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=128G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/submit_alphafast.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue --mem=128G submit_alphafast.sh ./example_inputs ./test_output_final
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/logs/alphafast_11508012_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/alphafast/logs/alphafast_11508012_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

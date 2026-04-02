@@ -1,0 +1,30 @@
+INFO:    Environment variable SINGULARITYENV_CUDA_VISIBLE_DEVICES is set, but APPTAINERENV_CUDA_VISIBLE_DEVICES is preferred
+I0331 16:03:06.324926 8759873168128 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:03:06.325038 8759873168128 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:03:06.325108 8759873168128 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:03:06.325138 8759873168128 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:03:06.325208 8759873168128 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:03:06.325410 8759873168128 pipeline.py:495] Using MMseqs2-GPU for protein MSA searches
+I0331 16:03:06.325446 8759873168128 pipeline.py:496] MMseqs2 binary: /usr/local/bin/mmseqs
+I0331 16:03:06.325473 8759873168128 pipeline.py:497] MMseqs2 database directory: /root/mmseqs_databases
+I0331 16:03:06.325495 8759873168128 pipeline.py:499] Using MMseqs2-GPU for template search
+I0331 16:03:06.325553 8759873168128 pipeline.py:718] Template search: e-value=1.00e-03, coverage≥40%, no seq_id filter
+I0331 16:03:06.325640 8759873168128 pipeline.py:128] Getting protein MSAs for sequence MQIFVKTLTGKTITLEVEPSDTIENVKAKIQDKEGIPPDQQRLIFAGKQLEDGRTLSDYNIQ
+I0331 16:03:06.326407 8759157073600 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.326772 8759154972352 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.327136 8759152854720 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.327327 8759150737088 mmseqs.py:105] MMseqs2 query sequence: MQIFVKTLTGKTITLE... (len 62)
+I0331 16:03:06.328420 8759157073600 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpdinn5k85/query.fasta /tmp/tmpdinn5k85/queryDB"
+I0331 16:03:06.328593 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp0d5d7q58/query.fasta /tmp/tmp0d5d7q58/queryDB"
+I0331 16:03:06.328761 8759150737088 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmpoh445xoh/query.fasta /tmp/tmpoh445xoh/queryDB"
+I0331 16:03:06.329087 8759154972352 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs createdb /tmp/tmp_81prvbg/query.fasta /tmp/tmp_81prvbg/queryDB"
+I0331 16:03:06.692947 8759152854720 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.364 seconds
+I0331 16:03:06.693054 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp0d5d7q58/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp0d5d7q58/resultDB /tmp/tmp0d5d7q58/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:03:06.693449 8759157073600 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.693600 8759157073600 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpdinn5k85/queryDB /root/mmseqs_databases/uniref90_padded /tmp/tmpdinn5k85/resultDB /tmp/tmpdinn5k85/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 10000 --gpu 1"
+I0331 16:03:06.693715 8759154972352 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.693787 8759154972352 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmp_81prvbg/queryDB /root/mmseqs_databases/mgnify_padded /tmp/tmp_81prvbg/resultDB /tmp/tmp_81prvbg/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 5000 --gpu 1"
+I0331 16:03:06.693961 8759150737088 subprocess_utils.py:111] Finished MMseqs2 createdb in 0.365 seconds
+I0331 16:03:06.694032 8759150737088 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs search /tmp/tmpoh445xoh/queryDB /root/mmseqs_databases/uniprot_padded /tmp/tmpoh445xoh/resultDB /tmp/tmpoh445xoh/tmp -a -s 7.5 -e 0.0001 --threads 16 --max-seqs 50000 --gpu 1"
+I0331 16:03:53.061815 8759152854720 subprocess_utils.py:111] Finished MMseqs2 search in 46.369 seconds
+I0331 16:03:53.061962 8759152854720 subprocess_utils.py:82] Launching subprocess "/usr/local/bin/mmseqs result2msa /tmp/tmp0d5d7q58/queryDB /root/mmseqs_databases/small_bfd_padded /tmp/tmp0d5d7q58/resultDB /tmp/tmp0d5d7q58/msaDB --msa-format-mode 5"

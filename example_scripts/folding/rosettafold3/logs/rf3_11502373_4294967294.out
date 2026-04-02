@@ -1,0 +1,63 @@
+=== RoseTTAFold3 Structure Prediction ===
+Job ID:    11502373
+Hostname:  hive-dc-7-10-50
+GPU:       NVIDIA RTX A6000
+Input:     example_input.json
+Output:    ./test_output_low5
+Date:      Tue Mar 31 16:38:32 PDT 2026
+==========================================
+
+############### Job 11502373 summary from hive-dc-7-10-50 ###############
+Name                : rf3_fold
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 16
+GPUs                : 1
+State               : FAILED
+ExitCode            : 1:0
+Submit              : 2026-03-31T16:38:23
+Start               : 2026-03-31T16:38:32
+End                 : 2026-03-31T16:39:01
+Reserved walltime   : 1-00:00:00
+Used walltime       :   00:00:29
+Used CPU time       :   00:00:10
+% User (Computation): 82.61%
+% System (I/O)      : 17.39%
+Mem reserved        : 64G
+Max Mem used        : 1.67M (hive-dc-7-10-50)
+Max Disk Write      : 0.00  (hive-dc-7-10-50)
+Max Disk Read       : 0.00  (hive-dc-7-10-50)
+
+############### Job 11502373 info ###############
+JobId=11502373 JobName=rf3_fold
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=NonZeroExitCode Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=1:0
+   RunTime=00:00:29 TimeLimit=1-00:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:38:23 EligibleTime=2026-03-31T16:38:23
+   AccrueTime=2026-03-31T16:38:23
+   StartTime=2026-03-31T16:38:32 EndTime=2026-03-31T16:39:01 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:38:32 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:38:32 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:902518
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=16 NumTasks=1 CPUs/Task=16 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   AllocTRES=cpu=16,mem=64G,node=1,billing=16,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=16 MinMemoryNode=64G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/rosettafold3/submit_rf3.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_rf3.sh example_input.json ./test_output_low5
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/rosettafold3
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/rosettafold3/logs/rf3_11502373_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/folding/rosettafold3/logs/rf3_11502373_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=16

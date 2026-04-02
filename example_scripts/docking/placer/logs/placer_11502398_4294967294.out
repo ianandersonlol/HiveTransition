@@ -1,0 +1,91 @@
+=== PLACER Job Info ===
+Job ID:      11502398
+Hostname:    hive-dc-7-10-50
+GPU:         NVIDIA RTX A6000
+Input:       /quobyte/jbsiegelgrp/software/PLACER/examples/inputs/3rgk.cif
+Output dir:  ./test_output_low6
+N samples:   10
+Start time:  Tue Mar 31 16:44:39 PDT 2026
+======================
+# device:  cuda:0
+Using checkpoint: /quobyte/jbsiegelgrp/software/PLACER/weights/PLACER_model_1.pt
+# variables:  5071802
+# number of PDB files to process: 1
+Keeping these ligands fixed during prediction IF they are in the crop: [].
+--> 0 3rgk {ID:type/atoms/bonds} : {A:polypeptide(L)/2450/2476; B:nonpoly/75/82; C:nonpoly/5/4; D:nonpoly/5/4; E:nonpoly/5/4}
+model    1 :  fape= 1.20558  lddt= 0.97455  rmsd= 0.36741  kabsch= 0.22266  prmsd= 0.71738  plddt= 0.98907  plddt_pde= 0.93886  | time= 14.29s  mem= 3.10gb 
+model    2 :  fape= 2.50909  lddt= 0.86134  rmsd= 6.37200  kabsch= 1.26117  prmsd= 6.21820  plddt= 0.53512  plddt_pde= 0.58509  | time= 1.41s  mem= 3.26gb 
+model    3 :  fape= 2.50035  lddt= 0.85959  rmsd= 5.84427  kabsch= 1.07745  prmsd= 6.26295  plddt= 0.47233  plddt_pde= 0.50001  | time= 1.38s  mem= 3.26gb 
+model    4 :  fape= 2.46307  lddt= 0.86214  rmsd= 1.46102  kabsch= 0.09984  prmsd= 1.40357  plddt= 0.82200  plddt_pde= 0.78730  | time= 1.40s  mem= 3.26gb 
+model    5 :  fape= 1.14133  lddt= 0.97004  rmsd= 0.34242  kabsch= 0.20511  prmsd= 1.13388  plddt= 0.98628  plddt_pde= 0.87297  | time= 1.41s  mem= 3.26gb 
+model    6 :  fape= 1.62897  lddt= 0.91278  rmsd= 2.03168  kabsch= 0.88114  prmsd= 5.38729  plddt= 0.49930  plddt_pde= 0.54925  | time= 1.39s  mem= 3.27gb 
+model    7 :  fape= 2.46704  lddt= 0.85574  rmsd= 6.02626  kabsch= 1.19523  prmsd= 5.51570  plddt= 0.58209  plddt_pde= 0.73412  | time= 1.39s  mem= 3.27gb 
+model    8 :  fape= 1.29461  lddt= 0.96800  rmsd= 0.29621  kabsch= 0.24283  prmsd= 0.58331  plddt= 0.98953  plddt_pde= 0.94248  | time= 1.37s  mem= 3.27gb 
+model    9 :  fape= 1.28373  lddt= 0.96389  rmsd= 0.45159  kabsch= 0.23124  prmsd= 0.64969  plddt= 0.98674  plddt_pde= 0.94632  | time= 1.37s  mem= 3.27gb 
+model   10 :  fape= 1.45099  lddt= 0.95090  rmsd= 0.40883  kabsch= 0.22720  prmsd= 0.61367  plddt= 0.98860  plddt_pde= 0.95000  | time= 1.39s  mem= 3.27gb 
+Ranking predictions based on prmsd. This will make the model numbers, and the CSV file look different from the above printed results.
+Wrote generated models to ./test_output_low6/3rgk_model.pdb
+Wrote scores to ./test_output_low6/3rgk.csv
+Finished predicting 1 structures in 29.00 seconds.
+
+=== PLACER Complete ===
+End time: Tue Mar 31 16:45:49 PDT 2026
+Output:   ./test_output_low6
+total 484K
+-rw-rw-r-- 1 icanders jbsiegelgrp 1.5K Mar 31 16:45 3rgk.csv
+-rw-rw-r-- 1 icanders jbsiegelgrp 480K Mar 31 16:45 3rgk_model.pdb
+
+############### Job 11502398 summary from hive-dc-7-10-50 ###############
+Name                : placer
+User                : icanders
+Account             : publicgrp
+Partition           : low
+Nodes               : hive-dc-7-10-50
+Cores               : 8
+GPUs                : 1
+State               : COMPLETED
+ExitCode            : 0:0
+Submit              : 2026-03-31T16:44:38
+Start               : 2026-03-31T16:44:39
+End                 : 2026-03-31T16:45:49
+Reserved walltime   : 04:00:00
+Used walltime       : 00:01:10
+Used CPU time       : 00:00:53
+% User (Computation): 59.63%
+% System (I/O)      : 40.37%
+Mem reserved        : 32G
+Max Mem used        : 1.95G (hive-dc-7-10-50)
+Max Disk Write      : 30.72K (hive-dc-7-10-50)
+Max Disk Read       : 204.48M (hive-dc-7-10-50)
+
+############### Job 11502398 info ###############
+JobId=11502398 JobName=placer
+   UserId=icanders(1928590) GroupId=icanders(1928590) MCS_label=N/A
+   Priority=138 Nice=0 Account=publicgrp QOS=publicgrp-low-qos
+   JobState=COMPLETING Reason=None Dependency=(null)
+   Requeue=1 Restarts=0 BatchFlag=1 Reboot=0 ExitCode=0:0
+   RunTime=00:01:10 TimeLimit=04:00:00 TimeMin=N/A
+   SubmitTime=2026-03-31T16:44:38 EligibleTime=2026-03-31T16:44:38
+   AccrueTime=2026-03-31T16:44:38
+   StartTime=2026-03-31T16:44:39 EndTime=2026-03-31T16:45:49 Deadline=N/A
+   PreemptEligibleTime=2026-03-31T16:44:39 PreemptTime=None
+   SuspendTime=None SecsPreSuspend=0 LastSchedEval=2026-03-31T16:44:39 Scheduler=Main
+   Partition=low AllocNode:Sid=hive-dc-7-6-14:932529
+   ReqNodeList=(null) ExcNodeList=(null)
+   NodeList=hive-dc-7-10-50
+   BatchHost=hive-dc-7-10-50
+   NumNodes=1 NumCPUs=8 NumTasks=1 CPUs/Task=8 ReqB:S:C:T=0:0:*:*
+   ReqTRES=cpu=8,mem=32G,node=1,billing=8,gres/gpu=1
+   AllocTRES=cpu=8,mem=32G,node=1,billing=8,gres/gpu=1
+   Socks/Node=* NtasksPerN:B:S:C=0:0:*:* CoreSpec=*
+   MinCPUsNode=8 MinMemoryNode=32G MinTmpDiskNode=0
+   Features=(null) DelayBoot=00:00:00
+   OverSubscribe=OK Contiguous=0 Licenses=(null) LicensesAlloc=(null) Network=(null)
+   Command=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/submit_placer.sh
+   SubmitLine=sbatch --partition=low --account=publicgrp --requeue submit_placer.sh /quobyte/jbsiegelgrp/software/PLACER/examples/inputs/3rgk.cif ./test_output_low6 10
+   WorkDir=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer
+   StdErr=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/logs/placer_11502398_4294967294.err
+   StdIn=/dev/null
+   StdOut=/quobyte/jbsiegelgrp/software/HiveTransition/example_scripts/docking/placer/logs/placer_11502398_4294967294.out
+   TresPerNode=gres/gpu:1
+   TresPerTask=cpu=8

@@ -1,0 +1,18 @@
+/quobyte/jbsiegelgrp/software/envs/esm_env/lib/python3.9/site-packages/deepspeed/runtime/zero/linear.py:44: FutureWarning: `torch.cuda.amp.custom_fwd(args...)` is deprecated. Please use `torch.amp.custom_fwd(args..., device_type='cuda')` instead.
+  def forward(ctx, input, weight, bias=None):
+/quobyte/jbsiegelgrp/software/envs/esm_env/lib/python3.9/site-packages/deepspeed/runtime/zero/linear.py:70: FutureWarning: `torch.cuda.amp.custom_bwd(args...)` is deprecated. Please use `torch.amp.custom_bwd(args..., device_type='cuda')` instead.
+  def backward(ctx, grad_output):
+Traceback (most recent call last):
+  File "/quobyte/jbsiegelgrp/software/esm/scripts/fold.py", line 205, in <module>
+    main()
+  File "/quobyte/jbsiegelgrp/software/esm/scripts/fold.py", line 202, in main
+    run(args)
+  File "/quobyte/jbsiegelgrp/software/esm/scripts/fold.py", line 143, in run
+    model = esm.pretrained.esmfold_v1()
+  File "/quobyte/jbsiegelgrp/software/envs/esm_env/lib/python3.9/site-packages/esm/pretrained.py", line 420, in esmfold_v1
+    return esm.esmfold.v1.pretrained.esmfold_v1()
+  File "/quobyte/jbsiegelgrp/software/envs/esm_env/lib/python3.9/site-packages/esm/esmfold/v1/pretrained.py", line 59, in esmfold_v1
+    return _load_model("esmfold_3B_v1")
+  File "/quobyte/jbsiegelgrp/software/envs/esm_env/lib/python3.9/site-packages/esm/esmfold/v1/pretrained.py", line 34, in _load_model
+    raise RuntimeError(f"Keys '{', '.join(missing_essential_keys)}' are missing.")
+RuntimeError: Keys 'trunk.structure_module.ipa.linear_q_points.linear.weight, trunk.structure_module.ipa.linear_kv_points.linear.weight, trunk.structure_module.ipa.linear_q_points.linear.bias, trunk.structure_module.ipa.linear_kv_points.linear.bias' are missing.

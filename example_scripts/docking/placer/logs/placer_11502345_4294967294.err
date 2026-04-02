@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/quobyte/jbsiegelgrp/software/PLACER/run_PLACER.py", line 18, in <module>
+    import PLACER
+  File "/quobyte/jbsiegelgrp/software/PLACER/PLACER.py", line 20, in <module>
+    import modules.model as model
+  File "/quobyte/jbsiegelgrp/software/PLACER/modules/model.py", line 7, in <module>
+    import dgl
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/dgl/__init__.py", line 58, in <module>
+    from .data.utils import load_graphs, save_graphs
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/dgl/data/__init__.py", line 87, in <module>
+    from .superpixel import CIFAR10SuperPixelDataset, MNISTSuperPixelDataset
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/dgl/data/superpixel.py", line 5, in <module>
+    from scipy.spatial.distance import cdist
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/scipy/spatial/__init__.py", line 116, in <module>
+    from ._geometric_slerp import geometric_slerp
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/scipy/spatial/_geometric_slerp.py", line 9, in <module>
+    from scipy.spatial.distance import euclidean
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/scipy/spatial/distance.py", line 121, in <module>
+    from ..special import rel_entr
+  File "/quobyte/jbsiegelgrp/software/envs/placer_env/lib/python3.10/site-packages/scipy/special/__init__.py", line 777, in <module>
+    from . import _ufuncs
+ImportError: libopenblasp-r0-01191904.3.27.so: cannot open shared object file: No such file or directory

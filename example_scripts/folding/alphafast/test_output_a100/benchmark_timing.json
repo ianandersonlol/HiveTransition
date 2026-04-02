@@ -1,0 +1,25 @@
+{
+  "benchmark_info": {
+    "mode": "sequential",
+    "batch_size": 1,
+    "mmseqs_threads": 16,
+    "use_mmseqs_gpu": true,
+    "mmseqs_sequential": false,
+    "timestamp": "2026-04-01T14:28:56.697875"
+  },
+  "summary": {
+    "num_fold_inputs": 1,
+    "num_unique_sequences": 1,
+    "total_chains": 1,
+    "total_seconds": 3197.881595134735,
+    "per_input_seconds": 3197.881595134735,
+    "per_unique_seq_seconds": 3197.881595134735
+  },
+  "per_protein": [
+    {
+      "name": "ubiquitin_human",
+      "num_chains": 1,
+      "total_seconds": 3197.8815593719482
+    }
+  ]
+}

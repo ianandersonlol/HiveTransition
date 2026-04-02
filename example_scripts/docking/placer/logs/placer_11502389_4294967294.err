@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/quobyte/jbsiegelgrp/software/PLACER/run_PLACER.py", line 282, in <module>
+    main(args)
+  File "/quobyte/jbsiegelgrp/software/PLACER/run_PLACER.py", line 196, in main
+    outputs = placer.run(placer_input_iter, args.nsamples)
+  File "/quobyte/jbsiegelgrp/software/PLACER/PLACER.py", line 193, in run
+    chains, obmol = protocol.parse_input_structure(input_object, ligand_reference=ligand_reference,
+  File "/quobyte/jbsiegelgrp/software/PLACER/modules/protocol.py", line 89, in parse_input_structure
+    assert not any([k in chains.keys() for k in lig_chains.keys()]), "One or more of ligand chains already exist in parsed protein chains. Consider changing the chain letters of your ligands."
+AssertionError: One or more of ligand chains already exist in parsed protein chains. Consider changing the chain letters of your ligands.

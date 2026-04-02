@@ -1,0 +1,56 @@
+{
+    "seeds": [
+        42
+    ],
+    "queries": {
+        "villin_headpiece": {
+            "query_name": "villin_headpiece",
+            "chains": [
+                {
+                    "molecule_type": "PROTEIN",
+                    "chain_ids": [
+                        "A"
+                    ],
+                    "description": null,
+                    "sequence": "MLSDEDFKAVFGMTRSAFANLPLWKQQNLK",
+                    "non_canonical_residues": null,
+                    "smiles": null,
+                    "ccd_codes": null,
+                    "paired_msa_file_paths": null,
+                    "main_msa_file_paths": [
+                        "/tmp/of3_colabfold_msas/main/fdf21871b0f9245bf3347c44d031978095f33bcababde0fd54999904d9605a2e.npz"
+                    ],
+                    "template_alignment_file_path": "/tmp/of3_template_data/template_cache/fdf21871b0f9245bf3347c44d031978095f33bcababde0fd54999904d9605a2e.npz",
+                    "template_entry_chain_ids": [
+                        "1vii_A",
+                        "2ppz_A",
+                        "2ppz_A",
+                        "3mya_B",
+                        "3myc_A",
+                        "2rjx_B",
+                        "2rjy_A",
+                        "2rjw_A",
+                        "2rjw_B",
+                        "5i1s_A",
+                        "5i1s_B",
+                        "5i1p_A",
+                        "5i1p_C",
+                        "1yrf_A",
+                        "1yri_A",
+                        "5i1p_B",
+                        "5vnt_A",
+                        "2l3x_A",
+                        "3nkj_A",
+                        "1wy3_A",
+                        "1wy4_A"
+                    ],
+                    "sdf_file_path": null
+                }
+            ],
+            "use_msas": true,
+            "use_paired_msas": true,
+            "use_main_msas": true,
+            "covalent_bonds": null
+        }
+    }
+}
