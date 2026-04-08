@@ -98,15 +98,27 @@ mkdir -p logs
 
 ## Partition and Account Rules
 
-### Decision logic (prefer `low` when possible — it's more efficient):
+### Decision logic (prefer `low` for short/array GPU jobs):
 
 | Scenario | Partition | Account | Extra flags |
 |----------|-----------|---------|-------------|
 | **CPU job, not time-sensitive** | `low` | `publicgrp` | `--requeue` |
 | **CPU job, needs >7 days or priority** | `high` | `jbsiegelgrp` | — |
+| **GPU array job (< 2h per task)** | `low` (with `--gres=gpu:1`) | `publicgrp` | `--requeue` |
 | **GPU job, not time-sensitive** | `low` (with `--gres=gpu:1`) | `publicgrp` | `--requeue` |
 | **GPU job, needs ≥80GB VRAM** | `low` (with `--constraint` + `--gres=gpu:1`) | `publicgrp` | `--requeue` (see below) |
 | **GPU job, needs >7 days or dedicated A100** | `gpu-a100` | `genome-center-grp` | — |
+
+**Prefer `low` for short, high-throughput GPU array jobs.** Most parallelized workflows
+(RFdiffusion with `num_designs=1`, AF3 single JSON, LigandMPNN single PDB, ColabFold
+single sequence) finish in under 1 hour per task. These short jobs are ideal for `low`:
+- They backfill into gaps on A100, A6000, and Blackwell nodes
+- If preempted, only minutes of work are lost (`--requeue` restarts them automatically)
+- They avoid congesting the dedicated `gpu-a100` queue, leaving it free for longer jobs
+  that cannot tolerate preemption
+
+When generating array job scripts, **default to `low`/`publicgrp` with `--requeue`** unless
+the user specifically requests `gpu-a100` or per-task runtime exceeds 2 hours.
 
 **Important:**
 - `low` partition has a 7-day time limit. Jobs may be preempted — always use `--requeue`.
