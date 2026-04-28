@@ -89,6 +89,9 @@ Or display the key and copy it manually:
 cat ~/.ssh/id_ed25519.pub
 ```
 
+**4. Paste hte public key into the box in the image**
+Just paste it. 
+
 #### Windows Subsystem for Linux (WSL)
 
 WSL maintains its own SSH configuration separate from Windows:
